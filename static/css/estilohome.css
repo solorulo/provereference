@@ -1,0 +1,52 @@
+.body {
+background:url("fondo_pegado.png") 
+no-repeat center center;
+height: 568px;
+}
+
+.form {
+	text-align: center;
+	padding-top: 260px;
+	color: #FFF;
+}
+
+.form input {
+	background-color: transparent;
+	border-width: 0;
+	color: #FFF;
+}
+
+.form label {
+	border-bottom-color: #FFF;
+	border-bottom-width: 3px;
+	border-bottom-style: solid;
+	padding: 0 0.5em;
+}
+
+
+.myButton {
+	background-color:#9ea3a2;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:28px;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:arial;
+	font-size:17px;
+	padding:3px 41px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #636363;
+}
+.myButton:hover {
+	background-color:#6c7c7c;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+footer {
+	text-align: center;
+}

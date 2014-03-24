@@ -16,6 +16,16 @@ urlpatterns += patterns('georef_app.views',
 
 urlpatterns += patterns('georef_app.admin_views',
     # Examples:
+    url(r'^administradores/$', 'admins', name='admins'),
+)
+
+urlpatterns += patterns('georef_app.supervisor_views',
+    # Examples:
+    url(r'^supervisores/$', 'supervisors', name='supervisors'),
+)
+
+urlpatterns += patterns('georef_app.admin_views',
+    # Examples:
     url(r'^admins/$', 'admins', name='admins'),
     url(r'^admin_new/$', 'admin_new', name='admin_new'),
     url(r'^admin_edit/$', 'admin_edit', name='admin_edit'),

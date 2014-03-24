@@ -5,11 +5,12 @@ from django.shortcuts import render
 from django.utils import simplejson
 
 # Create your views here.
+
 # @login_required
-def admins(request):
+def supervisors(request):
 	users = []
-	countUsers = User.objects.all().count()
-	mUsers = User.objects.all()[countUsers*0.5:countUsers]
+	countUsers = User.objects.all().count() * 0.5
+	mUsers = User.objects.all()[0:countUsers]
 
 	for user in mUsers:
 		users.append({
@@ -17,16 +18,16 @@ def admins(request):
 			"email":user.email
 			})
 	data = simplejson.dumps(users)
-	return render(request, 'administrador.html', {"data":data})
+	return render(request, 'Supervisor.html', {"data":data})
 
 @login_required
-def admin_new(request):
+def supervisor_new(request):
 	return render(request, 'index.html')
 
 @login_required
-def admin_edit(request):
+def supervisor_edit(request):
 	return render(request, 'index.html')
 
 @login_required
-def admin_delete(request):
+def supervisor_delete(request):
 	return render(request, 'index.html')
