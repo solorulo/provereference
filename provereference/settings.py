@@ -28,7 +28,6 @@ ALLOWED_HOSTS = []
 
 LOGIN_URL='/login/'
 
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -40,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'georef_app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -60,13 +60,13 @@ WSGI_APPLICATION = 'provereference.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # }
-    'default' : {
-        'ENGINE' : 'django_mongodb_engine',
-        'NAME' : 'my_database'
+    # 'default' : {
+    #     'ENGINE' : 'django_mongodb_engine',
+    #     'NAME' : 'my_database'
    }
 }
 
@@ -80,7 +80,7 @@ TEMPLATE_DIRS = (
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-mx'
 
 TIME_ZONE = 'UTC'
 
