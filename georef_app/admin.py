@@ -10,7 +10,7 @@ class UserProfileInline(admin.StackedInline):
     verbose_name_plural = 'profile'
 
 # # Define a new User admin
-class UserAdmin(UserAdmin):
+class UserAdminOther(UserAdmin):
 	inlines = (UserProfileInline, )
 
 class UserProvProfileInline(admin.StackedInline):
@@ -26,9 +26,9 @@ class EmpresaAdmin(admin.ModelAdmin):
 
 # admin.site.unregister(Group)
 admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
-# admin.site.unregister(User)
-# admin.site.register(User, UserProv)
+admin.site.register(User, UserAdminOther)
+# admin.site.register(InfoProv)
+# admin.site.register(InfoProv, UserProv)
 admin.site.register(Region)
 admin.site.register(Empresa)
 admin.site.register(Sitio)

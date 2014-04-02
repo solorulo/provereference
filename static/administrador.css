@@ -217,7 +217,7 @@ background-color: #0164BF;
 	color: #5B87DA;
 	margin-top: 10px;
 	}
-#contenedor{/*contenedores */
+.contenedor{/*contenedores */
 position: relative;
 width: 49%;
 top: 10px;
@@ -229,7 +229,7 @@ display: inline-block;
 margin: 10px auto;
 
 }
-#nombre{/*dentro del contenedor nombre*/
+.nombre{/*dentro del contenedor nombre*/
 	color: #FFF;
 	background-color: #0064BF;
 	padding-top: 10px;
@@ -237,18 +237,18 @@ margin: 10px auto;
 	padding-left: 15px;
 
 }
-#conf{/*dentro del contenedor /parte superior configuracion*/
+.conf{/*dentro del contenedor /parte superior configuracion*/
 	display: inline-block;
 	text-align: right;
 	position: relative;
 	left: 15%;
 
 }
-#conf:hover{
+.conf:hover{
 	color: #002160;
 }
 
-#info{/*informacion del personal*/
+.info{/*informacion del personal*/
 	padding-left: 15px;
 	color: #5B87DA;
 }

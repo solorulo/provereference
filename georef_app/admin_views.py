@@ -9,14 +9,16 @@ from django.utils import simplejson
 def admins(request):
 	users = []
 	countUsers = User.objects.all().count()
-	mUsers = User.objects.all()[countUsers*0.5:countUsers]
+	mUsers = User.objects.all()[0:countUsers]
 
 	for user in mUsers:
 		users.append({
-			"name":user.username,
-			"email":user.email
+			'name':user.username,
+			'email':user.email,
+			# 'tel':user.telefono
 			})
 	data = simplejson.dumps(users)
+	print data
 	return render(request, 'administrador.html', {"data":data})
 
 @login_required
