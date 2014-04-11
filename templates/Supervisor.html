@@ -3,94 +3,96 @@
 <head>
 	<title>Supervisores</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="/static/administrador.css">
+	<link rel="stylesheet" type="text/css" href="administrador.css">
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+	<script src="telcelscript.js" type="text/javascript"></script>		
 </head>
 <body>
-	{{ data }}
 	<header >
-		<a name="inicio"> </a> 
+		
 		<div class="principal">
 			<nav id="superior">
 				<ul >
-					<li id="s1" class="iconosuperior"><img src="/static/Supervisar/administrar.png" border="0">Administrar</li>
-					<li id="s2" class="iconosuperior"><img src="/static/Supervisar/supervisor_big.png" border="0">Supervisión</li>
-					<li id="s3" class="iconosuperior"><img src="/static/Supervisar/usuario.png" border="0">Usuario</li>
-					<li id="s4" class="iconosuperior"><img src="/static/Supervisar/cerrar.png" border="0">Cerrar sesión</li>
+					<li id="s1" class="iconosuperior"><img src="Supervisar/administrar.png" border="0"><a href="administrador.html">Administrar </a></li>
+					<li id="s2" class="iconosuperior"><img src="Supervisar/supervisor_big.png" border="0"><a href="Supervision.html">Supervisión</a></li>
+					<li id="s3" class="iconosuperior"><img src="Supervisar/usuario.png" border="0">Usuario</li>
+					<li id="s4" class="iconosuperior"><img src="Supervisar/cerrar.png" border="0">Cerrar sesión</li>
 				</ul>
 			</nav>
 		</div>
 	</header>
-	<a href= "#inicio"><img id="flecha"  src="/static/Supervisar/flecha_arriba.png"></a>
+	<a href= "#inicio"><img id="flecha"  src="Supervisar/flecha_arriba.png"></a>
 
 	<div id="gradiant"></div>
 	<div id="cuerpo">
 		<div id="izquierda" class="interior">
-			<li id="administrador"> Supervisores <img src="/static/Supervisar/flecha_combobox.png"></li>
+			<li id="administrador"> Supervisores <img src="Supervisar/flecha_combobox.png"></li>
 
 
-			<li id="nuevo" onclick="abrir1()"><div id="linea1"></div></br><dd>Nuevo supervisor <img src="/static/Supervisar/nuevo.png"> <div id="linea2"></div></li>
+			<li id="nuevo" onclick="abrir1()"><div id="linea1"></div></br><dd>Nuevo supervisor <img src="Supervisar/nuevo.png"> <div id="linea2"></div></li>
 
 			<ul id="lateral">
-				<li ><a href="/administradores">Administradores</a></li>
-				<li>Proveedores</li>
-				<li>Usuarios</li>
-				<li>Sitios</li>
+				<li ><a href="administrador.html">Administradores</a></li>
+				<li><a href="proveedor.html">Proveedores</li>
+				<li><a href="usuarios.html">Usuarios</a></li>
+				<li><a href="sitios.html">Sitios</a></li>
 			</ul>
 		</div>
 		<div id="derecha" class="interior">
+		<a name="inicio"> </a> 
 			<div id="busqueda"> Tu busqueda : <input type="text" size="15"></div>
 			
 			<div id="iabc">
 				<div id="abc">A</div>
 				<div id="contenedor">
-					<div id="nombre"> Andres López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="/static/Supervisar/configurar.png"></div></div>
+					<div id="nombre"> Andres López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="Supervisar/configurar.png"></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
 				</div>
 				<div id="contenedor">
-					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="/static/Supervisar/configurar.png"></div></div>
+					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="Supervisar/configurar.png"></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
 				</div>
 				<div id="contenedor">
-					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="/static/Supervisar/configurar.png"></div></div>
+					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="Supervisar/configurar.png"></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
 				</div>
 				<div id="contenedor">
-					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="/static/Supervisar/configurar.png"></div></div>
+					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="Supervisar/configurar.png"></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
 				</div>
+				
 				<div id="abc">B</div>
 				<div id="contenedor">
-					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="/static/Supervisar/configurar.png"></div></div>
+					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="Supervisar/configurar.png"></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
 				</div>
 				<div id="contenedor">
-					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="/static/Supervisar/configurar.png"></div></div>
+					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="Supervisar/configurar.png"></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
 				</div>
 				<div id="contenedor">
-					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="/static/Supervisar/configurar.png"></div></div>
+					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="Supervisar/configurar.png"></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
 				</div>
 				<div id="contenedor">
-					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()" > Editar datos <img src="/static/Supervisar/configurar.png"></div></div>
+					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()" > Editar datos <img src="Supervisar/configurar.png"></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
 				</div>
 				<div id="abc">C</div>
 				<div id="contenedor">
-					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="/static/Supervisar/configurar.png"></div></div>
+					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="Supervisar/configurar.png"></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
 				</div>
 				<div id="contenedor">
-					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="/static/Supervisar/configurar.png"></div></div>
+					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="Supervisar/configurar.png"></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
 				</div>
 				<div id="contenedor">
-					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="/static/Supervisar/configurar.png"></div></div>
+					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="Supervisar/configurar.png"></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
 				</div>
 				<div id="contenedor">
-					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="/static/Supervisar/configurar.png" ></div></div>
+					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir()"> Editar datos <img src="Supervisar/configurar.png" ></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
 					
 
@@ -100,7 +102,7 @@
 		</div>
 	</div>
 	<div id="popup1" class="pop">
-		<div id="popsuperior"> <img     src="/static/Supervisar/usuario.png"> Administrador > Editar <img id="azul" src="/static/Supervisar/configurar.png"> </div>
+		<div id="popsuperior"> <img     src="Supervisar/usuario.png"> Administrador > Editar <img id="azul" src="Supervisar/configurar.png"> </div>
 		<div id="gradiant"></div>
 		<div id="popcontenido">
 			<div id="poplateral">
@@ -120,14 +122,14 @@
 				<input type="text" class="textinfo">
 
 				<input type="text" class="textinfo">
-				<div id="popadministrador">Administrador <img onclick="activo()" src="/static/Supervisar/usuarioactivo.png"></div>
+				<div id="popadministrador">Administrador <label class="switch"><input type="checkbox" checked=""><span></span></label></div>
 
 				<button id="beliminar">Eliminar</button> <button id="bazul">Guardar</button><button id="bblanco" onclick="cerrar()">Cancelar</button>
 			</div>
 		</div>
 	</div>
 	<div id="popup2" class="pop">
-		<div id="popsuperior"> <img     src="/static/Supervisar/usuario.png"> Administrador > Nuevo <img id="azul" src="/static/Supervisar/configurar.png"> </div>
+		<div id="popsuperior"> <img     src="Supervisar/usuario.png"> Administrador > Nuevo <img id="azul" src="Supervisar/configurar.png"> </div>
 		<div id="gradiant"></div>
 		<div id="popcontenido">
 			<div id="poplateral">
@@ -147,7 +149,7 @@
 				<input type="text" class="textinfo">
 
 				<input type="text" class="textinfo">
-				<div id="popadministrador">Administrador <img onclick="activo()" src="/static/Supervisar/usuarioactivo.png"></div>
+				<div id="popadministrador">Administrador <label class="switch"><input type="checkbox" checked=""><span></span></label></div>
 
 				 <button id="bazul">Crear</button><button id="bblanco" onclick="cerrar1()">Cancelar</button>
 			</div>
@@ -157,51 +159,6 @@
 </body>
 
 
-<script type="text/javascript">
-	function abrir(){
-		document.querySelector("#popup1").style.webkitTransition = ".2s transform ease-in 0s";
-		document.querySelector("#popup1").style.webkitTransform = "scale(1)";
-		document.querySelector("#popup1").style.transition = ".2s transform ease-in 0s";
-		document.querySelector("#popup1").style.transform = "scale(1)";
 
-
-	};
-	function cerrar(){
-		document.querySelector("#popup1").style.webkitTransition = ".4s transform ease-in 0s";
-		document.querySelector("#popup1").style.webkitTransform = "scale(0)";
-		document.querySelector("#popup1").style.transition = ".4s transform ease-in 0s";
-		document.querySelector("#popup1").style.transform = "scale(0)";
-
-
-
-	};
-	function abrir1(){
-		document.querySelector("#popup2").style.webkitTransition = ".2s transform ease-in 0s";
-		document.querySelector("#popup2").style.webkitTransform = "scale(1)";
-		document.querySelector("#popup2").style.transition = ".2s transform ease-in 0s";
-		document.querySelector("#popup2").style.transform = "scale(1)";
-
-	};
-	function cerrar1(){
-		document.querySelector("#popup2").style.webkitTransition = ".4s transform ease-in 0s";
-		document.querySelector("#popup2").style.webkitTransform = "scale(0)";
-		document.querySelector("#popup2").style.transition = ".4s transform ease-in 0s";
-		document.querySelector("#popup2").style.transform = "scale(0)";
-
-
-
-	};
-	function activo(){
-		document.querySelector("#popadministrador img").style.webkitTransform = "rotate(180deg)";
-
-		document.querySelector("#popadministrador img").style.transform = "rotate(180deg)";
-
-
-
-
-	};
-
-
-</script>
 
 </html>

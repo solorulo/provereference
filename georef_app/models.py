@@ -3,8 +3,11 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class UserProfile (models.Model):
+	user = models.ForeignKey(User)
+
 class InfoUser (models.Model):
-	user = models.OneToOneField(User)
+	userProfile = models.ForeignKey(UserProfile)
 	ADMINISTRADOR = 0
 	SUPERVISOR = 1
 	TIPO_CHOICES = (
@@ -13,13 +16,17 @@ class InfoUser (models.Model):
 	)
 	tipo = models.IntegerField(choices=TIPO_CHOICES, default=SUPERVISOR)
 
+	class Meta:
+		db_table = 'info_user'
 	def __unicode__(self):
 		return self.user.first_name + " " + self.user.last_name
 
 class InfoProv (models.Model):
-	user = models.OneToOneField(User)
+	userProfile = models.ForeignKey(UserProfile)
 	telefono = models.CharField(max_length=45)
 
+	class Meta:
+		db_table = 'info_prov'
 	def __unicode__(self):
 		return self.user.first_name + " " + self.user.last_name
 
