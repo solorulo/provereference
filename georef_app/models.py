@@ -36,7 +36,6 @@ class InfoProv (models.Model):
 	telefono = models.CharField(max_length=45)
 	empresa = models.ForeignKey(Empresa)
 
-
 class Sitio (models.Model):
 	neumonico = models.CharField(max_length=45)
 	nombre = models.CharField(max_length=45)
