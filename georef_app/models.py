@@ -2,27 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-
-class InfoUser (models.Model):
-	user = models.OneToOneField(User)
-	ADMINISTRADOR = 0
-	SUPERVISOR = 1
-	TIPO_CHOICES = (
-		(ADMINISTRADOR, "Administrador"),
-		(SUPERVISOR, "Supervisor")
-	)
-	tipo = models.IntegerField(choices=TIPO_CHOICES, default=SUPERVISOR)
+class UserProfile (models.Model):
+	user = models.ForeignKey(User)
 
 	def __unicode__(self):
 		return self.user.first_name + " " + self.user.last_name
-
-class InfoProv (models.Model):
-	user = models.OneToOneField(User)
-	telefono = models.CharField(max_length=45)
-
-	def __unicode__(self):
-		return self.user.first_name + " " + self.user.last_name
-
+		
 class Region (models.Model):
 	nombre = models.CharField(max_length=45)
 
@@ -35,6 +20,21 @@ class Empresa (models.Model):
 
 	def __unicode__(self):
 		return self.nombre
+
+class InfoUser (models.Model):
+	userProfile = models.ForeignKey(UserProfile)
+	ADMINISTRADOR = 0
+	SUPERVISOR = 1
+	TIPO_CHOICES = (
+		(ADMINISTRADOR, "Administrador"),
+		(SUPERVISOR, "Supervisor")
+	)
+	tipo = models.IntegerField(choices=TIPO_CHOICES, default=SUPERVISOR)
+
+class InfoProv (models.Model):
+	userProfile = models.ForeignKey(UserProfile)
+	telefono = models.CharField(max_length=45)
+	empresa = models.ForeignKey(Empresa)
 
 
 class Sitio (models.Model):
@@ -55,7 +55,7 @@ class Actividad (models.Model):
 	lng = models.FloatField()
 	margen_error = models.FloatField()
 	sitio = models.ForeignKey(Sitio)
-	info_user = models.ForeignKey(User)
+	info_user = models.ForeignKey(InfoProv)
 
 	def __unicode__(self):
 		return self.tipo_evento
