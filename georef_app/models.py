@@ -2,11 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class UserProfile (models.Model):
-	user = models.ForeignKey(User)
+# class UserProfile (models.Model):
+# 	user = models.ForeignKey(User)
 
-	def __unicode__(self):
-		return self.user.first_name + " " + self.user.last_name
+# 	def __unicode__(self):
+# 		return self.user.first_name + " " + self.user.last_name
 		
 class Region (models.Model):
 	nombre = models.CharField(max_length=45)
@@ -21,8 +21,7 @@ class Empresa (models.Model):
 	def __unicode__(self):
 		return self.nombre
 
-class InfoUser (models.Model):
-	userProfile = models.ForeignKey(UserProfile)
+class InfoUser (User):
 	ADMINISTRADOR = 0
 	SUPERVISOR = 1
 	TIPO_CHOICES = (
@@ -30,11 +29,22 @@ class InfoUser (models.Model):
 		(SUPERVISOR, "Supervisor")
 	)
 	tipo = models.IntegerField(choices=TIPO_CHOICES, default=SUPERVISOR)
+	class Meta:
+		db_table = 'info_user'
 
-class InfoProv (models.Model):
-	userProfile = models.ForeignKey(UserProfile)
+	def __unicode__(self):
+		return self.first_name + " " + self.last_name + " - " + InfoUser.TIPO_CHOICES[self.tipo][1]
+
+
+class InfoProv (User):
 	telefono = models.CharField(max_length=45)
-	empresa = models.ForeignKey(Empresa)
+	empresa = models.ForeignKey(Empresa, related_name='empresa_prov')
+	class Meta:
+		db_table = 'info_prov'
+
+	def __unicode__(self):
+		return self.first_name + " " + self.last_name
+
 
 class Sitio (models.Model):
 	neumonico = models.CharField(max_length=45)
