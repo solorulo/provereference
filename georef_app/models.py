@@ -22,6 +22,7 @@ class Empresa (models.Model):
 		return self.nombre
 
 class InfoUser (User):
+	telefono = models.CharField(max_length=45)
 	ADMINISTRADOR = 0
 	SUPERVISOR = 1
 	TIPO_CHOICES = (

@@ -18,3 +18,11 @@ def user_edit(request):
 @login_required
 def user_delete(request):
 	return render(request, 'index.html')
+
+@login_required
+def user(request, id_user):
+	return render(request, 'mostrardatos.html')
+
+@login_required
+def supervision(request):
+	return render(request, 'Supervision.html')

@@ -9,23 +9,19 @@ from georef_app.models import *
 # @login_required
 def admins(request):
 	users = []
-	countUsers = User.objects.all().count()
-	mUsers = User.objects.all().order_by("username")[0:countUsers]
-	count = 0
+	mUsers = InfoUser.objects.filter(tipo=InfoUser.ADMINISTRADOR).order_by("first_name")
 	for user in mUsers:
-		for x in range(0,1):
-			if (user.first_name == ''):
-				name = user.username
-			else:
-				name = (user.first_name + " " + user.last_name)
-			users.append({
-				'id':user.id,
-				'name':name,
-				'email':user.email,
-				'tel':str(count)
-				# 'tel':user.telefono
-				})
-			count = count + 1
+		if (not user.first_name ):
+			name = user.username
+		else:
+			name = (user.first_name + " " + user.last_name)
+		users.append({
+			'id':user.id,
+			'name':name,
+			'email':user.email,
+			# 'tel':str(count)
+			'tel':user.telefono
+			})
 	data = simplejson.dumps(users)
 	return render(request, 'administrador.html', {"data":data})
 
