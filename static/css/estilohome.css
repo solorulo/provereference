@@ -10,7 +10,7 @@ height: 568px;
 	color: #FFF;
 }
 
-.form input {
+.form input:not([type="submit"]) {
 	background-color: transparent;
 	border-width: 0;
 	color: #FFF;

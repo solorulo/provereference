@@ -10,15 +10,18 @@
     <body>
         <div class="body">
             <div class="form">
-                <form>
-                    <div class="label"><label>User Name:  <input type="text"></input></label></div>
+                <form method="post"> {% csrf_token %}
+                    {% if wrong_data %}
+                    <p style="color:red;">Revisa tus datos</p>
+                    {% endif %}
+                    <div class="label"><label>User Name:  <input name="username" type="text" value="{{ username }}" /></label></div>
                     <p> </p>
-                    <div  class="label"><label>Password:         <input type="password"></input></label></div> 
+                    <div  class="label"><label>Password:         <input name="password" type="password"></input></label></div> 
                      <p> </p>
                       <p> </p>
                        <p> </p>
                         <p> </p>
-                    <div> <a href="/administradores/" target="_self" href="#" class="myButton">Log in</a></div>
+                    <div> <input type="submit" value="Log in" class="myButton"/></div>
                    
 
                 </form>

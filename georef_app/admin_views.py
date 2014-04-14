@@ -6,7 +6,7 @@ from django.utils import simplejson
 from georef_app.models import *
 
 # Create your views here.
-# @login_required
+
 def admins(request):
 	users = []
 	mUsers = InfoUser.objects.filter(tipo=InfoUser.ADMINISTRADOR).order_by("first_name")

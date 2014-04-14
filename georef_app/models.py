@@ -36,6 +36,15 @@ class InfoUser (User):
 	def __unicode__(self):
 		return self.first_name + " " + self.last_name + " - " + InfoUser.TIPO_CHOICES[self.tipo][1]
 
+	def save(self, *args, **kwargs):
+		print 'saving infouser'
+		if self.pk is not None:
+			super(InfoUser, self).save(*args, **kwargs)
+		else :
+			print 'first save'
+			super(InfoUser, self).save(*args, **kwargs)
+			self.set_password(self.password)
+			self.save()
 
 class InfoProv (User):
 	telefono = models.CharField(max_length=45)
@@ -45,6 +54,16 @@ class InfoProv (User):
 
 	def __unicode__(self):
 		return self.first_name + " " + self.last_name
+
+	def save(self, *args, **kwargs):
+		print 'saving infouser'
+		if self.pk is not None:
+			super(InfoProv, self).save(*args, **kwargs)
+		else :
+			print 'first save'
+			super(InfoProv, self).save(*args, **kwargs)
+			self.set_password(self.password)
+			self.save()
 
 
 class Sitio (models.Model):
