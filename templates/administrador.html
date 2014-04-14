@@ -47,6 +47,7 @@
 			<div id="busqueda"> Tu búsqueda : <input type="text" size="15"></div>
 			
 			<div id="iabc">
+				<!--
 				<div class="abc">A</div>
 				<div class="contenedor">
 					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
@@ -113,8 +114,7 @@
 				<div class="contenedor">
 					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png" ></div></div>
 					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-					
-
+				-->
 				</div>
 
 			</div>
@@ -164,13 +164,15 @@
 
 			</div>
 			<div id="popinfo">
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
+				<form>
+					<input name="first_name" type="text" class="textinfo">
+					<input name="last_name" type="text" class="textinfo">
 
-				<input type="text" class="textinfo">
-				<div id="popadministrador">Administrador<label class="switch"><input type="checkbox" checked=""><span></span></label></div>
+					<input name="email" type="text" class="textinfo">
+					<div id="popadministrador">Administrador<label class="switch"><input type="checkbox" checked=""><span></span></label></div>
 
-				 <button id="bazul">Crear</button><button id="bblanco" onclick="cerrar1()">Cancelar</button>
+					<button id="bazul">Crear</button><button id="bblanco" onclick="cerrar1()">Cancelar</button>
+				</form>
 			</div>
 		</div>
 	</div>

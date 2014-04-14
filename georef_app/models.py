@@ -22,7 +22,7 @@ class Empresa (models.Model):
 		return self.nombre
 
 class InfoUser (User):
-	telefono = models.CharField(max_length=45)
+	telefono = models.CharField(max_length=45, blank=True, null=True)
 	ADMINISTRADOR = 0
 	SUPERVISOR = 1
 	TIPO_CHOICES = (
@@ -34,17 +34,20 @@ class InfoUser (User):
 		db_table = 'info_user'
 
 	def __unicode__(self):
-		return self.first_name + " " + self.last_name + " - " + InfoUser.TIPO_CHOICES[self.tipo][1]
+		return self.get_full_name() + ' - ' + self.get_tipo_display()
+
+	def is_admin(self):
+		return self.tipo == ADMINISTRADOR
+
+	def is_supervisor(self):
+		return self.tipo == SUPERVISOR
 
 	def save(self, *args, **kwargs):
 		print 'saving infouser'
-		if self.pk is not None:
-			super(InfoUser, self).save(*args, **kwargs)
-		else :
+		if self.pk is None:
 			print 'first save'
-			super(InfoUser, self).save(*args, **kwargs)
 			self.set_password(self.password)
-			self.save()
+		super(InfoUser, self).save(*args, **kwargs)
 
 class InfoProv (User):
 	telefono = models.CharField(max_length=45)
@@ -53,17 +56,14 @@ class InfoProv (User):
 		db_table = 'info_prov'
 
 	def __unicode__(self):
-		return self.first_name + " " + self.last_name
+		return self.get_full_name()
 
 	def save(self, *args, **kwargs):
-		print 'saving infouser'
-		if self.pk is not None:
-			super(InfoProv, self).save(*args, **kwargs)
-		else :
+		print 'saving infoprov'
+		if self.pk is None:
 			print 'first save'
-			super(InfoProv, self).save(*args, **kwargs)
 			self.set_password(self.password)
-			self.save()
+		super(InfoProv, self).save(*args, **kwargs)
 
 
 class Sitio (models.Model):

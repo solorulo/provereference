@@ -12,7 +12,7 @@
  
 .principal{ /*menu principal*/
  
-background-image: url("../imagenes/Supervisar/operacionymantenimiento.png");
+background-image: url("/static/imagenes/Supervisar/operacionymantenimiento.png");
 background-repeat: no-repeat;
 width: 70%;
 height: 50px;
@@ -464,7 +464,7 @@ right: 23.5%;
 
 }
  input #check{
-	background-image: url("../imagenes/Supervisar/usuarioinactivo.png");
+	background-image: url("/static/imagenes/Supervisar/usuarioinactivo.png");
 }
 
 
@@ -533,11 +533,11 @@ label.switch input ~ span:after {
 	pointer-events: none;
 	border-radius: 10px;
 	overflow: hidden;
-	background: url('../imagenes/Supervisar/usuarioinactivo.png') no-repeat scroll 0px 0px / 34px 18px #FFF;
+	background: url('/static/imagenes/Supervisar/usuarioinactivo.png') no-repeat scroll 0px 0px / 34px 18px #FFF;
 	transition: #D6D2D0 0.2s ease 0s;
 }
 label.switch input:checked ~ span:after{
-	background: url('../imagenes/Supervisar/usuarioactivo.png') no-repeat scroll 1px -1px / 34px 18px #FFF;
+	background: url('/static/imagenes/Supervisar/usuarioactivo.png') no-repeat scroll 1px -1px / 34px 18px #FFF;
 }
 
 #bazul{
@@ -593,7 +593,7 @@ box-shadow: rgb(150,150,150) 0px 0px 10px ;
 background-color: #F1FAFF
  }
 #tactivo{
-background-image: url("../imagenes/Supervisar/usuarioactivo_lista.png");
+background-image: url("/static/imagenes/Supervisar/usuarioactivo_lista.png");
 background-repeat: no-repeat;
 background-position: 80% 50%;
 }

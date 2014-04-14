@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
+	<head>
 
-        <meta charset="utf-8" />
-        <title> Georeferencias Telcel</title>
-        <link rel=stylesheet href='/static/css/estilohome.css' type=text/css medi="screen"> 
-    </head>
+		<meta charset="utf-8" />
+		<title> Georeferencias Telcel</title>
+		<link rel=stylesheet href='/static/css/estilohome.css' type=text/css medi="screen"> 
+	</head>
 
-    <body>
-        <div class="body">
-            <div class="form">
-                <form method="post"> {% csrf_token %}
-                    {% if wrong_data %}
-                    <p style="color:red;">Revisa tus datos</p>
-                    {% endif %}
-                    <div class="label"><label>User Name:  <input name="username" type="text" value="{{ username }}" /></label></div>
-                    <p> </p>
-                    <div  class="label"><label>Password:         <input name="password" type="password"></input></label></div> 
-                     <p> </p>
-                      <p> </p>
-                       <p> </p>
-                        <p> </p>
-                    <div> <input type="submit" value="Log in" class="myButton"/></div>
-                   
+	<body>
+		<div class="body">
+			<div class="form">
+				<form method="post"> {% csrf_token %}
+					{% if wrong_data %}
+						<p style="color:red;">Revisa tus datos</p>
+					{% endif %}
+					<div class="label"><label>User Name:  <input name="username" type="text" value="{{ username }}" /></label></div>
+					<p> </p>
+					<div  class="label"><label>Password:  <input name="password" type="password" /></label></div> 
 
-                </form>
-            </div>
-       </div>
-      
-        <footer>
-            <small>
-                Copyright &copy; 2014<br/>
-                Actualizado en: 11/03/2014           
-            </small>        
-        </footer>
-    </body>
+					<div> <input type="submit" value="Log in" class="myButton"/></div>
+
+
+					{% if next %}
+						<input type="hidden" name="next" value="{{next}}" />
+					{% endif %}
+				   
+
+				</form>
+			</div>
+	   </div>
+	  
+		<footer>
+			<small>
+				Copyright &copy; 2014<br/>
+				Actualizado en: 11/03/2014
+			</small>
+		</footer>
+	</body>
 </html>
 
 

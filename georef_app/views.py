@@ -10,11 +10,15 @@ from georef_app.models import *
 # Create your views here.
 def login(request):
 	if request.method == 'GET' or not 'username' in request.POST or not 'password' in request.POST:
-		return render(request, 'login.html')
+		if 'next' in request.GET:
+			next = request.GET['next']
+		return render(request, 'login.html', {'next':next})
 	if not 'username' in request.POST or not 'password' in request.POST:
 		return render(request, 'login.html', {'wrong_data':True})
 	username = request.POST.get("username", None)
 	password = request.POST.get("password", None)
+	
+	next = request.POST.get('next', None)
 
 	# user = User.objects.get(username=username)
 	# print user.check_password(password)
@@ -26,13 +30,14 @@ def login(request):
 	print user
 	if user is not None :
 		auth_login(request, user)
+		if next is not None:
+			return HttpResponseRedirect(next)
 		if user.infouser.tipo == InfoUser.ADMINISTRADOR:
 			return HttpResponseRedirect('/administradores')
 		else:
 			return HttpResponseRedirect('/supervision')
 
-	print username
-	print password
+	print 'Login fail: ' + username
 	return render(request, 'login.html', {'wrong_data':True, 'username':username})
 
 
