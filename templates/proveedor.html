@@ -5,9 +5,11 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/static/css/administrador.css">
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-
-<script src="/static/js/telcelscript.js" type="text/javascript"></script>
-
+	<script src="/static/js/telcelscript.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		eval('var all_data = {{ data|escape|safe }}')
+		var data = all_data["providers"]
+	</script>
 </head>
 <body  > 
 	<header >
