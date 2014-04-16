@@ -28,35 +28,45 @@ def admins(request):
 @login_required
 def admin_new(request):
 	if not check_admin(request.user):
+		print "permission denied admin_new"
 		raise PermissionDenied
 	if request.method != 'POST':
+		print "solo post admin_new"
 		raise SuspiciousOperation('Solo POST')
 
 	try:
 		first_name = request.POST['first_name']
 		last_name = request.POST['last_name']
 		email = request.POST['email']
-		password = request.POST['password']
+
+		if 'password' in request.POST:
+			password = request.POST['password']
+		else:
+			password = last_name
 
 		# TODO Verificar que funcione el password con la funcion de primer registro
-		new_admin = InfoUser.create(
+		new_admin = InfoUser(
 			username=email,
 			first_name=first_name,
 			last_name=last_name,
 			tipo=InfoUser.ADMINISTRADOR,
 			email=email,
-			password=password)
-		# new_admin.save()
+			password=password,
+			telefono='3934290')
+
+
+		new_admin.save()
 		data = simplejson.dumps({
 			'code' : 1,
-			'msg' : "Bien"
+			'msg' : "Bien",
+			'admin_id' : new_admin.pk
 		})
 	except :
 		data = simplejson.dumps({
 			'code' : 0,
 			'msg' : "Fallo"
 		})
-	return render(request, 'simple_data.html', { 'data':data } )
+	return render(request, 'simple_data.html', { 'data':data })
 
 @login_required
 def admin_edit(request, id_admin):

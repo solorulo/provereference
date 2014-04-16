@@ -96,6 +96,13 @@ window.location.href = "#inicio";
 window.location.href = "#inicio1";
 
 	}
+function compareNames(a,b) {
+	if (a.name < b.name)
+	 	return -1;
+ 	if (a.name > b.name)
+		return 1;
+  	return 0;
+}
 
 function dataFormat(query){
 	var datahtml = "";
@@ -114,6 +121,7 @@ function dataFormat(query){
 	emptyNode.setAttribute("id", "iabc");
 	document.querySelector("#derecha").replaceChild(emptyNode, element);
 
+	data.sort(compareNames)
 	for (var i = 0; i < data.length; i++) {
 
 		if (query != '' && !(

@@ -6,6 +6,7 @@ from django.contrib.auth import logout as auth_logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from georef_app.models import *
+from georef_app.utils import check_admin
 
 # Create your views here.
 def login(request):
@@ -32,10 +33,7 @@ def login(request):
 		auth_login(request, user)
 		if next is not None:
 			return HttpResponseRedirect(next)
-		if user.infouser.tipo == InfoUser.ADMINISTRADOR:
-			return HttpResponseRedirect('/administradores')
-		else:
-			return HttpResponseRedirect('/supervision')
+		return HttpResponseRedirect('/')
 
 	print 'Login fail: ' + username
 	return render(request, 'login.html', {'wrong_data':True, 'username':username})
@@ -47,4 +45,7 @@ def logout(request):
 
 @login_required
 def home(request):
-	return render(request, 'index.html')
+	if check_admin(request.user):
+		return HttpResponseRedirect('/administradores')
+	else:
+		return HttpResponseRedirect('/supervision')

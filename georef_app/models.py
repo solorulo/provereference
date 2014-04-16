@@ -38,10 +38,10 @@ class InfoUser (User):
 		return self.get_full_name() + ' - ' + self.get_tipo_display()
 
 	def is_admin(self):
-		return self.tipo == ADMINISTRADOR
+		return self.tipo == InfoUser.ADMINISTRADOR
 
 	def is_supervisor(self):
-		return self.tipo == SUPERVISOR
+		return self.tipo == InfoUser.SUPERVISOR
 
 	def save(self, *args, **kwargs):
 		print 'saving infouser'

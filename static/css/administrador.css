@@ -540,7 +540,7 @@ label.switch input:checked ~ span:after{
 	background: url('/static/imagenes/Supervisar/usuarioactivo.png') no-repeat scroll 1px -1px / 34px 18px #FFF;
 }
 
-#bazul{
+.bazul{
 	background-color:#002160;
 	border:none;
 color: #FFF;
