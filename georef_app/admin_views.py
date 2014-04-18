@@ -5,13 +5,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import simplejson
 from georef_app.models import InfoUser
-from georef_app.utils import check_admin
+from georef_app.utils import check_admin, dec_magic
 
 # Create your views here.
-@login_required
+@dec_magic(method='GET', admin_required=True)
 def admins(request):
-	if not check_admin(request.user):
-		raise PermissionDenied
 	users = []
 	mUsers = InfoUser.objects.filter(tipo=InfoUser.ADMINISTRADOR).order_by("first_name")
 	for user in mUsers:
@@ -25,7 +23,7 @@ def admins(request):
 	data = simplejson.dumps(users)
 	return render(request, 'administrador.html', {"data":data})
 
-@login_required
+@dec_magic(method='POST', required_args=['last_name', 'email'], admin_required=True, json_res=True)
 def admin_new(request):
 	if not check_admin(request.user):
 		print "permission denied admin_new"
@@ -66,7 +64,7 @@ def admin_new(request):
 			'code' : 0,
 			'msg' : "Fallo"
 		})
-	return render(request, 'simple_data.html', { 'data':data })
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
 @login_required
 def admin_edit(request, id_admin):
@@ -110,7 +108,7 @@ def admin_edit(request, id_admin):
 			'code' : 0,
 			'msg' : "Ocurrio un error desconocido"
 		})
-	return render(request, 'simple_data.html', { 'data':data } )
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
 @login_required
 def admin_delete(request, id_admin):
@@ -128,4 +126,4 @@ def admin_delete(request, id_admin):
 			'code' : 0,
 			'msg' : "No existe el usuario"
 		})
-	return render(request, 'simple_data.html', { 'data':data } )
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')

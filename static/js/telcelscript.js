@@ -121,7 +121,7 @@ function dataFormat(query){
 	emptyNode.setAttribute("id", "iabc");
 	document.querySelector("#derecha").replaceChild(emptyNode, element);
 
-	data.sort(compareNames)
+	data.sort(compareNames);
 	for (var i = 0; i < data.length; i++) {
 
 		if (query != '' && !(

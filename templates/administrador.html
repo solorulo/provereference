@@ -4,9 +4,11 @@
 	<title>Administrador</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/static/css/administrador.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/cupertino/jquery-ui.css">
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 	<script src="/static/js/telcelscript.js" type="text/javascript"></script>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.js"></script>
+	<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
 	<script type="text/javascript">
 		var data = eval('{{ data|escape|safe }}')
 
@@ -26,13 +28,21 @@
 		          	'csrfmiddlewaretoken': '{{ csrf_token }}'
 		     	}
 				$.post("/administradores/new/", postdata, function(response) {
-					data.push({
-			          	'email':email, 
-			          	'name':first_name + " " +last_name,
-			          	"tel":"45678654",
-			          	"id" : response["admin_id"]
-					});
-					dataFormat('');
+					// eval('var _jsonData = '+response);
+					var code = response.code;
+					// alert(code);
+					if (code == 1) {
+						data.push({
+				          	'email':email, 
+				          	'name':first_name + " " +last_name,
+				          	"tel":"45678654",
+				          	"id" : response.admin_id
+						});
+						dataFormat('');
+					}
+					else {
+						$("#dialogError").dialog("open");
+					}
 				})
 				// .done(function() {
 				//     alert( "second success" );
@@ -45,6 +55,19 @@
 				// })
 				cerrar1();
 				return false;
+			});
+
+			$( "#dialogError" ).dialog({
+				autoOpen: false,
+				width: 400,
+				buttons: [
+					{
+						text: "Ok",
+						click: function() {
+							$( this ).dialog( "close" );
+						}
+					},
+				]
 			});
 		});
 
@@ -232,6 +255,11 @@
 				</form>
 			</div>
 		</div>
+	</div>
+
+	<!-- ui-dialog -->
+	<div id="dialogError" title="Error">
+		<p>No se pudo procesar la petici&oacute;n</p>
 	</div>
 
 </body>
