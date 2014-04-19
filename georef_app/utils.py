@@ -64,7 +64,7 @@ def dec_magic(method='POST', required_args=[], admin_required=False, login_requi
 			# For each required argument:
 			for name in required_args:
 				# Make sure it's present
-				if not name in arg_box.keys():
+				if not name in arg_box.keys() or not arg_box[name]:
 					if json_res :
 						return response('input-missing', "%s is a required %s argument" % (name, method))
 					else :

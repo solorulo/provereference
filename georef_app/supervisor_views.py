@@ -5,10 +5,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import simplejson
 from georef_app.models import InfoUser
-from georef_app.utils import check_admin
+from georef_app.utils import dec_magic
 
 # Create your views here.
-@login_required
+@dec_magic(method='GET', admin_required=True)
 def supervisors(request):
 	if not check_admin(request.user):
 		raise PermissionDenied
@@ -25,7 +25,7 @@ def supervisors(request):
 	data = simplejson.dumps(users)
 	return render(request, 'Supervisor.html', {"data":data})
 
-@login_required
+@dec_magic(method='POST', required_args=['last_name', 'email'], admin_required=True, json_res=True)
 def supervisor_new(request):
 	if not check_admin(request.user):
 		raise PermissionDenied
@@ -57,7 +57,7 @@ def supervisor_new(request):
 		})
 	return render(request, 'simple_data.html', { 'data':data } )
 
-@login_required
+@dec_magic(method='POST', admin_required=True, json_res=True)
 def supervisor_edit(request, id_supervisor):
 	if not check_admin(request.user):
 		raise PermissionDenied
@@ -101,7 +101,7 @@ def supervisor_edit(request, id_supervisor):
 		})
 	return render(request, 'simple_data.html', { 'data':data } )
 
-@login_required
+@dec_magic(method='POST', admin_required=True, json_res=True)                    
 def supervisor_delete(request, id_supervisor):
 	if not check_admin(request.user):
 		raise PermissionDenied

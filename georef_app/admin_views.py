@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import simplejson
 from georef_app.models import InfoUser
-from georef_app.utils import check_admin, dec_magic
+from georef_app.utils import dec_magic
 
 # Create your views here.
 @dec_magic(method='GET', admin_required=True)
@@ -25,13 +25,6 @@ def admins(request):
 
 @dec_magic(method='POST', required_args=['last_name', 'email'], admin_required=True, json_res=True)
 def admin_new(request):
-	if not check_admin(request.user):
-		print "permission denied admin_new"
-		raise PermissionDenied
-	if request.method != 'POST':
-		print "solo post admin_new"
-		raise SuspiciousOperation('Solo POST')
-
 	try:
 		first_name = request.POST['first_name']
 		last_name = request.POST['last_name']
@@ -66,12 +59,8 @@ def admin_new(request):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
-@login_required
+@dec_magic(method='POST', admin_required=True, json_res=True)
 def admin_edit(request, id_admin):
-	if not check_admin(request.user):
-		raise PermissionDenied
-	if request.method != 'POST':
-		raise SuspiciousOperation('Solo POST')
 
 	try:
 		first_name = request.POST('first_name', None)
@@ -110,10 +99,8 @@ def admin_edit(request, id_admin):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
-@login_required
+@dec_magic(method='POST', admin_required=True, json_res=True)
 def admin_delete(request, id_admin):
-	if not check_admin(request.user):
-		raise PermissionDenied
 	try:
 		the_admin = InfoUser.objects.get(pk=id_admin)
 		the_admin.delete()
