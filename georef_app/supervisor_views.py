@@ -10,8 +10,6 @@ from georef_app.utils import dec_magic
 # Create your views here.
 @dec_magic(method='GET', admin_required=True)
 def supervisors(request):
-	if not check_admin(request.user):
-		raise PermissionDenied
 	users = []
 	mUsers = InfoUser.objects.filter(tipo=InfoUser.SUPERVISOR).order_by("first_name")
 	for user in mUsers:
@@ -27,43 +25,39 @@ def supervisors(request):
 
 @dec_magic(method='POST', required_args=['last_name', 'email'], admin_required=True, json_res=True)
 def supervisor_new(request):
-	if not check_admin(request.user):
-		raise PermissionDenied
-	if request.method != 'POST':
-		raise SuspiciousOperation('Solo POST')
-
 	try:
 		first_name = request.POST['first_name']
 		last_name = request.POST['last_name']
 		email = request.POST['email']
-		password = request.POST['password']
 
-		new_supervisor = InfoUser.create(
+		if 'password' in request.POST:
+			password = request.POST['password']
+		else:
+			password = last_name
+
+		new_supervisor = InfoUser(
 			username=email,
 			first_name=first_name,
 			last_name=last_name,
-			tipo=InfoUser.Supervisor,
+			tipo=InfoUser.SUPERVISOR,
 			email=email,
-			password=password)
-		# new_supervisor.save()
+			password=password,
+			telefono='3934290')
+		new_supervisor.save()
 		data = simplejson.dumps({
 			'code' : 1,
-			'msg' : "Bien"
+			'msg' : "Bien",
+			'user_id':new_supervisor.pk
 		})
 	except :
 		data = simplejson.dumps({
 			'code' : 0,
 			'msg' : "Fallo"
 		})
-	return render(request, 'simple_data.html', { 'data':data } )
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
 @dec_magic(method='POST', admin_required=True, json_res=True)
 def supervisor_edit(request, id_supervisor):
-	if not check_admin(request.user):
-		raise PermissionDenied
-	if request.method != 'POST':
-		raise SuspiciousOperation('Solo POST')
-
 	try:
 		first_name = request.POST('first_name', None)
 		last_name = request.POST('last_name', None)
@@ -103,8 +97,6 @@ def supervisor_edit(request, id_supervisor):
 
 @dec_magic(method='POST', admin_required=True, json_res=True)                    
 def supervisor_delete(request, id_supervisor):
-	if not check_admin(request.user):
-		raise PermissionDenied
 	try:
 		the_supervisor = InfoUser.objects.get(pk=id_supervisor)
 		the_supervisor.delete()

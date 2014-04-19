@@ -36,14 +36,16 @@
 				          	'email':email, 
 				          	'name':first_name + " " +last_name,
 				          	"tel":"45678654",
-				          	"id" : response.admin_id
+				          	"id" : response.user_id
 						});
 						dataFormat('');
 					}
 					else {
 						$("#dialogError").dialog("open");
 					}
-				})
+				}).fail(function() {
+					$("#dialogError").dialog("open");
+				});
 				// .done(function() {
 				//     alert( "second success" );
 				//   })
@@ -245,14 +247,12 @@
 
 			</div>
 			<div id="popinfo">
-				<form id="create_form">
-					<input id="first_name" name="first_name" type="text" class="textinfo">
-					<input id="last_name" name="last_name" type="text" class="textinfo">
-					<input id="email" name="email" type="text" class="textinfo">
-					<div id="popadministrador">Administrador<label class="switch"><input id="is_admin" name="is_admin" type="checkbox" checked=""><span></span></label></div>
+				<input id="first_name" name="first_name" type="text" class="textinfo">
+				<input id="last_name" name="last_name" type="text" class="textinfo">
+				<input id="email" name="email" type="text" class="textinfo">
+				<div id="popadministrador">Administrador<label class="switch"><input id="is_admin" name="is_admin" type="checkbox" checked=""/><span></span></label></div>
 
-					<button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrar1(); return false;">Cancelar</button>
-				</form>
+				<button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrar1(); return false;">Cancelar</button>
 			</div>
 		</div>
 	</div>

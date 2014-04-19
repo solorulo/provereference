@@ -4,8 +4,14 @@
 	<title>Supervision</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/static/css/administrador.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/cupertino/jquery-ui.css">
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 	<script src="/static/js/telcelscript.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/static/js/jquery.js"></script>
+	<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+	<script type="text/javascript">
+		var data = eval('{{ data|escape|safe }}')
+	</script>
 </head>
 <body  > 
 	<header >
@@ -231,9 +237,14 @@
         <option>This Is A Longer Option</option>
     	</select> 
 
-				 <button id="bazul">Crear</button><button id="bblanco" onclick="cerrar2()">Cancelar</button>
+				 <button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrar2()">Cancelar</button>
 			</div>
 		</div>
+	</div>
+
+	<!-- ui-dialog -->
+	<div id="dialogError" title="Error">
+		<p>No se pudo procesar la petici&oacute;n</p>
 	</div>
 
 </body>

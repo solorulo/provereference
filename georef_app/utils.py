@@ -1,6 +1,7 @@
 from georef_app.models import *
 from provereference.settings import DEBUG
 from functools import wraps
+from django.http import HttpResponse, HttpResponseRedirect
 
 from django.contrib.auth.models import User
 
@@ -66,7 +67,7 @@ def dec_magic(method='POST', required_args=[], admin_required=False, login_requi
 				# Make sure it's present
 				if not name in arg_box.keys() or not arg_box[name]:
 					if json_res :
-						return response('input-missing', "%s is a required %s argument" % (name, method))
+						return response("input-missing %s is a required %s argument" % (name, method))
 					else :
 						raise SuspiciousOperation( "%s is a required %s argument" % (name, method))
 				# value = arg_box[name]

@@ -50,7 +50,7 @@ def admin_new(request):
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Bien",
-			'admin_id' : new_admin.pk
+			'user_id' : new_admin.pk
 		})
 	except :
 		data = simplejson.dumps({
