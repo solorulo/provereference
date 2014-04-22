@@ -119,7 +119,7 @@ function admin(i, id){
 		$.post("/administradores/"+id+"/edit/", postdata, function(response) {
 			// eval('var _jsonData = '+response);
 			var code = response.code;
-			alert(response.code);
+			//alert(response.code);
 			if(code == '1'){
 				data.splice(i, 1, {
 				          	'email':email, 

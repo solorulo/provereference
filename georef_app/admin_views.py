@@ -62,10 +62,10 @@ def admin_new(request):
 @dec_magic(method='POST', required_args=['last_name', 'email'], admin_required=True, json_res=True)
 def admin_edit(request, id_admin):
 	try:
-		first_name = request.POST['first_name']
-		last_name = request.POST['last_name']
-		email = request.POST['email']
-		is_admin = request.POST['is_admin']
+		first_name = request.POST.get('first_name', None)
+		last_name = request.POST.get('last_name', None)
+		email = request.POST.get('email', None)
+		is_admin = request.POST.get('is_admin', None)
 		the_admin = InfoUser.objects.get(pk=id_admin)
 		if first_name is not None :
 			the_admin.first_name = first_name
