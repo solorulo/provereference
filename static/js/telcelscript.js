@@ -1,11 +1,17 @@
-function abrir(){
+	function abrir(i, id){
 		document.querySelector("#popup1").style.webkitTransition = ".2s transform ease-in 0s";
 		document.querySelector("#popup1").style.webkitTransform = "scale(1)";
 		document.querySelector("#popup1").style.msTransition = ".2s transform ease-in 0s";
 		document.querySelector("#popup1").style.msTransform = "scale(1)";
 		document.querySelector("#popup1").style.transition = ".2s transform ease-in 0s";
 		document.querySelector("#popup1").style.transform = "scale(1)";
-
+		document.querySelector("#popup1 .form_nombre").value=data[i].first_name;
+		document.querySelector("#popup1 .form_apellido").value=data[i].last_name;
+		document.querySelector("#popup1 .form_mail").value=data[i].email;
+		document.querySelector("#popadministrador input").checked = true;
+		var obj = new admin(i, id)
+		document.querySelector("#popup1 #beliminar").onclick = obj.delete;
+		document.querySelector("#popup1 #b_save").onclick = obj.save;
 
 	};
 	function cerrar(){
@@ -16,11 +22,9 @@ function abrir(){
 		document.querySelector("#popup1").style.transition = ".4s transform ease-in 0s";
 		document.querySelector("#popup1").style.transform = "scale(0)";
 
-
-
 	};
 	function abrir1(){
-			document.querySelector("#popup2").style.webkitTransition = ".2s transform ease-in 0s";
+		document.querySelector("#popup2").style.webkitTransition = ".2s transform ease-in 0s";
 		document.querySelector("#popup2").style.msTransform = "scale(1)";
 		document.querySelector("#popup2").style.msTransition = ".2s transform ease-in 0s";
 		document.querySelector("#popup2").style.webkitTransform = "scale(1)";
@@ -36,8 +40,6 @@ function abrir(){
 		document.querySelector("#popup2").style.transition = ".4s transform ease-in 0s";
 		document.querySelector("#popup2").style.transform = "scale(0)";
 
-
-
 	};
 	function abrir2(){
 		document.querySelector("#popup3").style.webkitTransition = ".2s transform ease-in 0s";
@@ -46,7 +48,6 @@ function abrir(){
 		document.querySelector("#popup3").style.msTransform = "scale(1)";
 		document.querySelector("#popup3").style.transition = ".2s transform ease-in 0s";
 		document.querySelector("#popup3").style.transform = "scale(1)";
-
 
 	};
 	function cerrar2(){
@@ -57,8 +58,6 @@ function abrir(){
 		document.querySelector("#popup3").style.transition = ".4s transform ease-in 0s";
 		document.querySelector("#popup3").style.transform = "scale(0)";
 
-
-
 	};
 	function abrir3(){
 		document.querySelector("#popup4").style.webkitTransition = ".2s transform ease-in 0s";
@@ -67,7 +66,6 @@ function abrir(){
 		document.querySelector("#popup4").style.msTransform = "scale(1)";
 		document.querySelector("#popup4").style.transition = ".2s transform ease-in 0s";
 		document.querySelector("#popup4").style.transform = "scale(1)";
-
 
 	};
 	function cerrar3(){
@@ -78,22 +76,17 @@ function abrir(){
 		document.querySelector("#popup4").style.transition = ".4s transform ease-in 0s";
 		document.querySelector("#popup4").style.transform = "scale(0)";
 
-
-
 	};
 	function activo(){
 		document.querySelector("#popadministrador img").style.webkitTransform = "rotate(180deg)";
 		document.querySelector("#popadministrador img").style.msTransform = "rotate(180deg)";
 		document.querySelector("#popadministrador img").style.transform = "rotate(180deg)";
 
-
-
-
 	};
 
 	function subir(){
-window.location.href = "#inicio";
-window.location.href = "#inicio1";
+		window.location.href = "#inicio";
+		window.location.href = "#inicio1";
 
 	}
 function compareNames(a,b) {
@@ -102,6 +95,76 @@ function compareNames(a,b) {
  	if (a.name > b.name)
 		return 1;
   	return 0;
+}
+
+function admin(i, id){
+	this.a = i;
+	this.e = id;
+	this.open = function(){
+		abrir(i, id);
+	};
+	this.save = function(event){
+		event.preventDefault();
+		var email = $('#popup1 .form_mail').val();
+		var first_name = $('#popup1 .form_nombre').val();
+		var last_name = $('#popup1 .form_apellido').val();
+		var is_admin = document.querySelector("#popadministrador input").checked;
+		var postdata={
+          	'email':email, 
+          	'first_name':first_name,
+          	'last_name':last_name,
+          	'is_admin':is_admin,
+          	'csrfmiddlewaretoken': csrftoken
+     	}
+		$.post("/administradores/"+id+"/edit/", postdata, function(response) {
+			// eval('var _jsonData = '+response);
+			var code = response.code;
+			//alert(response.code);
+			if(code == '1'){
+				data.splice(i, 1, {
+				          	'email':email, 
+				          	'first_name':first_name,
+				          	'last_name':last_name,
+				          	"tel":"45678654",
+				          	"id" : id
+						});
+						dataFormat('');
+			}
+			else if (code == '1.1') {
+				data.splice(i, 1);
+				dataFormat('');
+			}
+			else {
+				$("#dialogError").dialog("open");
+			}
+		}).fail(function() {
+			$("#dialogError").dialog("open");
+		});
+		cerrar();
+		return false;
+	};
+	this.delete = function(){
+		event.preventDefault();
+		var postdata={
+	    	'csrfmiddlewaretoken': csrftoken
+		}
+		$.post("/administradores/"+id+"/delete/", postdata, function(response) {
+			// eval('var _jsonData = '+response);
+			var code = response.code;
+			// alert(code);
+			if(code == '1'){
+				data.splice(i, 1);
+				dataFormat('');
+			}
+			else {
+				$("#dialogError").dialog("open");
+			}
+		}).fail(function() {
+			$("#dialogError").dialog("open");
+		});
+		cerrar();
+		return false;
+	};
 }
 
 function dataFormat(query){
@@ -123,7 +186,9 @@ function dataFormat(query){
 
 	data.sort(compareNames);
 	for (var i = 0; i < data.length; i++) {
-
+		if (data[i].name == null){
+			data[i].name = data[i].first_name + " " + data[i].last_name;
+		}
 		if (query != '' && !(
 			reg.test((data[i].email).toLowerCase().replace(/[\s-]/g, '')) || 
 			reg.test((data[i].name).toLowerCase().replace(/[\s-]/g, '')) || 
@@ -160,7 +225,7 @@ function dataFormat(query){
 		contenedor.setAttribute("id", data[i].id);
 		nombre.setAttribute("class", "nombre");
 		conf.setAttribute("class", "conf");
-		conf.onclick = abrir;
+		conf.onclick = (new admin(i, data[i].id)).open;
 		img.setAttribute("src", "../static/imagenes/Supervisar/configurar.png");
 		info.setAttribute("class", "info");
 

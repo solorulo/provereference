@@ -34,7 +34,8 @@
 					if (code == 1) {
 						data.push({
 				          	'email':email, 
-				          	'name':first_name + " " +last_name,
+				          	'first_name':first_name,
+				          	'last_name':last_name,
 				          	"tel":"45678654",
 				          	"id" : response.user_id
 						});
@@ -220,10 +221,10 @@
 
 			</div>
 			<div id="popinfo">
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
+				<input type="text" class="textinfo form_nombre">
+				<input type="text" class="textinfo form_apellido">
 
-				<input type="text" class="textinfo">
+				<input type="text" class="textinfo form_mail">
 				<div id="popadministrador">Administrador<label class="switch"><input type="checkbox" checked=""><span></span></label></div>
 
 				<button id="beliminar">Eliminar</button> <button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrar()">Cancelar</button>

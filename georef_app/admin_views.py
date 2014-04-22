@@ -14,8 +14,10 @@ def admins(request):
 	for user in mUsers:
 		users.append({
 			'id':user.id,
-			'name':user.get_full_name(),
+			'first_name':user.first_name,
+			'last_name':user.last_name,
 			'email':user.email,
+			'is_admin':user.is_admin(),
 			# 'tel':str(count)
 			'tel':user.telefono
 			})
@@ -57,14 +59,13 @@ def admin_new(request):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
-@dec_magic(method='POST', admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['last_name', 'email'], admin_required=True, json_res=True)
 def admin_edit(request, id_admin):
 	try:
-		first_name = request.POST('first_name', None)
-		last_name = request.POST('last_name', None)
-		email = request.POST('email', None)
-		is_admin = request.POST('is_admin', None)
-
+		first_name = request.POST.get('first_name', None)
+		last_name = request.POST.get('last_name', None)
+		email = request.POST.get('email', None)
+		is_admin = request.POST.get('is_admin', None)
 		the_admin = InfoUser.objects.get(pk=id_admin)
 		if first_name is not None :
 			the_admin.first_name = first_name
