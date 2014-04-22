@@ -7,7 +7,6 @@ from django.utils import simplejson
 from georef_app.models import InfoUser
 from georef_app.utils import dec_magic
 
-# Create your views here.
 @dec_magic(method='GET', admin_required=True)
 def admins(request):
 	users = []
@@ -37,7 +36,6 @@ def admin_new(request):
 		else:
 			password = last_name
 
-		# TODO Verificar que funcione el password con la funcion de primer registro
 		new_admin = InfoUser(
 			username=email,
 			first_name=first_name,
@@ -63,7 +61,6 @@ def admin_new(request):
 
 @dec_magic(method='POST', required_args=['last_name', 'email'], admin_required=True, json_res=True)
 def admin_edit(request, id_admin):
-
 	try:
 		first_name = request.POST['first_name']
 		last_name = request.POST['last_name']
@@ -76,16 +73,18 @@ def admin_edit(request, id_admin):
 			the_admin.last_name = last_name
 		if email is not None :
 			the_admin.email = email
+		code = 1
 		if is_admin is not None :
 			if is_admin != 'false' and is_admin != 'False':
 				the_admin.tipo = InfoUser.ADMINISTRADOR
 			else:
 				the_admin.tipo = InfoUser.SUPERVISOR
+				code = 1.1
 
 		the_admin.save()
 
 		data = simplejson.dumps({
-			'code' : 1,
+			'code' : code,
 			'msg' : "Bien"
 		})
 	except InfoUser.DoesNotExist:
