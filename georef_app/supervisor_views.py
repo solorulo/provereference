@@ -59,10 +59,10 @@ def supervisor_new(request):
 @dec_magic(method='POST', admin_required=True, json_res=True)
 def supervisor_edit(request, id_supervisor):
 	try:
-		first_name = request.POST('first_name', None)
-		last_name = request.POST('last_name', None)
-		email = request.POST('email', None)
-		the_supervisor = request.POST('is_admin', None)
+		first_name = request.POST.get('first_name', None)
+		last_name = request.POST.get('last_name', None)
+		email = request.POST.get('email', None)
+		the_supervisor = request.POST.get('is_admin', None)
 
 		the_supervisor = InfoUser.objects.get(pk=id_supervisor)
 		if first_name is not None :

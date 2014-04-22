@@ -67,8 +67,8 @@ def provider_new(request):
 @dec_magic(method='POST', admin_required=True, json_res=True)
 def provider_edit(request, id_provider):
 	try:
-		name = request.POST('name', None)
-		id_region = request.POST('region', None)
+		name = request.POST.get('name', None)
+		id_region = request.POST.get('region', None)
 
 		the_provider = Empresa.objects.get(pk=id_provider)
 		if name is not None :
