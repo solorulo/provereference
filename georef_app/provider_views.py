@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import simplejson
 from georef_app.models import InfoProv, Empresa, Sitio, Region
-from georef_app.utils import check_admin
+from georef_app.utils import dec_magic
 
 @dec_magic(method='GET', admin_required=True)
 def providers(request):
