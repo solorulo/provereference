@@ -71,16 +71,18 @@ def supervisor_edit(request, id_supervisor):
 			the_supervisor.last_name = last_name
 		if email is not None :
 			the_supervisor.email = email
+		code = 1
 		if is_admin is not None :
 			if is_admin != 'false' and is_admin != 'False':
 				the_supervisor.tipo = InfoUser.ADMINISTRADOR
+				code = 1.1
 			else:
 				the_supervisor.tipo = InfoUser.SUPERVISOR
 
 		the_supervisor.save()
 
 		data = simplejson.dumps({
-			'code' : 1,
+			'code' : code,
 			'msg' : "Bien"
 		})
 	except InfoUser.DoesNotExist:

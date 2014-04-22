@@ -8,12 +8,8 @@ from django.utils import simplejson
 from georef_app.models import InfoProv, Empresa, Sitio, Region
 from georef_app.utils import check_admin
 
-# Create your views here.
-
-@login_required
+@dec_magic(method='GET', admin_required=True)
 def providers(request):
-	if not check_admin(request.user):
-		raise PermissionDenied
 	_json = {}
 	providers = []
 	sites_provs = []
@@ -45,14 +41,72 @@ def providers(request):
 	print data
 	return render(request, 'proveedor.html', {"data":data})
 
-@login_required
+@dec_magic(method='POST', required_args=['name', 'region'], admin_required=True, json_res=True)
 def provider_new(request):
+	try:
+		name = request.POST['name']
+		region = request.POST['region']
+
+		new_provider = Empresa(
+			nombre=name,
+			region_id=int(region)
+			)
+		new_provider.save()
+		data = simplejson.dumps({
+			'code' : 1,
+			'msg' : "Bien",
+			'provider_id' : new_provider.pk
+		})
+	except :
+		data = simplejson.dumps({
+			'code' : 0,
+			'msg' : "Fallo"
+		})
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+
+@dec_magic(method='POST', admin_required=True, json_res=True)
+def provider_edit(request, id_provider):
+	try:
+		name = request.POST('name', None)
+		id_region = request.POST('region', None)
+
+		the_provider = Empresa.objects.get(pk=id_provider)
+		if name is not None :
+			the_provider.nombre = name
+		if id_region is not None :
+			the_provider.region_id = id_region
+
+		the_provider.save()
+
+		data = simplejson.dumps({
+			'code' : code,
+			'msg' : "Bien"
+		})
+	except Empresa.DoesNotExist:
+		data = simplejson.dumps({
+			'code' : 0,
+			'msg' : "No existe el proveedor"
+		})
+	except:
+		data = simplejson.dumps({
+			'code' : 0,
+			'msg' : "Ocurrio un error desconocido"
+		})
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'index.html')
 
-@login_required
-def provider_edit(request):
-	return render(request, 'index.html')
-
-@login_required
-def provider_delete(request):
-	return render(request, 'index.html')
+@dec_magic(method='POST', admin_required=True, json_res=True)
+def provider_delete(request, id_provider):
+	try:
+		the_provider = InfoUser.objects.get(pk=id_provider)
+		the_provider.delete()
+		data = simplejson.dumps({
+			'code' : 1,
+			'msg' : "Borrado"
+		})
+	except Empresa.DoesNotExist:
+		data = simplejson.dumps({
+			'code' : 0,
+			'msg' : "No existe el usuario"
+		})
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
