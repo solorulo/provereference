@@ -1,6 +1,7 @@
 from georef_app.models import *
 from provereference.settings import DEBUG
 from functools import wraps
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseRedirect
 
 from django.contrib.auth.models import User
@@ -43,7 +44,7 @@ def dec_magic(method='POST', required_args=[], admin_required=False, login_requi
 					if json_res :
 						return response('login required')
 					else :
-						return HttpResponseRedirect("/login")
+						return HttpResponseRedirect("/login?next="+request.path)
 				if not check_admin(request.user):
 					raise PermissionDenied
 			# Validate call method and get the arguments

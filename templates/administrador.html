@@ -6,38 +6,34 @@
 	<link rel="stylesheet" type="text/css" href="/static/css/administrador.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/cupertino/jquery-ui.css">
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-	<script src="/static/js/telcelscript.js" type="text/javascript"></script>
 	<script type="text/javascript" src="/static/js/jquery.js"></script>
 	<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+	<script type="text/javascript" src="/static/js/telcelscript.js" ></script>
 	<script type="text/javascript">
 		var data = eval('{{ data|escape|safe }}')
-
-		var csrftoken ;
 		$(document).ready(function() {
-
-			csrftoken = getCookie('csrftoken');
 			$('#b_create').click(function(event) {
 				event.preventDefault();
 				var email = $('#email').val();
 				var first_name = $('#first_name').val();
 				var last_name = $('#last_name').val();
 				var postdata={
-		          	'email':email, 
-		          	'first_name':first_name,
-		          	'last_name':last_name,
-		          	'csrfmiddlewaretoken': '{{ csrf_token }}'
-		     	}
+					'email':email, 
+					'first_name':first_name,
+					'last_name':last_name,
+					'csrfmiddlewaretoken': csrftoken
+				}
 				$.post("/administradores/new/", postdata, function(response) {
 					// eval('var _jsonData = '+response);
 					var code = response.code;
 					// alert(code);
 					if (code == 1) {
 						data.push({
-				          	'email':email, 
-				          	'first_name':first_name,
-				          	'last_name':last_name,
-				          	"tel":"45678654",
-				          	"id" : response.user_id
+							'email':email, 
+							'first_name':first_name,
+							'last_name':last_name,
+							"tel":"45678654",
+							"id" : response.user_id
 						});
 						dataFormat('');
 					}
@@ -47,50 +43,10 @@
 				}).fail(function() {
 					$("#dialogError").dialog("open");
 				});
-				// .done(function() {
-				//     alert( "second success" );
-				//   })
-				//   .fail(function(data) {
-				//     alert( data );
-				//   })
-				//   .always(function() {
-				//     alert( "finished" );
-				// })
 				cerrar1();
 				return false;
 			});
-
-			$( "#dialogError" ).dialog({
-				autoOpen: false,
-				width: 400,
-				buttons: [
-					{
-						text: "Ok",
-						click: function() {
-							$( this ).dialog( "close" );
-						}
-					},
-				]
-			});
 		});
-
-
-		function getCookie(name) {
-		    var cookieValue = null;
-		    if (document.cookie && document.cookie != '') {
-		        var cookies = document.cookie.split(';');
-		        for (var i = 0; i < cookies.length; i++) {
-		            var cookie = jQuery.trim(cookies[i]);
-		            // Does this cookie string begin with the name we want?
-		            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-		                break;
-		            }
-		        }
-		    }
-		    
-		    return cookieValue;
-		}
 	</script>
 </head>
 <body  > 
@@ -100,9 +56,12 @@
 		<div class="principal">
 			<nav id="superior">
 				<ul >
-					<li id="s1" class="iconosuperior"><img src="/static/imagenes/Supervisar/administrar.png" border="0"><a href="/administradores/">Administrar </a></li>
 					<li id="s2" class="iconosuperior"><img src="/static/imagenes/Supervisar/supervisor_big.png" border="0"><a href="/supervision/">Supervisión</a></li>
-					<li id="s3" class="iconosuperior"><img src="/static/imagenes/Supervisar/usuario.png" border="0">Usuario</li>
+					<li id="s3" class="iconosuperior"><img src="/static/imagenes/Supervisar/usuario.png" border="0">{% if user.first_name %}
+						{{ user.first_name }}
+					{% endif %}</li>
+
+					
 					<li id="s4" class="iconosuperior"><img src="/static/imagenes/Supervisar/cerrar.png" border="0">Cerrar sesión</li>
 				</ul>
 			</nav>
@@ -131,75 +90,7 @@
 			<div id="busqueda"> Tu búsqueda : <input type="text" size="15"></div>
 			
 			<div id="iabc">
-				<!--
-				<div class="abc">A</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="abc">B</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()" > Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div><div class="abc">B</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()" > Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="abc">C</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png" ></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				-->
-				</div>
+			</div>
 
 			</div>
 		</div>
@@ -227,7 +118,7 @@
 				<input type="text" class="textinfo form_mail">
 				<div id="popadministrador">Administrador<label class="switch"><input type="checkbox" checked=""><span></span></label></div>
 
-				<button id="beliminar">Eliminar</button> <button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrar()">Cancelar</button>
+				<button id="beliminar">Eliminar</button> <button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrar('#popup1')">Cancelar</button>
 			</div>
 		</div>
 	</div>

@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
@@ -65,3 +66,5 @@ urlpatterns += patterns('georef_app.sites_views',
 	url(r'^sitios/(?P<id_site>\d{1,5})/edit/$', 'site_edit', name='site_edit'),
 	url(r'^sitios/(?P<id_site>\d{1,5})/delete/$', 'site_delete', name='site_delete'),
 )
+
+urlpatterns += staticfiles_urlpatterns()

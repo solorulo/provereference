@@ -1,107 +1,109 @@
-	function abrir(i, id){
-		document.querySelector("#popup1").style.webkitTransition = ".2s transform ease-in 0s";
-		document.querySelector("#popup1").style.webkitTransform = "scale(1)";
-		document.querySelector("#popup1").style.msTransition = ".2s transform ease-in 0s";
-		document.querySelector("#popup1").style.msTransform = "scale(1)";
-		document.querySelector("#popup1").style.transition = ".2s transform ease-in 0s";
-		document.querySelector("#popup1").style.transform = "scale(1)";
-		document.querySelector("#popup1 .form_nombre").value=data[i].first_name;
-		document.querySelector("#popup1 .form_apellido").value=data[i].last_name;
-		document.querySelector("#popup1 .form_mail").value=data[i].email;
-		document.querySelector("#popadministrador input").checked = true;
-		var obj = new admin(i, id)
-		document.querySelector("#popup1 #beliminar").onclick = obj.delete;
-		document.querySelector("#popup1 #b_save").onclick = obj.save;
 
-	};
-	function cerrar(){
-		document.querySelector("#popup1").style.webkitTransition = ".4s transform ease-in 0s";
-		document.querySelector("#popup1").style.webkitTransform = "scale(0)";
-		document.querySelector("#popup1").style.msTransition = ".4s transform ease-in 0s";
-		document.querySelector("#popup1").style.msTransform = "scale(0)";
-		document.querySelector("#popup1").style.transition = ".4s transform ease-in 0s";
-		document.querySelector("#popup1").style.transform = "scale(0)";
+function abrirAdmin(i, id){
+	abrir("#popup1");
+	document.querySelector("#popup1 .form_nombre").value=data[i].first_name;
+	document.querySelector("#popup1 .form_apellido").value=data[i].last_name;
+	document.querySelector("#popup1 .form_mail").value=data[i].email;
+	document.querySelector("#popadministrador input").checked = true;
+	var obj = new admin(i, id)
+	document.querySelector("#popup1 #beliminar").onclick = obj.delete;
+	document.querySelector("#popup1 #b_save").onclick = obj.save;
 
-	};
-	function abrir1(){
-		document.querySelector("#popup2").style.webkitTransition = ".2s transform ease-in 0s";
-		document.querySelector("#popup2").style.msTransform = "scale(1)";
-		document.querySelector("#popup2").style.msTransition = ".2s transform ease-in 0s";
-		document.querySelector("#popup2").style.webkitTransform = "scale(1)";
-		document.querySelector("#popup2").style.transition = ".2s transform ease-in 0s";
-		document.querySelector("#popup2").style.transform = "scale(1)";
+};
 
-	};
-	function cerrar1(){
-		document.querySelector("#popup2").style.webkitTransition = ".4s transform ease-in 0s";
-		document.querySelector("#popup2").style.webkitTransform = "scale(0)";
-		document.querySelector("#popup2").style.msTransition = ".4s transform ease-in 0s";
-		document.querySelector("#popup2").style.msTransform = "scale(0)";
-		document.querySelector("#popup2").style.transition = ".4s transform ease-in 0s";
-		document.querySelector("#popup2").style.transform = "scale(0)";
+function cerrar(selector) {
+	document.querySelector(selector).style.webkitTransition = ".4s transform ease-in 0s";
+	document.querySelector(selector).style.webkitTransform = "scale(0)";
+	document.querySelector(selector).style.msTransition = ".4s transform ease-in 0s";
+	document.querySelector(selector).style.msTransform = "scale(0)";
+	document.querySelector(selector).style.transition = ".4s transform ease-in 0s";
+	document.querySelector(selector).style.transform = "scale(0)";
+}
 
-	};
-	function abrir2(){
-		document.querySelector("#popup3").style.webkitTransition = ".2s transform ease-in 0s";
-		document.querySelector("#popup3").style.webkitTransform = "scale(1)";
-		document.querySelector("#popup3").style.msTransition = ".2s transform ease-in 0s";
-		document.querySelector("#popup3").style.msTransform = "scale(1)";
-		document.querySelector("#popup3").style.transition = ".2s transform ease-in 0s";
-		document.querySelector("#popup3").style.transform = "scale(1)";
+function cerrar0(){
+	cerrar("#popup1");
 
-	};
-	function cerrar2(){
-		document.querySelector("#popup3").style.webkitTransition = ".4s transform ease-in 0s";
-		document.querySelector("#popup3").style.webkitTransform = "scale(0)";
-		document.querySelector("#popup3").style.msTransition = ".4s transform ease-in 0s";
-		document.querySelector("#popup3").style.msTransform = "scale(0)";
-		document.querySelector("#popup3").style.transition = ".4s transform ease-in 0s";
-		document.querySelector("#popup3").style.transform = "scale(0)";
+};
+function abrir0(){
+	abrir("#popup1");
 
-	};
-	function abrir3(){
-		document.querySelector("#popup4").style.webkitTransition = ".2s transform ease-in 0s";
-		document.querySelector("#popup4").style.webkitTransform = "scale(1)";
-		document.querySelector("#popup4").style.msTransition = ".2s transform ease-in 0s";
-		document.querySelector("#popup4").style.msTransform = "scale(1)";
-		document.querySelector("#popup4").style.transition = ".2s transform ease-in 0s";
-		document.querySelector("#popup4").style.transform = "scale(1)";
+};
+function abrir(selector){
+	document.querySelector(selector).style.webkitTransition = ".2s transform ease-in 0s";
+	document.querySelector(selector).style.msTransform = "scale(1)";
+	document.querySelector(selector).style.msTransition = ".2s transform ease-in 0s";
+	document.querySelector(selector).style.webkitTransform = "scale(1)";
+	document.querySelector(selector).style.transition = ".2s transform ease-in 0s";
+	document.querySelector(selector).style.transform = "scale(1)";
 
-	};
-	function cerrar3(){
-		document.querySelector("#popup4").style.webkitTransition = ".4s transform ease-in 0s";
-		document.querySelector("#popup4").style.webkitTransform = "scale(0)";
-		document.querySelector("#popup4").style.msTransition = ".4s transform ease-in 0s";
-		document.querySelector("#popup4").style.msTransform = "scale(0)";
-		document.querySelector("#popup4").style.transition = ".4s transform ease-in 0s";
-		document.querySelector("#popup4").style.transform = "scale(0)";
+};
+function abrir1(){
+	abrir("#popup2");
 
-	};
-	function activo(){
-		document.querySelector("#popadministrador img").style.webkitTransform = "rotate(180deg)";
-		document.querySelector("#popadministrador img").style.msTransform = "rotate(180deg)";
-		document.querySelector("#popadministrador img").style.transform = "rotate(180deg)";
+};
+function cerrar1(){
+	cerrar("#popup2");
 
-	};
+};
+function abrir2(){
+	abrir("#popup3");
 
-	function subir(){
-		window.location.href = "#inicio";
-		window.location.href = "#inicio1";
+};
+function cerrar2(){
+	cerrar("#popup3");
 
+};
+function abrir3(){
+	abrir("#popup4");
+
+};
+function cerrar3(){
+	cerrar("#popup4");
+
+};
+function activo(){
+	document.querySelector("#popadministrador img").style.webkitTransform = "rotate(180deg)";
+	document.querySelector("#popadministrador img").style.msTransform = "rotate(180deg)";
+	document.querySelector("#popadministrador img").style.transform = "rotate(180deg)";
+
+};
+
+function subir(){
+	window.location.href = "#inicio";
+	window.location.href = "#inicio1";
+
+}
+
+function getCookie(name) {
+	var cookieValue = null;
+	if (document.cookie && document.cookie != '') {
+		var cookies = document.cookie.split(';');
+		for (var i = 0; i < cookies.length; i++) {
+			var cookie = jQuery.trim(cookies[i]);
+			// Does this cookie string begin with the name we want?
+			if (cookie.substring(0, name.length + 1) == (name + '=')) {
+				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				break;
+			}
+		}
 	}
+	
+	return cookieValue;
+}
+
 function compareNames(a,b) {
 	if (a.name < b.name)
-	 	return -1;
- 	if (a.name > b.name)
+		return -1;
+	if (a.name > b.name)
 		return 1;
-  	return 0;
+	return 0;
 }
 
 function admin(i, id){
 	this.a = i;
 	this.e = id;
 	this.open = function(){
-		abrir(i, id);
+		abrirAdmin(i, id);
 	};
 	this.save = function(event){
 		event.preventDefault();
@@ -110,23 +112,23 @@ function admin(i, id){
 		var last_name = $('#popup1 .form_apellido').val();
 		var is_admin = document.querySelector("#popadministrador input").checked;
 		var postdata={
-          	'email':email, 
-          	'first_name':first_name,
-          	'last_name':last_name,
-          	'is_admin':is_admin,
-          	'csrfmiddlewaretoken': csrftoken
-     	}
+			'email':email, 
+			'first_name':first_name,
+			'last_name':last_name,
+			'is_admin':is_admin,
+			'csrfmiddlewaretoken': csrftoken
+		}
 		$.post("/administradores/"+id+"/edit/", postdata, function(response) {
 			// eval('var _jsonData = '+response);
 			var code = response.code;
 			//alert(response.code);
 			if(code == '1'){
 				data.splice(i, 1, {
-				          	'email':email, 
-				          	'first_name':first_name,
-				          	'last_name':last_name,
-				          	"tel":"45678654",
-				          	"id" : id
+							'email':email, 
+							'first_name':first_name,
+							'last_name':last_name,
+							"tel":"45678654",
+							"id" : id
 						});
 						dataFormat('');
 			}
@@ -140,13 +142,13 @@ function admin(i, id){
 		}).fail(function() {
 			$("#dialogError").dialog("open");
 		});
-		cerrar();
+		cerrar0();
 		return false;
 	};
 	this.delete = function(){
 		event.preventDefault();
 		var postdata={
-	    	'csrfmiddlewaretoken': csrftoken
+			'csrfmiddlewaretoken': csrftoken
 		}
 		$.post("/administradores/"+id+"/delete/", postdata, function(response) {
 			// eval('var _jsonData = '+response);
@@ -162,7 +164,7 @@ function admin(i, id){
 		}).fail(function() {
 			$("#dialogError").dialog("open");
 		});
-		cerrar();
+		cerrar0();
 		return false;
 	};
 }
@@ -241,9 +243,23 @@ function dataFormat(query){
 		document.querySelector("#iabc").appendChild(contenedor);
 	};
 }
+var csrftoken ;
 
-window.onload = function(){
+$(document).ready(function() {
+	csrftoken = getCookie('csrftoken');
+	$( "#dialogError" ).dialog({
+		autoOpen: false,
+		width: 400,
+		buttons: [
+			{
+				text: "Ok",
+				click: function() {
+					$( this ).dialog( "close" );
+				}
+			},
+		]
+	});
 	dataFormat('');
 	var inputDOM = document.querySelector("#busqueda input");
 	inputDOM.oninput = function (event) { dataFormat(inputDOM.value); };
-}
+});

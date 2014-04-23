@@ -11,8 +11,7 @@ from georef_app.utils import check_admin
 # Create your views here.
 def login(request):
 	if request.method == 'GET' or not 'username' in request.POST or not 'password' in request.POST:
-		if 'next' in request.GET:
-			next = request.GET['next']
+		next = request.GET.get('next', None)
 		return render(request, 'login.html', {'next':next})
 	if not 'username' in request.POST or not 'password' in request.POST:
 		return render(request, 'login.html', {'wrong_data':True})
