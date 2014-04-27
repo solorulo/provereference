@@ -51,7 +51,7 @@ class InfoUser (User):
 		super(InfoUser, self).save(*args, **kwargs)
 
 class InfoProv (User):
-	telefono = models.CharField(max_length=45)
+	imei = models.CharField(max_length=45, unique=True)
 	empresa = models.ForeignKey(Empresa, related_name='empresa_prov')
 	class Meta:
 		db_table = 'info_prov'

@@ -22,7 +22,7 @@ def admins(request):
 			'tel':user.telefono
 			})
 	data = simplejson.dumps(users)
-	return render(request, 'administrador.html', {"data":data, 'user':request.user})
+	return render(request, 'administrador.html', { "data":data })
 
 @dec_magic(method='POST', required_args=['last_name', 'email'], admin_required=True, json_res=True)
 def admin_new(request):

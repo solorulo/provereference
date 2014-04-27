@@ -20,7 +20,7 @@
 			<nav id="superior">
 				<ul >
 					<li id="s1" class="iconosuperior"><img src="/static/imagenes/Supervisar/supervisor_big.png" border="0"><a href="/supervision">Supervisión</a></li>
-					{% if is_admin %}
+					{% if request.user.info_user.is_admin %}
 						<li id="s2" class="iconosuperior"><img src="/static/imagenes/Supervisar/administrar.png" border="0"><a href="/administradores">Administrar </a></li>
 					{% endif %}
 					

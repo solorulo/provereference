@@ -67,4 +67,10 @@ urlpatterns += patterns('georef_app.sites_views',
 	url(r'^sitios/(?P<id_site>\d{1,5})/delete/$', 'site_delete', name='site_delete'),
 )
 
+urlpatterns += patterns('georef_app.api',
+	# Examples:
+	url(r'^api/log/$', 'api_log', name='api_log'),
+	# url(r'^sitios/$', 'sites', name='sites'),
+)
+
 urlpatterns += staticfiles_urlpatterns()

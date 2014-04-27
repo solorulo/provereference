@@ -39,7 +39,7 @@ INSTALLED_APPS = (
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
-	'georef_app'
+	'georef_app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -84,7 +84,7 @@ TEMPLATE_DIRS = (
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'es-mx'
+LANGUAGE_CODE = 'es-MX'
 
 TIME_ZONE = 'UTC'
 

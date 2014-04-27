@@ -112,4 +112,4 @@ def user(request, id_user):
 @dec_magic(method='GET', admin_required=False)
 def supervision(request):
 
-	return render(request, 'Supervision.html', { 'is_admin':check_admin(request.user) })
+	return render(request, 'Supervision.html')
