@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.core.exceptions import PermissionDenied, SuspiciousOperation
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import simplejson
 from georef_app.models import InfoProv, Empresa, Sitio, Region
@@ -93,7 +89,6 @@ def provider_edit(request, id_provider):
 			'msg' : "Ocurrio un error desconocido"
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
-	return render(request, 'index.html')
 
 @dec_magic(method='POST', admin_required=True, json_res=True)
 def provider_delete(request, id_provider):
@@ -107,6 +102,6 @@ def provider_delete(request, id_provider):
 	except Empresa.DoesNotExist:
 		data = simplejson.dumps({
 			'code' : 0,
-			'msg' : "No existe el usuario"
+			'msg' : "No existe el proveedor"
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')

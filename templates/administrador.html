@@ -44,7 +44,6 @@
 					$("#dialogError").dialog("open");
 				});
 				cerrar1();
-				return false;
 			});
 		});
 	</script>
@@ -58,20 +57,16 @@
 				<ul >
 					<li id="s2" class="iconosuperior"><img src="/static/imagenes/Supervisar/supervisor_big.png" border="0"><a href="/supervision/">Supervisión</a></li>
 					<li id="s3" class="iconosuperior"><img src="/static/imagenes/Supervisar/usuario.png" border="0">{{ user.first_name }}</li>
-
-					
 					<li id="s4" class="iconosuperior"><img src="/static/imagenes/Supervisar/cerrar.png" border="0">Cerrar sesión</li>
 				</ul>
 			</nav>
 		</div>
 	</header>
 	
-
 	<div id="gradiant"></div>
 	<div id="cuerpo">
 		<div id="izquierda" class="interior">
 			<li id="administrador"> Administradores <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
-
 
 			<li id="nuevo" onclick="abrir1()"><div id="linea1"></div></br><dd>Nuevo Administrador <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
 
@@ -94,7 +89,7 @@
 		</div>
 	</div>
 	<div id="popup1" class="pop">
-		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Administrador > Editar <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
+		<div id="popsuperior"> <img src="/static/imagenes/Supervisar/usuario.png"> Administrador > Editar <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
 		<div id="gradiant"></div>
 		<div id="popcontenido">
 			<div id="poplateral">
@@ -153,6 +148,4 @@
 	</div>
 
 </body>
-
-
 </html>
