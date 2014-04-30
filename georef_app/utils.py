@@ -89,3 +89,55 @@ def dec_magic(method='POST', required_args=[], admin_required=False, login_requi
 			return r if r else response('ok')
 		return new_f
 	return check_args
+
+def fetch_token(token_id):
+	from django.contrib.sessions.models import Session
+	return Session.objects.get(pk=token_id)
+
+def dec_magic_api(method='POST', required_args=[], login_required=True):
+	def check_args(func):
+		# First, validate arguments *to API_magic* and raise an exception if they are bad. 
+		# This happens when the code is first loaded by the server.
+		#
+		#  validate the method:
+		if method not in ['GET', 'POST']: # add more here if you want
+			err_msg = "Invalid method %s passed to API_magic by %s" % (method, func.__name__)
+			raise ValueError(err_msg)
+
+		# Next, create an input-validating version of the decorated function:
+		@wraps(func)
+		def new_f(request, *args, **kwargs):
+			# Validate authentication
+			# Validate call method and get the arguments
+			if method == 'GET':
+				if request.method != 'GET':
+					return response('method-get')
+				arg_box = request.GET
+			else: # method == 'POST':
+				if request.method != 'POST':
+					return response('method-post')
+				arg_box = request.POST
+			if login_required :
+				token = request.META.get('X_GEOREF_TOKEN', None)
+				if not token:
+					return response("missing token")
+				try:
+					session = fetch_token(arg_box['token'])
+					if datetime.datetime.now().date() > session.expire_date :
+						session.delete()
+						return response("token has expired")
+					args += (session,)
+				except Session.DoesNotExist:
+					return response("invalid token")
+
+			# For each required argument:
+			for name in required_args:
+				# Make sure it's present
+				if not name in arg_box.keys() or not arg_box[name]:
+					return response("input-missing %s is a required %s argument" % (name, method))
+
+			# Call function with new arguments and return the function's return, or a default 'ok'
+			r = func(request, *args, **kwargs)
+			return r if r else response('ok')
+		return new_f
+	return check_args
