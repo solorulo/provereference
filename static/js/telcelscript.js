@@ -127,7 +127,7 @@ function admin(i, id){
 							'email':email, 
 							'first_name':first_name,
 							'last_name':last_name,
-							"tel":"45678654",
+							"tel":"",
 							"id" : id
 						});
 						dataFormat('');

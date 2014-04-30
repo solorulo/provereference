@@ -1,13 +1,8 @@
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.core.exceptions import PermissionDenied, SuspiciousOperation
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import simplejson
 from georef_app.models import InfoUser
 from georef_app.utils import dec_magic
 
-# Create your views here.
 @dec_magic(method='GET', admin_required=True)
 def supervisors(request):
 	users = []
@@ -15,8 +10,10 @@ def supervisors(request):
 	for user in mUsers:
 		users.append({
 			'id':user.id,
-			'name':user.get_full_name(),
+			'first_name':user.first_name,
+			'last_name':user.last_name,
 			'email':user.email,
+			'is_admin':user.is_admin(),
 			# 'tel':str(count)
 			'tel':user.telefono
 			})
@@ -29,6 +26,7 @@ def supervisor_new(request):
 		first_name = request.POST['first_name']
 		last_name = request.POST['last_name']
 		email = request.POST['email']
+		phone = request.POST.get('phone', '')
 
 		if 'password' in request.POST:
 			password = request.POST['password']
@@ -42,7 +40,7 @@ def supervisor_new(request):
 			tipo=InfoUser.SUPERVISOR,
 			email=email,
 			password=password,
-			telefono='3934290')
+			telefono=phone)
 		new_supervisor.save()
 		data = simplejson.dumps({
 			'code' : 1,
@@ -62,7 +60,7 @@ def supervisor_edit(request, id_supervisor):
 		first_name = request.POST.get('first_name', None)
 		last_name = request.POST.get('last_name', None)
 		email = request.POST.get('email', None)
-		the_supervisor = request.POST.get('is_admin', None)
+		is_admin = request.POST.get('is_admin', None)
 
 		the_supervisor = InfoUser.objects.get(pk=id_supervisor)
 		if first_name is not None :
@@ -71,13 +69,17 @@ def supervisor_edit(request, id_supervisor):
 			the_supervisor.last_name = last_name
 		if email is not None :
 			the_supervisor.email = email
+		if phone is not None :
+			the_supervisor.telefono = phone
 		code = 1
 		if is_admin is not None :
 			if is_admin != 'false' and is_admin != 'False':
-				the_supervisor.tipo = InfoUser.ADMINISTRADOR
-				code = 1.1
+				type_user = InfoUser.ADMINISTRADOR
 			else:
-				the_supervisor.tipo = InfoUser.SUPERVISOR
+				type_user = InfoUser.SUPERVISOR
+			if the_admin.tipo != type_user:
+				code = 1.1
+				the_admin.tipo = type_user
 
 		the_supervisor.save()
 
