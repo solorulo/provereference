@@ -12,39 +12,7 @@
 	<script type="text/javascript">
 		var data = eval('{{ data|escape|safe }}')
 		$(document).ready(function() {
-			$('#b_create').click(function(event) {
-				event.preventDefault();
-				var email = $('#email').val();
-				var first_name = $('#first_name').val();
-				var last_name = $('#last_name').val();
-				var postdata={
-					'email':email, 
-					'first_name':first_name,
-					'last_name':last_name,
-					'csrfmiddlewaretoken': csrftoken
-				}
-				$.post("/administradores/new/", postdata, function(response) {
-					// eval('var _jsonData = '+response);
-					var code = response.code;
-					// alert(code);
-					if (code == 1) {
-						data.push({
-							'email':email, 
-							'first_name':first_name,
-							'last_name':last_name,
-							"tel":"45678654",
-							"id" : response.user_id
-						});
-						dataFormat('');
-					}
-					else {
-						$("#dialogError").dialog("open");
-					}
-				}).fail(function() {
-					$("#dialogError").dialog("open");
-				});
-				cerrar1();
-			});
+			$('#b_create').click(new admin().create);
 		});
 	</script>
 </head>

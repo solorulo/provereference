@@ -8,7 +8,6 @@ function abrirAdmin(i, id){
 	var obj = new admin(i, id)
 	document.querySelector("#popup1 #beliminar").onclick = obj.delete;
 	document.querySelector("#popup1 #b_save").onclick = obj.save;
-
 };
 
 function cerrar(selector) {
@@ -18,6 +17,10 @@ function cerrar(selector) {
 	document.querySelector(selector).style.msTransform = "scale(0)";
 	document.querySelector(selector).style.transition = ".4s transform ease-in 0s";
 	document.querySelector(selector).style.transform = "scale(0)";
+	var inputs = document.querySelectorAll(selector+" input[type=\"text\"]");
+	for (var i = inputs.length - 1; i >= 0; i--) {
+		inputs[i].value = '';
+	};
 }
 
 function cerrar0(){
@@ -43,7 +46,6 @@ function abrir1(){
 };
 function cerrar1(){
 	cerrar("#popup2");
-
 };
 function abrir2(){
 	abrir("#popup3");
@@ -91,46 +93,42 @@ function getCookie(name) {
 	return cookieValue;
 }
 
-function compareNames(a,b) {
-	if (a.name < b.name)
-		return -1;
-	if (a.name > b.name)
-		return 1;
-	return 0;
-}
-
-function admin(i, id){
-	this.a = i;
-	this.e = id;
-	this.open = function(){
-		abrirAdmin(i, id);
+function Bridge(i, id, nombre, datos){
+	this.create = function(event){
+		event.preventDefault();
+		var postdata = jQuery.extend({}, datos);
+		postdata.csrfmiddlewaretoken = csrftoken;
+		$.post("/"+nombre+"/new/", postdata, function(response) {
+			// eval('var _jsonData = '+response);
+			var code = response.code;
+			// alert(code);
+			if (code == 1) {
+				datos.id = response.user_id;
+				data.push(datos);
+				dataSort();
+				dataFormat('');
+			}
+			else {
+				$("#dialogError").dialog("open");
+			}
+		}).fail(function() {
+			$("#dialogError").dialog("open");
+		});
+		cerrar1();
 	};
 	this.save = function(event){
 		event.preventDefault();
-		var email = $('#popup1 .form_mail').val();
-		var first_name = $('#popup1 .form_nombre').val();
-		var last_name = $('#popup1 .form_apellido').val();
-		var is_admin = document.querySelector("#popadministrador input").checked;
-		var postdata={
-			'email':email, 
-			'first_name':first_name,
-			'last_name':last_name,
-			'is_admin':is_admin,
-			'csrfmiddlewaretoken': csrftoken
-		}
-		$.post("/administradores/"+id+"/edit/", postdata, function(response) {
+		var postdata = jQuery.extend({}, datos);
+		postdata.csrfmiddlewaretoken = csrftoken;
+		$.post("/"+ nombre +"/"+id+"/edit/", postdata, function(response) {
 			// eval('var _jsonData = '+response);
 			var code = response.code;
 			//alert(response.code);
 			if(code == '1'){
-				data.splice(i, 1, {
-							'email':email, 
-							'first_name':first_name,
-							'last_name':last_name,
-							"tel":"",
-							"id" : id
-						});
-						dataFormat('');
+				datos.id = id;
+				data.splice(i, 1, datos);
+				dataSort();
+				dataFormat('');
 			}
 			else if (code == '1.1') {
 				data.splice(i, 1);
@@ -150,7 +148,7 @@ function admin(i, id){
 		var postdata={
 			'csrfmiddlewaretoken': csrftoken
 		}
-		$.post("/administradores/"+id+"/delete/", postdata, function(response) {
+		$.post("/"+ nombre +"/"+id+"/delete/", postdata, function(response) {
 			// eval('var _jsonData = '+response);
 			var code = response.code;
 			// alert(code);
@@ -167,7 +165,55 @@ function admin(i, id){
 		cerrar0();
 		return false;
 	};
-}
+};
+
+function admin(i, id){
+	this.open = function(){
+		abrirAdmin(i, id);
+	};
+	this.create = function(event){
+		var email = $('#email').val();
+		var first_name = $('#first_name').val();
+		var last_name = $('#last_name').val();
+		var postdata = {
+			'email':email, 
+			'first_name':first_name,
+			'last_name':last_name,
+			'is_admin':true,
+			'tel':''
+		};
+		(new Bridge(i, id, "administradores", postdata)).create(event);
+	};
+	this.save = function(event){
+		var email = $('#popup1 .form_mail').val();
+		var first_name = $('#popup1 .form_nombre').val();
+		var last_name = $('#popup1 .form_apellido').val();
+		var is_admin = document.querySelector("#popadministrador input").checked;
+		var postdata={
+			'email':email, 
+			'first_name':first_name,
+			'last_name':last_name,
+			'is_admin':is_admin,
+			'tel':''
+		}
+		(new Bridge(i, id, "administradores", postdata)).save(event);
+	}
+	this.delete = function(){
+		(new Bridge(i, id, "administradores")).delete();
+	}
+};
+
+function dataSort(){
+	data.sort(function(a, b){
+		if (a.first_name < b.first_name){
+			return -1;
+		}
+		if (a.first_name > b.first_name){
+			return 1;
+		}
+		return 0;
+	});
+};
 
 function dataFormat(query){
 	var datahtml = "";
@@ -186,7 +232,6 @@ function dataFormat(query){
 	emptyNode.setAttribute("id", "iabc");
 	document.querySelector("#derecha").replaceChild(emptyNode, element);
 
-	data.sort(compareNames);
 	for (var i = 0; i < data.length; i++) {
 		if (data[i].name == null){
 			data[i].name = data[i].first_name + " " + data[i].last_name;
@@ -243,7 +288,8 @@ function dataFormat(query){
 		document.querySelector("#iabc").appendChild(contenedor);
 	};
 }
-var csrftoken ;
+
+var csrftoken;
 
 $(document).ready(function() {
 	csrftoken = getCookie('csrftoken');
