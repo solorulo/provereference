@@ -78,9 +78,9 @@ def supervisor_edit(request, id_supervisor):
 				type_user = InfoUser.ADMINISTRADOR
 			else:
 				type_user = InfoUser.SUPERVISOR
-			if the_admin.tipo != type_user:
+			if the_supervisor.tipo != type_user:
 				code = 1.1
-				the_admin.tipo = type_user
+				the_supervisor.tipo = type_user
 
 		the_supervisor.save()
 
@@ -98,7 +98,7 @@ def supervisor_edit(request, id_supervisor):
 			'code' : 0,
 			'msg' : "Ocurrio un error desconocido"
 		})
-	return render(request, 'simple_data.html', { 'data':data } )
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
 @dec_magic(method='POST', admin_required=True, json_res=True)                    
 def supervisor_delete(request, id_supervisor):
@@ -114,4 +114,4 @@ def supervisor_delete(request, id_supervisor):
 			'code' : 0,
 			'msg' : "No existe el usuario"
 		})
-	return render(request, 'simple_data.html', { 'data':data } )
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )

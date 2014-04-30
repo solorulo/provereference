@@ -10,6 +10,17 @@ function abrirAdmin(i, id){
 	document.querySelector("#popup1 #b_save").onclick = obj.save;
 };
 
+function abrirSupervisor(i, id){
+	abrir("#popup1");
+	document.querySelector("#popup1 .form_nombre").value=data[i].first_name;
+	document.querySelector("#popup1 .form_apellido").value=data[i].last_name;
+	document.querySelector("#popup1 .form_mail").value=data[i].email;
+	document.querySelector("#popadministrador input").checked = false;
+	var obj = new supervisor(i, id)
+	document.querySelector("#popup1 #beliminar").onclick = obj.delete;
+	document.querySelector("#popup1 #b_save").onclick = obj.save;
+}
+
 function cerrar(selector) {
 	document.querySelector(selector).style.webkitTransition = ".4s transform ease-in 0s";
 	document.querySelector(selector).style.webkitTransform = "scale(0)";
@@ -123,7 +134,7 @@ function Bridge(i, id, nombre, datos){
 		$.post("/"+ nombre +"/"+id+"/edit/", postdata, function(response) {
 			// eval('var _jsonData = '+response);
 			var code = response.code;
-			//alert(response.code);
+			// alert(response["code"]);
 			if(code == '1'){
 				datos.id = id;
 				data.splice(i, 1, datos);
@@ -203,6 +214,42 @@ function admin(i, id){
 	}
 };
 
+function supervisor(i, id){
+	this.open = function(){
+		abrirSupervisor(i, id);
+	};
+	this.create = function(event){
+		var first_name = $("#first_name").val();
+		var last_name = $("#last_name").val();
+		var email = $("#email").val();
+		var postdata = {
+			'email':email, 
+			'first_name':first_name,
+			'last_name':last_name,
+			'is_admin':false,
+			'tel':''
+		};
+		(new Bridge(i, id, "supervisores", postdata)).create(event);
+	};
+	this.save = function(event){
+		var email = $('#popup1 .form_mail').val();
+		var first_name = $('#popup1 .form_nombre').val();
+		var last_name = $('#popup1 .form_apellido').val();
+		var is_admin = document.querySelector("#popadministrador input").checked;
+		var postdata={
+			'email':email, 
+			'first_name':first_name,
+			'last_name':last_name,
+			'is_admin':is_admin,
+			'tel':''
+		};
+		(new Bridge(i, id, "supervisores", postdata)).save(event);
+	}
+	this.delete = function(){
+		(new Bridge(i, id, "supervisores")).delete();
+	}
+};
+
 function dataSort(){
 	data.sort(function(a, b){
 		if (a.first_name < b.first_name){
@@ -227,6 +274,13 @@ function dataFormat(query){
 	query = query.replace(/[oòó]/ig, "[oòó]");
 	query = query.replace(/[uùú]/ig, "[uùú]");
 	var reg = new RegExp(query);
+
+	var usr;
+	if (document.location.pathname == "/administradores/"){
+		usr = admin;
+	} else if(document.location.pathname == "/supervisores/"){
+		usr = supervisor;
+	}
 
 	emptyNode = document.createElement('div');
 	emptyNode.setAttribute("id", "iabc");
@@ -272,7 +326,7 @@ function dataFormat(query){
 		contenedor.setAttribute("id", data[i].id);
 		nombre.setAttribute("class", "nombre");
 		conf.setAttribute("class", "conf");
-		conf.onclick = (new admin(i, data[i].id)).open;
+		conf.onclick = (new usr(i, data[i].id)).open;
 		img.setAttribute("src", "../static/imagenes/Supervisar/configurar.png");
 		info.setAttribute("class", "info");
 
