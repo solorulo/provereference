@@ -28,10 +28,16 @@ function cerrar(selector) {
 	document.querySelector(selector).style.msTransform = "scale(0)";
 	document.querySelector(selector).style.transition = ".4s transform ease-in 0s";
 	document.querySelector(selector).style.transform = "scale(0)";
+	// Formulario reset.
 	var inputs = document.querySelectorAll(selector+" input[type=\"text\"]");
 	for (var i = inputs.length - 1; i >= 0; i--) {
 		inputs[i].value = '';
 	};
+	if (document.location.pathname == "/administradores/"){
+		document.querySelector(selector+" input[type=\"checkbox\"]").checked = true;
+	} else if(document.location.pathname == "/supervisores/"){
+		document.querySelector(selector+" input[type=\"checkbox\"]").checked = false;
+	}
 }
 
 function cerrar0(){
