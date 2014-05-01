@@ -1,9 +1,8 @@
 from georef_app.models import *
-from provereference.settings import DEBUG
+from provereference.settings import DEBUG, API_KEY
 from functools import wraps
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseRedirect
-
 from django.contrib.auth.models import User
 
 def response(msg, code=0, data=None):
@@ -94,6 +93,8 @@ def fetch_token(token_id):
 	from django.contrib.sessions.models import Session
 	return Session.objects.get(pk=token_id)
 
+
+
 def dec_magic_api(method='POST', required_args=[], login_required=True):
 	def check_args(func):
 		# First, validate arguments *to API_magic* and raise an exception if they are bad. 
@@ -119,6 +120,7 @@ def dec_magic_api(method='POST', required_args=[], login_required=True):
 				arg_box = request.POST
 			if login_required :
 				token = request.META.get('X_GEOREF_TOKEN', None)
+				api_key = request.META.get('X_GEOREF_API_KEY', None)
 				if not token:
 					return response("missing token")
 				try:
@@ -129,6 +131,7 @@ def dec_magic_api(method='POST', required_args=[], login_required=True):
 					args += (session,)
 				except Session.DoesNotExist:
 					return response("invalid token")
+
 
 			# For each required argument:
 			for name in required_args:
