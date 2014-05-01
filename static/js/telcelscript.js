@@ -33,9 +33,9 @@ function cerrar(selector) {
 	for (var i = inputs.length - 1; i >= 0; i--) {
 		inputs[i].value = '';
 	};
-	if (document.location.pathname == "/administradores/"){
+	if ((/^\/administradores/i).test(document.location.pathname)){
 		document.querySelector(selector+" input[type=\"checkbox\"]").checked = true;
-	} else if(document.location.pathname == "/supervisores/"){
+	} else if((/^\/supervisores/i).test(document.location.pathname)){
 		document.querySelector(selector+" input[type=\"checkbox\"]").checked = false;
 	}
 }
@@ -91,7 +91,7 @@ function subir(){
 	window.location.href = "#inicio";
 	window.location.href = "#inicio1";
 
-}
+};
 
 function getCookie(name) {
 	var cookieValue = null;
@@ -108,7 +108,7 @@ function getCookie(name) {
 	}
 	
 	return cookieValue;
-}
+};
 
 function Bridge(i, id, nombre, datos){
 	this.create = function(event){
@@ -282,10 +282,12 @@ function dataFormat(query){
 	var reg = new RegExp(query);
 
 	var usr;
-	if (document.location.pathname == "/administradores/"){
+	if ((/^\/administradores/i).test(document.location.pathname)){
 		usr = admin;
-	} else if(document.location.pathname == "/supervisores/"){
+	} else if((/^\/supervisores/i).test(document.location.pathname)){
 		usr = supervisor;
+	} else {
+		return;
 	}
 
 	emptyNode = document.createElement('div');
