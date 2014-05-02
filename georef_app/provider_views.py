@@ -93,7 +93,7 @@ def provider_edit(request, id_provider):
 @dec_magic(method='POST', admin_required=True, json_res=True)
 def provider_delete(request, id_provider):
 	try:
-		the_provider = InfoUser.objects.get(pk=id_provider)
+		the_provider = Empresa.objects.get(pk=id_provider)
 		the_provider.delete()
 		data = simplejson.dumps({
 			'code' : 1,
