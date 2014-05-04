@@ -58,10 +58,58 @@ def site_new(request):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
-@login_required
-def site_edit(request):
-	return render(request, 'index.html')
+@dec_magic(method='POST', admin_required=True, json_res=True)
+def site_edit(request, id_site):
+	try:
+		name = request.POST.get('name', None)
+		neumonico = request.POST.get('neumonico', None)
+		id_region = request.POST.get('region', None)
+		lat = request.POST.get('lat', None)
+		lng = request.POST.get('lng', None)
+		radio = request.POST.get('radio', None)
 
-@login_required
-def site_delete(request):
-	return render(request, 'index.html')
+		the_site = Sitio.objects.get(pk=id_site)
+		if name is not None :
+			the_site.nombre = name
+		if neumonico is not None :
+			the_site.neumonico = neumonico
+		if id_region is not None :
+			the_site.region_id = id_region
+		if lat is not None :
+			the_site.lat = lat
+		if lng is not None :
+			the_site.lng = lng
+
+		the_site.save()
+
+		data = simplejson.dumps({
+			'code' : 1,
+			'msg' : "Bien"
+		})
+	except Sitio.DoesNotExist:
+		data = simplejson.dumps({
+			'code' : 0,
+			'msg' : "No existe el sitio"
+		})
+	except:
+		data = simplejson.dumps({
+			'code' : 0,
+			'msg' : "Ocurrio un error desconocido"
+		})
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+
+@dec_magic(method='POST', admin_required=True, json_res=True)
+def site_delete(request, id_site):
+	try:
+		the_site = Sitio.objects.get(pk=id_site)
+		the_site.delete()
+		data = simplejson.dumps({
+			'code' : 1,
+			'msg' : "Borrado"
+		})
+	except Site.DoesNotExist:
+		data = simplejson.dumps({
+			'code' : 0,
+			'msg' : "No existe el sitio"
+		})
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')

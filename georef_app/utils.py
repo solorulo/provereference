@@ -141,6 +141,7 @@ def dec_magic_api(method='POST', required_args=[], login_required=True):
 
 			# Call function with new arguments and return the function's return, or a default 'ok'
 			r = func(request, *args, **kwargs)
+			print args
 			return r if r else response('ok')
 		return new_f
 	return check_args
