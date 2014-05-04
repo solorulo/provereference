@@ -56,6 +56,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		contenedor.setAttribute("id", all_data.providers[i].id);
 		nombre.setAttribute("class", "nombre");
 		// TODO Link a los detalles
+		nombre.onclick = (new proveedor(i, all_data.providers[i].id)).open;
 		info.setAttribute("class", "info");
 
 		nombre.appendChild(nombreTxtNode);

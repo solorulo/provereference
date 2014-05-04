@@ -256,6 +256,12 @@ function supervisor(i, id){
 	}
 };
 
+function proveedor(i, id){
+	this.open = function(){
+		console.log(i, id);
+	};
+}
+
 function dataSort(){
 	data.sort(function(a, b){
 		if (a.first_name < b.first_name){
