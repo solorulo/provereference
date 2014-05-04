@@ -11,7 +11,7 @@ from georef_app.utils import dec_magic, response
 import datetime
 # datetime.datetime.now()
 
-@dec_magic_api(method='GET', required_args=['imei'], admin_required=False, json_res=True)
+@dec_magic(method='GET', required_args=['imei'], admin_required=False, json_res=True)
 def api_log(request):
 	imei = request.GET['imei']
 	user_prov = InfoProv.objects.get(imei=imei)

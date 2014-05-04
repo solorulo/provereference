@@ -300,6 +300,7 @@ function dataFormat(query){
 
 var csrftoken;
 
+var inputDOM;
 $(document).ready(function() {
 	csrftoken = getCookie('csrftoken');
 	$( "#dialogError" ).dialog({
@@ -315,6 +316,6 @@ $(document).ready(function() {
 		]
 	});
 	dataFormat('');
-	var inputDOM = document.querySelector("#busqueda input");
+	inputDOM = document.querySelector("#busqueda input");
 	inputDOM.oninput = function (event) { dataFormat(inputDOM.value); };
 });
