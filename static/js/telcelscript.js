@@ -33,21 +33,17 @@ function cerrar(selector) {
 	for (var i = inputs.length - 1; i >= 0; i--) {
 		inputs[i].value = '';
 	};
+	// TODO Limpiar los select
+	// var inputs = document.querySelectorAll(selector+" input[type=\"text\"]");
+	// for (var i = inputs.length - 1; i >= 0; i--) {
+	// 	inputs[i].value = '';
+	// };
 	if ((/^\/administradores/i).test(document.location.pathname)){
 		document.querySelector(selector+" input[type=\"checkbox\"]").checked = true;
 	} else if((/^\/supervisores/i).test(document.location.pathname)){
 		document.querySelector(selector+" input[type=\"checkbox\"]").checked = false;
 	}
 }
-
-function cerrar0(){
-	cerrar("#popup1");
-
-};
-function abrir0(){
-	abrir("#popup1");
-
-};
 function abrir(selector){
 	document.querySelector(selector).style.webkitTransition = ".2s transform ease-in 0s";
 	document.querySelector(selector).style.msTransform = "scale(1)";
@@ -55,6 +51,14 @@ function abrir(selector){
 	document.querySelector(selector).style.webkitTransform = "scale(1)";
 	document.querySelector(selector).style.transition = ".2s transform ease-in 0s";
 	document.querySelector(selector).style.transform = "scale(1)";
+
+};
+function cerrar0(){
+	cerrar("#popup1");
+
+};
+function abrir0(){
+	abrir("#popup1");
 
 };
 function abrir1(){
@@ -132,6 +136,7 @@ function Bridge(i, id, nombre, datos){
 			$("#dialogError").dialog("open");
 		});
 		cerrar1();
+		// TODO Función generica que cierre y limpie los formularios.
 	};
 	this.save = function(event){
 		event.preventDefault();
@@ -258,7 +263,20 @@ function supervisor(i, id){
 
 function proveedor(i, id){
 	this.open = function(){
+		// document.location.pathname = "/proveedores/"+id+"/";
 		console.log(i, id);
+	};
+	this.create = function(event){
+		var name = $("#popup3 input.textinfo").val();
+		var selected = document.querySelector("#popup3 .optionRegion").selectedIndex;
+
+		console.log(name, selected);
+	};
+	this.save = function(event){
+
+	};
+	this.delete = function(event){
+		(new Bridge(i, id, "proveedores")).delete();
 	};
 }
 

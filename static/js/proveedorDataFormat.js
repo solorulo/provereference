@@ -70,11 +70,13 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 };
 
 $(document).ready(function(event){
+	document.querySelector("#b_create").onclick = (new proveedor()).create;
+
 	/*
 		SELECT OPTION REGIONES
 	*/
 	var optionRegion = document.createElement("select");
-	optionRegion.setAttribute("id", "optionRegion");
+	optionRegion.setAttribute("class", "optionRegion");
 	optionRegion.setAttribute("style", "display:block;");
 
 	var firstOption = document.createElement("option");
@@ -87,9 +89,15 @@ $(document).ready(function(event){
 		option.appendChild(optionTextNode);
 		optionRegion.appendChild(option);
 	};
-	optionRegion.onchange = function(event){dataFormat(inputDOM.value);};
-	var oldOptionRegion = document.querySelector("#optionRegion");
-	oldOptionRegion.parentNode.replaceChild(optionRegion, oldOptionRegion);
+	var oldOptionsRegion = document.querySelectorAll(".optionRegion");
+	for (var i = oldOptionsRegion.length - 1; i >= 0; i--) {
+		var clone = optionRegion.cloneNode(true);
+		if(oldOptionsRegion[i].hasAttribute("id")){
+			clone.setAttribute("id", "optionRegion");
+		}
+		oldOptionsRegion[i].parentNode.replaceChild(clone, oldOptionsRegion[i]);
+	};
+	document.querySelector("#optionRegion").onchange = function(event){dataFormat(inputDOM.value);};
 
 	/*
 		SELECT OPTION SITIOS
@@ -108,7 +116,7 @@ $(document).ready(function(event){
 		option.appendChild(optionTextNode);
 		optionSitio.appendChild(option);
 	};
-	optionSitio.onchange = function(event){dataFormat(inputDOM.value);};
-	var oldOptionSitio = document.querySelector("#optionSitio");
+	var oldOptionSitio = document.querySelector(".optionSitio");
 	oldOptionSitio.parentNode.replaceChild(optionSitio, oldOptionSitio);
+	document.querySelector("#optionSitio").onchange = function(event){dataFormat(inputDOM.value);};
 });

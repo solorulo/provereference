@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="/static/js/proveedorDataFormat.js"></script>
 	<script type="text/javascript">
 		eval('var all_data = {{ data|escape|safe }}')
-		var data = all_data["providers"]
+		var data = all_data["providers"];
 	</script>
 </head>
 <body  > 
@@ -38,7 +38,7 @@
 
 			<li id="nuevo" onclick="abrir2()"><div id="linea1"></div></br><dd>Nuevo Proveedor <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
 			<li id="nuevo"></br></br><dd>Región 
-		<select id="optionRegion" style="display:block;">
+		<select id="optionRegion" class="optionRegion" style="display:block;">
 		<option selected> Select Box </option>
 		<option>Short Option</option>
 		<option>This Is A Longer Option</option>
@@ -46,7 +46,7 @@
 		<div id="linea2"></div>
 			</li>
 			<li id="nuevo"></br></br><dd>Sitio
-		<select id="optionSitio" style="display:block;">
+		<select id="optionSitio" class="optionSitio" style="display:block;">
 		<option selected> Todos </option>
 		<option>Short Option</option>
 		<option>This Is A Longer Option</option>
@@ -148,31 +148,22 @@
 		<div id="popcontenido">
 			<div id="poplateral" class="poplateral3">
 				<ul id="popul">
-					<li> Nombre</li>
+					<li>Nombre</li>
 					<div id="linea1"></div>
-					<li>Apellido</li>
-					<div id="linea1"></div>
-					<li>Mail</li>
-					<div id="linea1"></div>
-					<li>Telefono</li>
-					<div id="linea1"></div>
-					<li>Proveedor</li>
+					<li>Región</li>
 				</ul>
 
 
 			</div>
 			<div id="popinfo" class="popinfo3">
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
+				<div><input type="text" class="textinfo">
+				<select class="textinfo optionRegion">
+					<option selected> Select Box </option>
+					<option>Short Option</option>
+					<option>This Is A Longer Option</option>
+				</select> </div>
 
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
-				<select class="textinfo">
-		<option selected> Select Box </option>
-		<option>Short Option</option>
-		<option>This Is A Longer Option</option>
-		</select> 
-				<button id="beliminar">Eliminar</button> <button id="bazul">Guardar</button><button id="bblanco" onclick="cerrar3()">Cancelar</button>
+				 <button id="beliminar">Eliminar</button><button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrar2()">Cancelar</button>
 			</div>
 		</div>
 	</div>
@@ -191,13 +182,13 @@
 			</div>
 			<div id="popinfo" class="popinfo3">
 				<div><input type="text" class="textinfo">
-				<select class="textinfo">
+				<select class="textinfo optionRegion">
 					<option selected> Select Box </option>
 					<option>Short Option</option>
 					<option>This Is A Longer Option</option>
 				</select> </div>
 
-				 <button class="bazul">Crear</button><button id="bblanco" onclick="cerrar2()">Cancelar</button>
+				 <button class="bazul" id="b_create">Crear</button><button id="bblanco" onclick="cerrar2()">Cancelar</button>
 			</div>
 		</div>
 	</div>
