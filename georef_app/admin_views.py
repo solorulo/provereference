@@ -26,7 +26,7 @@ def admin_new(request):
 		first_name = request.POST.get('first_name', '')
 		last_name = request.POST['last_name']
 		email = request.POST['email']
-		phone = request.POST.get('phone', '')
+		phone = request.POST.get('tel', '')
 
 		if 'password' in request.POST:
 			password = request.POST['password']
@@ -60,7 +60,7 @@ def admin_edit(request, id_admin):
 		first_name = request.POST.get('first_name', None)
 		last_name = request.POST.get('last_name', None)
 		email = request.POST.get('email', None)
-		phone = request.POST.get('phone', None)
+		phone = request.POST.get('tel', None)
 		is_admin = request.POST.get('is_admin', None)
 		the_admin = InfoUser.objects.get(pk=id_admin)
 
