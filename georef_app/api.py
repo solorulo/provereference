@@ -25,8 +25,9 @@ def api_log(request):
 
 def login(request):
 	imei = request.POST['imei']
+	password = request.POST['password']
 	user_prov = InfoProv.objects.get(imei=imei)
 	request.session['user_id'] = user_prov.pk
 	request.session['first_name'] = user_prov.first_name
 	request.session['last_name'] = user_prov.last_name
-	request.session.set_expiry(0)
+	# request.session.set_expiry(0)
