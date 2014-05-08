@@ -281,8 +281,8 @@ function supervisor(i, id){
 
 function proveedor(i, id){
 	this.open = function(){
-		// document.location.pathname = "/proveedores/"+id+"/";
-		console.log(i, id);
+		window.location.pathname = "/proveedor/"+id+"/";
+		// console.log(i, id);
 	};
 	this.create = function(event){
 		var name = $("#popup3 input.textinfo").val();

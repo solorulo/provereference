@@ -267,6 +267,9 @@ background-color: #0164BF;
 	position: relative;
 	
 }
+td #busqueda{
+	padding-top: 0;
+}
 #iabc{/*contenedor general de abecedario*/
 	position: relative;
 	
