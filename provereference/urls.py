@@ -45,6 +45,8 @@ urlpatterns += patterns('georef_app.provider_views',
 	url(r'^proveedores/new/$', 'provider_new', name='provider_new'),
 	url(r'^proveedores/(?P<id_provider>\d{1,5})/edit/$', 'provider_edit', name='provider_edit'),
 	url(r'^proveedores/(?P<id_provider>\d{1,5})/delete/$', 'provider_delete', name='provider_delete'),
+
+	url(r'^proveedor/(?P<id_provider>\d{1,5})/$', 'provider', name='provider'),
 )
 
 urlpatterns += patterns('georef_app.user_views',

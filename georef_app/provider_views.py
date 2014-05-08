@@ -106,3 +106,10 @@ def provider_delete(request, id_provider):
 			'msg' : "No existe el proveedor"
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+
+@dec_magic(method='GET', admin_required=True)
+def provider(request, id_provider):
+	_json = {}
+	data = simplejson.dumps(_json)
+	print data
+	return render(request, 'mostrardatosprov.html', {"data":data})
