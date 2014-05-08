@@ -4,7 +4,7 @@ from georef_app.models import InfoUser
 from georef_app.utils import dec_magic
 
 @dec_magic(method='GET', admin_required=True)
-def supervisors(request):
+def supervisors(request, format):
 	users = []
 	mUsers = InfoUser.objects.filter(tipo=InfoUser.SUPERVISOR).order_by("first_name")
 	for user in mUsers:
@@ -18,6 +18,8 @@ def supervisors(request):
 			'tel':user.telefono
 			})
 	data = simplejson.dumps(users)
+	if format:
+		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'Supervisor.html', {"data":data})
 
 @dec_magic(method='POST', required_args=['last_name', 'email'], admin_required=True, json_res=True)

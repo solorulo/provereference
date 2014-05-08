@@ -11,8 +11,10 @@ from provereference.settings import API_KEY
 
 # Create your views here.
 @dec_magic(method='GET', admin_required=True)
-def users(request):
-	return render(request, 'usuarios.html')
+def users(request, format):
+	if format:
+		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+	return render(request, 'usuarios.html', {"data":data})
 
 @dec_magic(method='POST', required_args=['email', 'imei', 'provider'], admin_required=True, json_res=True)
 def user_new(request):
@@ -112,7 +114,7 @@ def user_delete(request):
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
 @dec_magic(method='GET', admin_required=False)
-def user(request, id_user):
+def user(request, id_user, format):
 	the_userprov = get_object_or_404(InfoProv, pk=id_user)
 	try:
 		actividades = Actividad.objects.all().order_by('-fecha')
@@ -120,10 +122,12 @@ def user(request, id_user):
 	except Actividad.DoesNotExist:
 		pass
 
-	return render(request, 'mostrardatos.html')
+	if format:
+		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+	return render(request, 'mostrardatos.html', {"data":data})
 
 @dec_magic(method='GET', admin_required=False)
-def supervision(request):
+def supervision(request, format):
 	usersprov = InfoProv.objects.all().select_related('empresa')
 	actividades = Actividad.objects.all().select_related('sitio', 'infoprov')
 	for user in usersprov:
@@ -132,4 +136,6 @@ def supervision(request):
 			# TODO agregar last_act al json
 		except :
 			pass
-	return render(request, 'Supervision.html')
+	if format:
+		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+	return render(request, 'Supervision.html', {"data":data})

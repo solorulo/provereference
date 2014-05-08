@@ -11,7 +11,7 @@ from georef_app.utils import dec_magic
 # Create your views here.
 
 @dec_magic(method='GET', admin_required=True)
-def sites(request):
+def sites(request, format):
 	_json = {}
 	sites_provs = []
 	mSites = Sitio.objects.all().select_related()
@@ -25,8 +25,9 @@ def sites(request):
 	_json["sites"] = sites_provs
 	_json["regiones"] = list(mRegions)
 	data = simplejson.dumps(_json)
-	print data
-	return render(request, 'proveedor.html', {"data":data})
+	if format:
+		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+	return render(request, 'sitios.html', {"data":data})
 
 @dec_magic(method='POST', required_args=['name', 'neumonico', 'lat', 'lng', 'region'], admin_required=True, json_res=True)
 def site_new(request):
