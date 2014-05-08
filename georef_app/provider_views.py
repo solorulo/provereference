@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
+from django.core import serializers
+from django.shortcuts import render, get_object_or_404
 from django.utils import simplejson
 from georef_app.models import InfoProv, Empresa, Sitio, Region
 from georef_app.utils import dec_magic
@@ -110,6 +111,18 @@ def provider_delete(request, id_provider):
 @dec_magic(method='GET', admin_required=True)
 def provider(request, id_provider):
 	_json = {}
+	userprovs = []
+	mProvider = get_object_or_404(Empresa, pk=id_provider)
+	mAllUsers = InfoProv.objects.filter(empresa_id=id_provider).values('first_name', 'last_name', 'imei', 'email', 'telefono')
+	# print simplejson.dumps(list(mSites.values()))
+
+	_json["provider"] = { 
+		'name_provider':mProvider.nombre, 
+		'id_region':mProvider.region_id,
+		'name_region':mProvider.region.nombre,
+		'n_users':mAllUsers.count() 
+		}
+	_json["users"] = list(mAllUsers)
 	data = simplejson.dumps(_json)
-	print data
+	# return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'mostrardatosprov.html', {"data":data})
