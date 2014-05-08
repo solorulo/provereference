@@ -25,7 +25,7 @@ urlpatterns += patterns('georef_app.views',
 
 urlpatterns += patterns('georef_app.admin_views',
 	# Examples:
-	url(r'^administradores/(?P<format>[a-z]{1,5})?$', 'admins', name='admins'),
+	url(r'^administradores/(?P<format>json)?$', 'admins', name='admins'),
 	url(r'^administradores/new/$', 'admin_new', name='admin_new'),
 	url(r'^administradores/(?P<id_admin>\d{1,5})/edit/$', 'admin_edit', name='admin_edit'),
 	url(r'^administradores/(?P<id_admin>\d{1,5})/delete/$', 'admin_delete', name='admin_delete'),
@@ -33,7 +33,7 @@ urlpatterns += patterns('georef_app.admin_views',
 
 urlpatterns += patterns('georef_app.supervisor_views',
 	# Examples:
-	url(r'^supervisores/(?P<format>[a-z]{1,5})?$', 'supervisors', name='supervisors'),
+	url(r'^supervisores/(?P<format>json)?$', 'supervisors', name='supervisors'),
 	url(r'^supervisores/new/$', 'supervisor_new', name='supervisor_new'),
 	url(r'^supervisores/(?P<id_supervisor>\d{1,5})/edit/$', 'supervisor_edit', name='supervisor_edit'),
 	url(r'^supervisores/(?P<id_supervisor>\d{1,5})/delete/$', 'supervisor_delete', name='supervisor_delete'),
@@ -46,24 +46,24 @@ urlpatterns += patterns('georef_app.provider_views',
 	url(r'^proveedores/(?P<id_provider>\d{1,5})/edit/$', 'provider_edit', name='provider_edit'),
 	url(r'^proveedores/(?P<id_provider>\d{1,5})/delete/$', 'provider_delete', name='provider_delete'),
 
-	url(r'^proveedor/(?P<id_provider>\d{1,5})/(?P<format>[a-z]{1,5})?$', 'provider', name='provider'),
+	url(r'^proveedor/(?P<id_provider>\d{1,5})/(?P<format>json)?$', 'provider', name='provider'),
 )
 
 urlpatterns += patterns('georef_app.user_views',
 	# Examples:
-	url(r'^usuarios/(?P<format>[a-z]{1,5})?$', 'users', name='users'),
+	url(r'^usuarios/(?P<format>json)?$', 'users', name='users'),
 	url(r'^usuarios/new/$', 'user_new', name='user_new'),
 	url(r'^usuarios/(?P<id_user>\d{1,5})/edit/$', 'user_edit', name='user_edit'),
 	url(r'^usuarios/(?P<id_user>\d{1,5})/delete/$', 'user_delete', name='user_delete'),
 
-	url(r'^usuario/(?P<id_user>\d{1,5})/(?P<format>[a-z]{1,5})?$', 'user', name='user'),
+	url(r'^usuario/(?P<id_user>\d{1,5})/(?P<format>json)?$', 'user', name='user'),
 
-	url(r'^supervision/(?P<format>[a-z]{1,5})?$', 'supervision', name='supervision'),
+	url(r'^supervision/(?P<format>json)?$', 'supervision', name='supervision'),
 )
 
 urlpatterns += patterns('georef_app.sites_views',
 	# Examples:
-	url(r'^sitios/(?P<format>[a-z]{1,5})?$', 'sites', name='sites'),
+	url(r'^sitios/(?P<format>json)?$', 'sites', name='sites'),
 	url(r'^sitios/new/$', 'site_new', name='site_new'),
 	url(r'^sitios/(?P<id_site>\d{1,5})/edit/$', 'site_edit', name='site_edit'),
 	url(r'^sitios/(?P<id_site>\d{1,5})/delete/$', 'site_delete', name='site_delete'),
