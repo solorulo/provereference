@@ -92,7 +92,7 @@ def user_edit(request, id_user):
 			'code' : 0,
 			'msg' : "Ocurrio un error desconocido"
 		})
-	return render(request, 'simple_data.html', { 'data':data } )
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
 @dec_magic(method='POST', admin_required=True, json_res=True)
 def user_delete(request):
@@ -109,7 +109,7 @@ def user_delete(request):
 			'code' : 0,
 			'msg' : "No existe el usuario"
 		})
-	return render(request, 'simple_data.html', { 'data':data } )
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
 @dec_magic(method='GET', admin_required=False)
 def user(request, id_user):
