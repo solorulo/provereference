@@ -53,6 +53,7 @@ class InfoUser (User):
 class InfoProv (User):
 	imei = models.CharField(max_length=45, unique=True)
 	empresa = models.ForeignKey(Empresa, related_name='empresa_prov')
+	telefono = models.CharField(max_length=45, unique=True)
 	class Meta:
 		db_table = 'info_prov'
 
@@ -85,7 +86,7 @@ class Actividad (models.Model):
 	lng = models.FloatField()
 	margen_error = models.FloatField()
 	sitio = models.ForeignKey(Sitio)
-	info_user = models.ForeignKey(InfoProv)
+	infoprov = models.ForeignKey(InfoProv)
 
 	def __unicode__(self):
 		return self.tipo_evento

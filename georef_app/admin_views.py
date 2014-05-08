@@ -23,7 +23,7 @@ def admins(request):
 @dec_magic(method='POST', required_args=['last_name', 'email'], admin_required=True, json_res=True)
 def admin_new(request):
 	try:
-		first_name = request.POST['first_name']
+		first_name = request.POST.get('first_name', '')
 		last_name = request.POST['last_name']
 		email = request.POST['email']
 		phone = request.POST.get('tel', '')

@@ -2,42 +2,47 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied, SuspiciousOperation
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils import simplejson
 from georef_app.models import *
 from georef_app.utils import dec_magic, check_admin
+import hashlib
+from provereference.settings import API_KEY
 
 # Create your views here.
 @dec_magic(method='GET', admin_required=True)
 def users(request):
-	return render(request, 'index.html')
+	return render(request, 'usuarios.html')
 
-@dec_magic(method='POST', required_args=[], admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['email', 'imei', 'provider'], admin_required=True, json_res=True)
 def user_new(request):
 	try:
+
 		# TODO dar de alta el usuario
-		# first_name = request.POST['first_name']
-		# last_name = request.POST['last_name']
-		# email = request.POST['email']
+		email = request.POST['email']
+		imei = request.POST['imei']
+		provider = request.POST['provider']
+		first_name = request.POST.get('first_name', '')
+		last_name = request.POST.get('last_name', '')
+		phone = request.POST.get('phone', '')
+		password = hashlib.md5(imei+API_KEY)
 
-		# if 'password' in request.POST:
-		# 	password = request.POST['password']
-		# else:
-		# 	password = last_name
+		new_userprov = InfoProv(
+			username=imei,
+			first_name=first_name,
+			last_name=last_name,
+			email=email,
+			password=password,
+			imei=imei,
+			telefono=phone,
+			empresa=int(provider)
+			)
+		new_userprov.save()
 
-		# new_supervisor = InfoUser(
-		# 	username=email,
-		# 	first_name=first_name,
-		# 	last_name=last_name,
-		# 	tipo=InfoUser.SUPERVISOR,
-		# 	email=email,
-		# 	password=password,
-		# 	telefono='3934290')
-		# new_supervisor.save()
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Bien",
-			# 'user_id':new_supervisor.pk
+			'user_id':new_userprov.pk
 		})
 	except :
 		data = simplejson.dumps({
@@ -50,25 +55,26 @@ def user_new(request):
 def user_edit(request, id_user):
 	try:
 		# TODO Editar al usuario
-		# first_name = request.POST.get('first_name', None)
-		# last_name = request.POST.get('last_name', None)
-		# email = request.POST.get('email', None)
-		# the_supervisor = request.POST.get('is_admin', None)
+		email = request.POST.get('email', None)
+		imei = request.POST.get('imei',None)
+		provider = request.POST.get('provider', None)
+		first_name = request.POST.get('first_name', None)
+		last_name = request.POST.get('last_name', None)
+		phone = request.POST.get('phone', None)
 
-		# the_supervisor = InfoUser.objects.get(pk=id_supervisor)
-		# if first_name is not None :
-		# 	the_supervisor.first_name = first_name
-		# if last_name is not None :
-		# 	the_supervisor.last_name = last_name
-		# if email is not None :
-		# 	the_supervisor.email = email
-		# code = 1
-		# if is_admin is not None :
-		# 	if is_admin != 'false' and is_admin != 'False':
-		# 		the_supervisor.tipo = InfoUser.ADMINISTRADOR
-		# 		code = 1.1
-		# 	else:
-		# 		the_supervisor.tipo = InfoUser.SUPERVISOR
+		the_userprov = InfoProv.objects.get(pk=id_user)
+		if email is not None :
+			the_userprov.email = email
+		if imei is not None :
+			the_userprov.imei = imei
+		if provider is not None :
+			the_userprov.empresa = int(provider)
+		if first_name is not None :
+			the_userprov.first_name = first_name
+		if last_name is not None :
+			the_userprov.last_name = last_name
+		if phone is not None :
+			the_userprov.telefono = phone
 
 		# the_supervisor.save()
 
@@ -76,11 +82,11 @@ def user_edit(request, id_user):
 			'code' : 1,
 			'msg' : "Bien"
 		})
-	# except InfoUser.DoesNotExist:
-	# 	data = simplejson.dumps({
-	# 		'code' : 0,
-	# 		'msg' : "No existe el usuario"
-	# 	})
+	except InfoProv.DoesNotExist:
+		data = simplejson.dumps({
+			'code' : 0,
+			'msg' : "No existe el usuario"
+		})
 	except:
 		data = simplejson.dumps({
 			'code' : 0,
@@ -92,13 +98,13 @@ def user_edit(request, id_user):
 def user_delete(request):
 	try:
 		# TODO Borrar Supervisor
-		# the_supervisor = InfoUser.objects.get(pk=id_supervisor)
-		# the_supervisor.delete()
+		the_userprov = InfoProv.objects.get(pk=id_supervisor)
+		the_userprov.delete()
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Borrado"
 		})
-	except InfoUser.DoesNotExist:
+	except InfoProv.DoesNotExist:
 		data = simplejson.dumps({
 			'code' : 0,
 			'msg' : "No existe el usuario"
@@ -107,9 +113,23 @@ def user_delete(request):
 
 @dec_magic(method='GET', admin_required=False)
 def user(request, id_user):
+	the_userprov = get_object_or_404(InfoProv, pk=id_user)
+	try:
+		actividades = Actividad.objects.all().order_by('-fecha')
+		last_act = actividades.latest('fecha')
+	except Actividad.DoesNotExist:
+		pass
+
 	return render(request, 'mostrardatos.html')
 
 @dec_magic(method='GET', admin_required=False)
 def supervision(request):
-
+	usersprov = InfoProv.objects.all().select_related('empresa')
+	actividades = Actividad.objects.all().select_related('sitio', 'infoprov')
+	for user in usersprov:
+		try:
+			last_act = actividades.filter(infoprov=user).latest('fecha')
+			# TODO agregar last_act al json
+		except :
+			pass
 	return render(request, 'Supervision.html')

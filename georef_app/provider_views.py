@@ -12,6 +12,7 @@ def providers(request):
 	mProviders = Empresa.objects.all().select_related().order_by('nombre')
 	mSites = Sitio.objects.all().select_related()
 	mRegions = Region.objects.all().values()
+	mAllUsers = InfoProv.objects.all()
 	# print simplejson.dumps(list(mSites.values()))
 	for site in mSites:
 		mSiteProvs = mProviders.filter(region=site.region).values('pk')
@@ -21,7 +22,7 @@ def providers(request):
 			'provs':list(mSiteProvs)
 			})
 	for prov in mProviders:
-		nusers = InfoProv.objects.filter(empresa=prov).count()
+		nusers = mAllUsers.filter(empresa=prov).count()
 		# sites = Sitio.objects.filter(region=prov.region).values('pk', 'nombre')
 		providers.append({
 			'id':prov.id,
@@ -70,7 +71,7 @@ def provider_edit(request, id_provider):
 		if name is not None :
 			the_provider.nombre = name
 		if id_region is not None :
-			the_provider.region_id = id_region
+			the_provider.region_id = int(id_region)
 
 		the_provider.save()
 
