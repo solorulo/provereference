@@ -22,6 +22,9 @@ function abrirSupervisor(i, id){
 }
 
 function cerrar(selector) {
+	if (!document.querySelector(selector)) {
+		return;
+	}
 	document.querySelector(selector).style.webkitTransition = ".4s transform ease-in 0s";
 	document.querySelector(selector).style.webkitTransform = "scale(0)";
 	document.querySelector(selector).style.msTransition = ".4s transform ease-in 0s";
@@ -34,10 +37,10 @@ function cerrar(selector) {
 		inputs[i].value = '';
 	};
 	// TODO Limpiar los select
-	// var inputs = document.querySelectorAll(selector+" input[type=\"text\"]");
-	// for (var i = inputs.length - 1; i >= 0; i--) {
-	// 	inputs[i].value = '';
-	// };
+	var select = document.querySelectorAll(selector+" select");
+	for (var i = select.length - 1; i >= 0; i--) {
+		select[i].selectedIndex = 0;
+	};
 	if ((/^\/administradores/i).test(document.location.pathname)){
 		document.querySelector(selector+" input[type=\"checkbox\"]").checked = true;
 	} else if((/^\/supervisores/i).test(document.location.pathname)){
@@ -84,6 +87,14 @@ function cerrar3(){
 	cerrar("#popup4");
 
 };
+
+function cerrarTodo() {
+	cerrar0();
+	cerrar1();
+	cerrar2();
+	cerrar3();
+}
+
 function activo(){
 	document.querySelector("#popadministrador img").style.webkitTransform = "rotate(180deg)";
 	document.querySelector("#popadministrador img").style.msTransform = "rotate(180deg)";
@@ -114,7 +125,7 @@ function getCookie(name) {
 	return cookieValue;
 };
 
-function Bridge(i, id, nombre, datos){
+function Bridge(i, id, nombre, datos, func){
 	this.create = function(event){
 		event.preventDefault();
 		var postdata = jQuery.extend({}, datos);
@@ -124,19 +135,24 @@ function Bridge(i, id, nombre, datos){
 			var code = response.code;
 			// alert(code);
 			if (code == 1) {
-				datos.id = response.user_id;
-				data.push(datos);
-				dataSort();
-				dataFormat('');
+				if (!func){
+					datos.id = response.user_id;
+					data.push(datos);
+					dataSort();
+					dataFormat('');
+				}else{
+					func(response);
+				}
 			}
 			else {
 				$("#dialogError").dialog("open");
 			}
+			cerrarTodo();
+			return true;
 		}).fail(function() {
 			$("#dialogError").dialog("open");
 		});
-		cerrar1();
-		// TODO Función generica que cierre y limpie los formularios.
+		return false;
 	};
 	this.save = function(event){
 		event.preventDefault();
@@ -159,10 +175,11 @@ function Bridge(i, id, nombre, datos){
 			else {
 				$("#dialogError").dialog("open");
 			}
+			cerrarTodo();
+			return true;
 		}).fail(function() {
 			$("#dialogError").dialog("open");
 		});
-		cerrar0();
 		return false;
 	};
 	this.delete = function(){
@@ -181,10 +198,11 @@ function Bridge(i, id, nombre, datos){
 			else {
 				$("#dialogError").dialog("open");
 			}
+			cerrarTodo();
+			return true;
 		}).fail(function() {
 			$("#dialogError").dialog("open");
 		});
-		cerrar0();
 		return false;
 	};
 };
@@ -269,13 +287,33 @@ function proveedor(i, id){
 	this.create = function(event){
 		var name = $("#popup3 input.textinfo").val();
 		var selected = document.querySelector("#popup3 .optionRegion").selectedIndex;
+		if (selected == 0) {
+			return;
+		}
+		var region = all_data.regiones[selected-1].id;
+		var postdata = {
+			'name':name,
+			'region':region
+		}
 
-		console.log(name, selected);
+		function responseFomat(response){
+			console.log("Estoy usando mi función personalizada.");
+			var provider = {
+				'id':response.provider_id,
+				'name':name,
+				'nusers':0,
+				'reg':all_data.regiones[selected-1].nombre
+			}
+			all_data.providers.push(provider);
+			dataSort();
+			dataFormat('');
+		};
+		(new Bridge(i, id, "proveedores", postdata, responseFomat)).create(event);
 	};
 	this.save = function(event){
-
+		(new Bridge(i, id, "proveedores", postdata)).create(event);
 	};
-	this.delete = function(event){
+	this.delete = function(){
 		(new Bridge(i, id, "proveedores")).delete();
 	};
 }

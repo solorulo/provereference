@@ -119,4 +119,16 @@ $(document).ready(function(event){
 	var oldOptionSitio = document.querySelector(".optionSitio");
 	oldOptionSitio.parentNode.replaceChild(optionSitio, oldOptionSitio);
 	document.querySelector("#optionSitio").onchange = function(event){dataFormat(inputDOM.value);};
+
+	dataSort = function(){
+		all_data.providers.sort(function(a, b){
+			if (a.name < b.name){
+				return -1;
+			}
+			if (a.name > b.name){
+				return 1;
+			}
+			return 0;
+		});
+	};
 });
