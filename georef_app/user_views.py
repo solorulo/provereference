@@ -12,9 +12,27 @@ from provereference.settings import API_KEY
 # Create your views here.
 @dec_magic(method='GET', admin_required=True)
 def users(request, format):
+	_json = {}
+	# providers = []
+	# sites_provs = []
+	# mSites = Sitio.objects.all().select_related()
+	# mRegions = Region.objects.all().values()
+	# mAllUsers = InfoProv.objects.all()
+	# # print simplejson.dumps(list(mSites.values()))
+	# for site in mSites:
+	# 	mSiteProvs = mProviders.filter(region=site.region).values('pk')
+	# 	sites_provs.append({
+	# 		'id':site.id,
+	# 		'name':site.nombre,
+	# 		'provs':list(mSiteProvs)
+	# 		})
+	# _json["providers"] = providers
+	# _json["sites"] = sites_provs
+	# _json["regiones"] = list(mRegions)
+	data = simplejson.dumps(_json)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
-	return render(request, 'usuarios.html', {"data":data})
+	return render(request, 'proveedor.html', {"data":data})
 
 @dec_magic(method='POST', required_args=['email', 'imei', 'provider'], admin_required=True, json_res=True)
 def user_new(request):
