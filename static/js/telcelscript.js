@@ -125,7 +125,7 @@ function getCookie(name) {
 	return cookieValue;
 };
 
-function Bridge(i, id, nombre, datos, func){
+function Bridge(i, id, nombre, datos){
 	this.create = function(event){
 		event.preventDefault();
 		var postdata = jQuery.extend({}, datos);
@@ -135,14 +135,10 @@ function Bridge(i, id, nombre, datos, func){
 			var code = response.code;
 			// alert(code);
 			if (code == 1) {
-				if (!func){
-					datos.id = response.user_id;
-					data.push(datos);
-					dataSort();
+				$.getJSON("json", function(json){
+					data = json;
 					dataFormat('');
-				}else{
-					func(response);
-				}
+				});
 			}
 			else {
 				$("#dialogError").dialog("open");
@@ -162,15 +158,11 @@ function Bridge(i, id, nombre, datos, func){
 			// eval('var _jsonData = '+response);
 			var code = response.code;
 			// alert(response["code"]);
-			if(code == '1'){
-				datos.id = id;
-				data.splice(i, 1, datos);
-				dataSort();
-				dataFormat('');
-			}
-			else if (code == '1.1') {
-				data.splice(i, 1);
-				dataFormat('');
+			if(code == '1' || code == '1.1'){
+				$.getJSON("json", function(json){
+					data = json;
+					dataFormat('');
+				});
 			}
 			else {
 				$("#dialogError").dialog("open");
@@ -192,8 +184,10 @@ function Bridge(i, id, nombre, datos, func){
 			var code = response.code;
 			// alert(code);
 			if(code == '1'){
-				data.splice(i, 1);
-				dataFormat('');
+				$.getJSON("json", function(json){
+					data = json;
+					dataFormat('');
+				});
 			}
 			else {
 				$("#dialogError").dialog("open");
@@ -235,7 +229,7 @@ function admin(i, id){
 			'last_name':last_name,
 			'is_admin':is_admin,
 			'tel':''
-		}
+		};
 		(new Bridge(i, id, "administradores", postdata)).save(event);
 	}
 	this.delete = function(){
@@ -290,25 +284,12 @@ function proveedor(i, id){
 		if (selected == 0) {
 			return;
 		}
-		var region = all_data.regiones[selected-1].id;
+		var region = data.regiones[selected-1].id;
 		var postdata = {
 			'name':name,
 			'region':region
-		}
-
-		function responseFomat(response){
-			console.log("Estoy usando mi función personalizada.");
-			var provider = {
-				'id':response.provider_id,
-				'name':name,
-				'nusers':0,
-				'reg':all_data.regiones[selected-1].nombre
-			}
-			all_data.providers.push(provider);
-			dataSort();
-			dataFormat('');
 		};
-		(new Bridge(i, id, "proveedores", postdata, responseFomat)).create(event);
+		(new Bridge(i, id, "proveedores", postdata)).create(event);
 	};
 	this.save = function(event){
 		(new Bridge(i, id, "proveedores", postdata)).create(event);
@@ -319,6 +300,7 @@ function proveedor(i, id){
 }
 
 function dataSort(){
+	// TODO AJAX JSON del servidor.
 	data.sort(function(a, b){
 		if (a.first_name < b.first_name){
 			return -1;

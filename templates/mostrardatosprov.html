@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
 	<script src="/static/js/telcelscript.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		eval('var all_data = {{ data|escape|safe }}')
+		eval('var data = {{ data|escape|safe }}')
 	</script>
 </head>
 <body  > 
@@ -137,9 +137,33 @@
 
 			</div>
 		</div>
-	
+	<div id="popup4" class="pop">
+		<div id="popsuperior"> <img src="/static/imagenes/Supervisar/usuario.png"> Proveedores > Editar <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
+		<div id="gradiant"></div>
+		<div id="popcontenido">
+			<div id="poplateral" class="poplateral3">
+				<ul id="popul">
+					<li>Nombre</li>
+					<div id="linea1"></div>
+					<li>Región</li>
+				</ul>
+
+
+			</div>
+			<div id="popinfo" class="popinfo3">
+				<div><input type="text" class="textinfo">
+				<select class="textinfo optionRegion">
+					<option selected> Select Box </option>
+					<option>Short Option</option>
+					<option>This Is A Longer Option</option>
+				</select> </div>
+
+				 <button id="beliminar">Eliminar</button><button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrar2()">Cancelar</button>
+			</div>
+		</div>
+	</div>
 	<div id="popup1" class="pop">
-		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Administrador > Editar <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
+		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Usuario > Editar <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
 		<div id="gradiant"></div>
 		<div id="popcontenido">
 			<div id="poplateral">
@@ -166,7 +190,7 @@
 		</div>
 	</div>
 	<div id="popup2" class="pop">
-		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Administrador > Nuevo <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
+		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Usuario > Nuevo <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
 		<div id="gradiant"></div>
 		<div id="popcontenido">
 			<div id="poplateral">

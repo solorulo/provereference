@@ -3,25 +3,25 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 	emptyNode.setAttribute("id", "iabc");
 	document.querySelector("#derecha").replaceChild(emptyNode, element);
 
-	for (var i = 0; i < all_data.providers.length; i++) {
+	for (var i = 0; i < data.providers.length; i++) {
 		if (query != '' && !(
-			reg.test((all_data.providers[i].name).toLowerCase().replace(/[\s-]/g, '')) || 
-			reg.test((all_data.providers[i].reg).toLowerCase().replace(/[\s-]/g, ''))
+			reg.test((data.providers[i].name).toLowerCase().replace(/[\s-]/g, '')) || 
+			reg.test((data.providers[i].reg).toLowerCase().replace(/[\s-]/g, ''))
 			)) {
 			continue;
 		}
 
 		if(document.querySelector("#optionRegion").selectedIndex != 0){
-			var r = all_data.regiones[document.querySelector("#optionRegion").selectedIndex-1];
-			if("Región "+r.nombre != all_data.providers[i].reg){
+			var r = data.regiones[document.querySelector("#optionRegion").selectedIndex-1];
+			if("Región "+r.nombre != data.providers[i].reg){
 				continue;
 			}
 		}
 		if(document.querySelector("#optionSitio").selectedIndex != 0){
-			var s = all_data.sites[document.querySelector("#optionSitio").selectedIndex-1];
+			var s = data.sites[document.querySelector("#optionSitio").selectedIndex-1];
 			var result = false;
 			for (var e = 0; e < s.provs.length; e++) {
-				if (s.provs[e].pk == all_data.providers[i].id){
+				if (s.provs[e].pk == data.providers[i].id){
 					result = true;
 				}
 			};
@@ -30,8 +30,8 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 			}
 		}
 
-		if (lastLetter != all_data.providers[i].name[0].toUpperCase()){
-			lastLetter = all_data.providers[i].name[0].toUpperCase();
+		if (lastLetter != data.providers[i].name[0].toUpperCase()){
+			lastLetter = data.providers[i].name[0].toUpperCase();
 			var letra = document.createElement("div");
 			letra.setAttribute("class", "abc");
 			var letraText = document.createTextNode(lastLetter);
@@ -43,20 +43,20 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var nombre = document.createElement("div");
 		var info = document.createElement("div");
 		
-		var nombreTxtNode = document.createTextNode(all_data.providers[i].name);
-		if (all_data.providers[i].nusers == 1){
+		var nombreTxtNode = document.createTextNode(data.providers[i].name);
+		if (data.providers[i].nusers == 1){
 			nusersSuffix = " Usuario";
 		} else {
 			nusersSuffix = " Usuarios";
 		}
-		var usuartiosTxtNode = document.createTextNode(all_data.providers[i].nusers + nusersSuffix);
-		var regionTxtNode = document.createTextNode(all_data.providers[i].reg);
+		var usuartiosTxtNode = document.createTextNode(data.providers[i].nusers + nusersSuffix);
+		var regionTxtNode = document.createTextNode(data.providers[i].reg);
 		
 		contenedor.setAttribute("class", "contenedor");
-		contenedor.setAttribute("id", all_data.providers[i].id);
+		contenedor.setAttribute("id", data.providers[i].id);
 		nombre.setAttribute("class", "nombre");
 		// TODO Link a los detalles
-		nombre.onclick = (new proveedor(i, all_data.providers[i].id)).open;
+		nombre.onclick = (new proveedor(i, data.providers[i].id)).open;
 		info.setAttribute("class", "info");
 
 		nombre.appendChild(nombreTxtNode);
@@ -82,8 +82,8 @@ $(document).ready(function(event){
 	var firstOption = document.createElement("option");
 	firstOption.appendChild(document.createTextNode("---"));
 	optionRegion.appendChild(firstOption);
-	for (var i = 0; i < all_data.regiones.length; i++) {
-		var optionText = all_data.regiones[i].nombre;
+	for (var i = 0; i < data.regiones.length; i++) {
+		var optionText = data.regiones[i].nombre;
 		var optionTextNode = document.createTextNode(optionText);
 		var option = document.createElement("option");
 		option.appendChild(optionTextNode);
@@ -109,8 +109,8 @@ $(document).ready(function(event){
 	firstOption = document.createElement("option");
 	firstOption.appendChild(document.createTextNode("---"));
 	optionSitio.appendChild(firstOption);
-	for (var i = 0; i < all_data.sites.length; i++) {
-		var optionText = all_data.sites[i].name;
+	for (var i = 0; i < data.sites.length; i++) {
+		var optionText = data.sites[i].name;
 		var optionTextNode = document.createTextNode(optionText);
 		var option = document.createElement("option");
 		option.appendChild(optionTextNode);
@@ -121,7 +121,7 @@ $(document).ready(function(event){
 	document.querySelector("#optionSitio").onchange = function(event){dataFormat(inputDOM.value);};
 
 	dataSort = function(){
-		all_data.providers.sort(function(a, b){
+		data.providers.sort(function(a, b){
 			if (a.name < b.name){
 				return -1;
 			}
