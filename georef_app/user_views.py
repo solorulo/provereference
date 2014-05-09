@@ -32,7 +32,7 @@ def users(request, format):
 	data = simplejson.dumps(_json)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
-	return render(request, 'proveedor.html', {"data":data})
+	return render(request, 'usuarios.html', {"data":data})
 
 @dec_magic(method='POST', required_args=['email', 'imei', 'provider'], admin_required=True, json_res=True)
 def user_new(request):
