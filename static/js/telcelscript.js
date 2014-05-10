@@ -335,7 +335,9 @@ function dataFormat(query){
 		// Importar adminDataFormat.js
 		innerDataFormat(element, lastLetter, query, reg, usr);
 	} else if((/^\/proveedores/i).test(document.location.pathname)){
-		// Importar proveedorDataFormat.js
+		// Importar proveedoresDataFormat.js
+		innerDataFormat(element, lastLetter, query, reg, usr);
+	} else if((/^\/proveedor/i).test(document.location.pathname)){
 		innerDataFormat(element, lastLetter, query, reg, usr);
 	} else {
 		return;

@@ -75,6 +75,7 @@ $(document).ready(function(event){
 	/*
 		SELECT OPTION REGIONES
 	*/
+
 	var optionRegion = document.createElement("select");
 	optionRegion.setAttribute("class", "optionRegion");
 	optionRegion.setAttribute("style", "display:block;");
@@ -102,6 +103,7 @@ $(document).ready(function(event){
 	/*
 		SELECT OPTION SITIOS
 	*/
+
 	var optionSitio = document.createElement("select");
 	optionSitio.setAttribute("id", "optionSitio");
 	optionSitio.setAttribute("style", "display:block;");
@@ -119,6 +121,10 @@ $(document).ready(function(event){
 	var oldOptionSitio = document.querySelector(".optionSitio");
 	oldOptionSitio.parentNode.replaceChild(optionSitio, oldOptionSitio);
 	document.querySelector("#optionSitio").onchange = function(event){dataFormat(inputDOM.value);};
+
+	/*
+		FUNCIÓN SOBRESCRITA PARA REORDENAR
+	*/
 
 	dataSort = function(){
 		data.providers.sort(function(a, b){
