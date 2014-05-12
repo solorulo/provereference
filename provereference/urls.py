@@ -72,6 +72,8 @@ urlpatterns += patterns('georef_app.sites_views',
 urlpatterns += patterns('georef_app.api',
 	# Examples:
 	url(r'^api/log/$', 'api_log', name='api_log'),
+	url(r'^api/login/$', 'login', name='api_login'),
+	url(r'^api/logout/$', 'logout', name='api_logout'),
 	# url(r'^sitios/$', 'sites', name='sites'),
 )
 

@@ -1,9 +1,11 @@
 from georef_app.models import *
 from provereference.settings import DEBUG, API_KEY
 from functools import wraps
+from django.contrib.sessions.models import Session
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
+import datetime
 
 def response(msg, code=0, data=None):
 	"""Simple example response generator"""
@@ -119,19 +121,23 @@ def dec_magic_api(method='POST', required_args=[], login_required=True):
 					return response('method-post')
 				arg_box = request.POST
 			if login_required :
-				token = request.META.get('X_GEOREF_TOKEN', None)
-				api_key = request.META.get('X_GEOREF_API_KEY', None)
+				# print request.META
+				token = request.META.get('HTTP_X_GEOREF_TOKEN', None)
+				api_key = request.META.get('HTTP_X_GEOREF_API_KEY', None)
 				if not token:
 					return response("missing token")
+				if not api_key:
+					return response("missing api key")
+				if api_key != API_KEY:
+					return response("invalid api key")
 				try:
-					session = fetch_token(arg_box['token'])
-					if datetime.datetime.now().date() > session.expire_date :
+					session = fetch_token(token)
+					if datetime.datetime.now().date() > session.expire_date.date() :
 						session.delete()
 						return response("token has expired")
 					args += (session,)
 				except Session.DoesNotExist:
 					return response("invalid token")
-
 
 			# For each required argument:
 			for name in required_args:
@@ -141,7 +147,6 @@ def dec_magic_api(method='POST', required_args=[], login_required=True):
 
 			# Call function with new arguments and return the function's return, or a default 'ok'
 			r = func(request, *args, **kwargs)
-			print args
 			return r if r else response('ok')
 		return new_f
 	return check_args
