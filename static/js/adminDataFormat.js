@@ -25,7 +25,6 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 			document.querySelector("#iabc").appendChild(letra);
 		}
 
-
 		var contenedor = document.createElement("div");
 		var nombre = document.createElement("div");
 		var conf = document.createElement("div");
@@ -43,8 +42,8 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		contenedor.setAttribute("id", data[i].id);
 		nombre.setAttribute("class", "nombre");
 		conf.setAttribute("class", "conf");
-		conf.onclick = (new usr(i, data[i].id)).open;
-		img.setAttribute("src", "../static/imagenes/Supervisar/configurar.png");
+		conf.onclick = (new admin(i, data[i].id)).open;
+		img.setAttribute("src", "/static/imagenes/Supervisar/configurar.png");
 		info.setAttribute("class", "info");
 
 		conf.appendChild(confTextNode);
