@@ -4,7 +4,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 	document.querySelector("#derecha").replaceChild(emptyNode, element);
 
 	for (var i = 0; i < data.length; i++) {
-		if (data[i].name == null){
+		if (!data[i].name){
 			data[i].name = data[i].first_name + " " + data[i].last_name;
 		}
 		if (query != '' && !(

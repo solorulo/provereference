@@ -353,6 +353,8 @@ function dataFormat(query){
 		innerDataFormat(element, lastLetter, query, reg, usr);
 	} else if((/^\/proveedor/i).test(document.location.pathname)){
 		innerDataFormat(element, lastLetter, query, reg, usr);
+	} else if((/^\/usuarios/i).test(document.location.pathname)){
+		innerDataFormat(element, lastLetter, query, reg, usr);
 	} else {
 		return;
 	}

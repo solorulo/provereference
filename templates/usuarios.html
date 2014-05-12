@@ -10,17 +10,17 @@
 	<script type="text/javascript" src="/static/js/userDataFormat.js"></script>
 	<script type="text/javascript" src="/static/js/telcelscript.js"></script>
 	<script type="text/javascript">
-		eval('var data = {{ data|escape|safe }}')
+	eval('var data = {{ data|escape|safe }}');
 	</script>
 </head>
-<body  > 
-	<header >
+<body> 
+	<header>
 		<a name="inicio1"> </a>
 		<div class="principal">
 			<nav id="superior">
-				<ul >
+				<ul>
 					{% if is_admin %}
-						<li id="s1" class="iconosuperior"><img src="/static/imagenes/Supervisar/administrar.png" border="0"><a href="/administradores">Administrar </a></li>
+					<li id="s1" class="iconosuperior"><img src="/static/imagenes/Supervisar/administrar.png" border="0"><a href="/administradores">Administrar </a></li>
 					{% endif %}
 					<li id="s2" class="iconosuperior"><img src="/static/imagenes/Supervisar/supervisor_big.png" border="0"><a href="/supervision">Supervisión</a></li>
 					<li id="s3" class="iconosuperior"><img src="/static/imagenes/Supervisar/usuario.png" border="0">Usuario</li>
@@ -29,46 +29,38 @@
 			</nav>
 		</div>
 	</header>
-	
-
 	<div id="gradiant"></div>
 	<div id="cuerpo">
 		<div id="izquierda1" class="interior">
 			<li id="administrador"> Usuarios <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
-
-
 			<li id="nuevo" onclick="abrir2()"><div id="linea1"></div></br><dd>Nuevo Usuario <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
 			<li id="nuevo"></br></br><dd>Región 
-	  	<select style="display:block;">
-        <option selected> Select Box </option>
-        <option>Short Option</option>
-        <option>This Is A Longer Option</option>
-    	</select> 
-    	<div id="linea2"></div>
-    		</li>
-    		<li id="nuevo"></br></br><dd>Sitio
-	  	<select style="display:block;">
-        <option selected> Todos </option>
-        <option>Short Option</option>
-        <option>This Is A Longer Option</option>
-    	</select> 
-    	
-    		</li>
+				<select id="optionRegion" class="optionRegion" style="display:block;">
+					<option selected> Select Box </option>
+					<option>Short Option</option>
+					<option>This Is A Longer Option</option>
+				</select> 
+				<div id="linea2"></div>
+			</li>
+			<li id="nuevo"></br></br><dd>Sitio
+				<select id="optionSitio" class="optionSitio" style="display:block;">
+					<option selected> Todos </option>
+					<option>Short Option</option>
+					<option>This Is A Longer Option</option>
+				</select> 
 
-
-
+			</li>
 			<ul id="lateral">
-			<li ><a href="/administradores">Administradores</a></li>
+				<li ><a href="/administradores">Administradores</a></li>
 				<li ><a href="/supervisores">Supervisores</a></li>
 				<li><a href="/proveedores">Proveedores</a></li>
 				<li><a href="/sitios">Sitios</a></li>
 			</ul>
 		</div>
 		<div id="derecha" class="interior">
-		<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 	
+			<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 	
 			<a name="inicio"> </a>
 			<div id="busqueda"> Tu busqueda : <input type="text" size="15"></div>
-			
 			<div id="iabc">
 				<div id="abc">A</div>
 				<div id="contenedor">
@@ -136,10 +128,7 @@
 				<div id="contenedor">
 					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir3()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png" ></div></div>
 					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
-					
-
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -159,8 +148,6 @@
 					<div id="linea1"></div>
 					<li>Proveedor</li>
 				</ul>
-
-
 			</div>
 			<div id="popinfo" class="popinfo3">
 				<input type="text" class="textinfo">
@@ -168,11 +155,11 @@
 
 				<input type="text" class="textinfo">
 				<input type="text" class="textinfo">
-				<select class="textinfo">
-        <option selected> Select Box </option>
-        <option>Short Option</option>
-        <option>This Is A Longer Option</option>
-    	</select> 
+				<select class="textinfo selectProvider">
+					<option selected> Select Box </option>
+					<option>Short Option</option>
+					<option>This Is A Longer Option</option>
+				</select> 
 				<button id="beliminar">Eliminar</button> <button id="bazul">Guardar</button><button id="bblanco" onclick="cerrar3()">Cancelar</button>
 			</div>
 		</div>
@@ -193,32 +180,20 @@
 					<div id="linea1"></div>
 					<li>Proveedor</li>
 				</ul>
-
-
 			</div>
 			<div id="popinfo" class="popinfo3">
 				<input type="text" class="textinfo">
 				<input type="text" class="textinfo">
-
 				<input type="text" class="textinfo">
 				<input type="text" class="textinfo">
-				<select class="textinfo">
-        <option selected> Select Box </option>
-        <option>Short Option</option>
-        <option>This Is A Longer Option</option>
-    	</select> 
-
-				 <button id="bazul">Crear</button><button id="bblanco" onclick="cerrar2()">Cancelar</button>
+				<select class="textinfo selectProvider">
+					<option selected> Select Box </option>
+					<option>Short Option</option>
+					<option>This Is A Longer Option</option>
+				</select> 
+				<button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrar1(); return false;">Cancelar</button>
 			</div>
 		</div>
 	</div>
-
 </body>
-
-
-
-
-
-
-
 </html>
