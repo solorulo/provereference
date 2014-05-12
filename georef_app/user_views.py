@@ -13,22 +13,27 @@ from provereference.settings import API_KEY
 @dec_magic(method='GET', admin_required=True)
 def users(request, format):
 	_json = {}
-	# providers = []
 	# sites_provs = []
 	# mSites = Sitio.objects.all().select_related()
-	# mRegions = Region.objects.all().values()
-	# mAllUsers = InfoProv.objects.all()
-	# # print simplejson.dumps(list(mSites.values()))
-	# for site in mSites:
-	# 	mSiteProvs = mProviders.filter(region=site.region).values('pk')
-	# 	sites_provs.append({
-	# 		'id':site.id,
-	# 		'name':site.nombre,
-	# 		'provs':list(mSiteProvs)
-	# 		})
-	# _json["providers"] = providers
-	# _json["sites"] = sites_provs
-	# _json["regiones"] = list(mRegions)
+	mRegions = Region.objects.all().select_related()
+	mAllUsers = InfoProv.objects.all()
+	mSites = Sitio.objects.all().select_related()
+	regiones = []
+
+	for region in mRegions:
+		_jsonreg = {}
+		region_users = mAllUsers.filter(empresa__region=region.pk).values('pk')
+		region_sites = mSites.filter(region=region.pk).values('pk')
+		_jsonreg['pk'] = region.pk
+		_jsonreg['name'] = region.nombre
+		_jsonreg['users'] = list(region_users)
+		_jsonreg['sites'] = list(region_sites)
+		regiones.append(_jsonreg)
+
+	# print simplejson.dumps(list(mSites.values()))
+	_json["users"] = list(mAllUsers.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei'))
+	_json["sites"] = list(mSites.values('pk', 'nombre'))
+	_json["regiones"] = regiones
 	data = simplejson.dumps(_json)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
@@ -133,27 +138,74 @@ def user_delete(request):
 
 @dec_magic(method='GET', admin_required=False)
 def user(request, id_user, format):
+	_json = {}
 	the_userprov = get_object_or_404(InfoProv, pk=id_user)
 	try:
-		actividades = Actividad.objects.all().order_by('-fecha')
+		actividades = Actividad.objects.filter(infoprov_id=id_user).order_by('-fecha').select_related()
+		_json['activity'] = list(actividades.values('fecha', 'tipo_evento', 'lat', 'lng', 'margen_error', 'sitio__nombre'))
 		last_act = actividades.latest('fecha')
+		_json['last_act'] = {
+			'date':last_act.fecha,
+			'site':last_act.sitio.nombre,
+		}
 	except Actividad.DoesNotExist:
 		pass
-
+	_json['first_name'] = the_userprov.first_name
+	_json['last_name'] = the_userprov.last_name
+	_json['phone'] = the_userprov.telefono
+	_json['imei'] = the_userprov.imei
+	_json['provider'] = the_userprov.empresa.nombre
+	data = simplejson.dumps(_json)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'mostrardatos.html', {"data":data})
 
 @dec_magic(method='GET', admin_required=False)
 def supervision(request, format):
+	_json = {}
 	usersprov = InfoProv.objects.all().select_related('empresa')
+	providers = Empresa.objects.all()
+	regiones = Region.objects.all()
+	sitios = Sitio.objects.all()
 	actividades = Actividad.objects.all().select_related('sitio', 'infoprov')
+	_jsonactivity = {}
+	_jsonregiones = {}
+	_jsonsitios = {}
+	_jsonproviders = {}
+	for region in regiones:
+		_jsonregiones[region.pk] = {
+			'name':region.nombre,
+			'providers':list(providers.filter(region=region).values('pk')),
+			'sites':list(sitios.filter(region=region).values('pk')),
+			'users':list(usersprov.filter(empresa__region=region).values('pk'))
+		}
+	for sitio in sitios:
+		_jsonsitios[sitio.pk] = {
+			'name':sitio.nombre,
+			'users':list(usersprov.filter(actividad__sitio=sitio).values('pk'))
+		}
+	for provider in providers:
+		_jsonproviders[provider.pk] = {
+			'name':provider.nombre,
+			'users':list(usersprov.filter(empresa=provider).values('pk'))
+		}
 	for user in usersprov:
 		try:
 			last_act = actividades.filter(infoprov=user).latest('fecha')
+			_jsonactivity[user.pk] = {
+				'date':last_act.fecha,
+				'site':last_act.sitio.nombre
+			}
 			# TODO agregar last_act al json
 		except :
 			pass
+
+	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei'))
+	_json['activity'] = _jsonactivity
+	_json['provider'] = _jsonproviders
+	_json['site'] = _jsonsitios
+	_json['region'] = _jsonregiones
+	data = simplejson.dumps(_json)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'Supervision.html', {"data":data})
