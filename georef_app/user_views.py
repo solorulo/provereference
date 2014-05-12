@@ -18,6 +18,7 @@ def users(request, format):
 	mRegions = Region.objects.all().select_related()
 	mAllUsers = InfoProv.objects.all()
 	mSites = Sitio.objects.all().select_related()
+	mProviders = Empresa.objects.all()
 	regiones = []
 
 	for region in mRegions:
@@ -31,8 +32,9 @@ def users(request, format):
 		regiones.append(_jsonreg)
 
 	# print simplejson.dumps(list(mSites.values()))
-	_json["users"] = list(mAllUsers.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei'))
+	_json["users"] = list(mAllUsers.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id'))
 	_json["sites"] = list(mSites.values('pk', 'nombre'))
+	_json["providers"] = list(mProviders.values('pk', 'nombre'))
 	_json["regiones"] = regiones
 	data = simplejson.dumps(_json)
 	if format:
