@@ -298,6 +298,20 @@ function proveedor(i, id){
 		(new Bridge(i, id, "proveedores")).delete();
 	};
 }
+function user(i, id){
+	this.open = function(){
+
+	}
+	this.create = function(event){
+
+	}
+	this.save = function(event){
+
+	}
+	this.delete = function(){
+
+	}
+}
 
 function dataSort(){
 	// TODO AJAX JSON del servidor.

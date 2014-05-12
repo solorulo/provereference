@@ -1,27 +1,28 @@
 function innerDataFormat (element, lastLetter, query, reg, usr) {
 	emptyNode = document.createElement('div');
 	emptyNode.setAttribute("id", "iabc");
-	document.querySelector("#derecha").replaceChild(emptyNode, element);
+	document.querySelector("#iabc").parentNode.replaceChild(emptyNode, element);
 
-	for (var i = 0; i < data.providers.length; i++) {
+	for (var i = 0; i < data.users.length; i++) {
+		// Creando el campo nombre, si no lo tienen
+		if (!data.users[i].name){
+			data.users[i].name = data.users[i].first_name + " " + data.users[i].last_name;
+		}
+
 		if (query != '' && !(
-			reg.test((data.providers[i].name).toLowerCase().replace(/[\s-]/g, '')) || 
-			reg.test((data.providers[i].reg).toLowerCase().replace(/[\s-]/g, ''))
+			reg.test((data.users[i].name).toLowerCase().replace(/[\s-]/g, '')) || 
+			reg.test((data.users[i].imei).toLowerCase().replace(/[\s-]/g, '')) || 
+			reg.test((data.users[i].telefono).toLowerCase().replace(/[\s-]/g, '')) || 
+			reg.test((data.users[i].email).toLowerCase().replace(/[\s-]/g, ''))
 			)) {
 			continue;
 		}
 
-		if(document.querySelector("#optionRegion").selectedIndex != 0){
-			var r = data.regiones[document.querySelector("#optionRegion").selectedIndex-1];
-			if("Región "+r.nombre != data.providers[i].reg){
-				continue;
-			}
-		}
 		if(document.querySelector("#optionSitio").selectedIndex != 0){
 			var s = data.sites[document.querySelector("#optionSitio").selectedIndex-1];
 			var result = false;
-			for (var e = 0; e < s.provs.length; e++) {
-				if (s.provs[e].pk == data.providers[i].id){
+			for (var e = 0; e < s.user_ids.length; e++) {
+				if (s.user_ids[e].pk == data.users[i].id){
 					result = true;
 				}
 			};
@@ -30,8 +31,8 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 			}
 		}
 
-		if (lastLetter != data.providers[i].name[0].toUpperCase()){
-			lastLetter = data.providers[i].name[0].toUpperCase();
+		if (lastLetter != data.users[i].name[0].toUpperCase()){
+			lastLetter = data.users[i].name[0].toUpperCase();
 			var letra = document.createElement("div");
 			letra.setAttribute("class", "abc");
 			var letraText = document.createTextNode(lastLetter);
@@ -41,64 +42,63 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 
 		var contenedor = document.createElement("div");
 		var nombre = document.createElement("div");
+		var conf = document.createElement("div");
+		var img = document.createElement("img");
 		var info = document.createElement("div");
 		
-		var nombreTxtNode = document.createTextNode(data.providers[i].name);
-		if (data.providers[i].nusers == 1){
-			nusersSuffix = " Usuario";
-		} else {
-			nusersSuffix = " Usuarios";
-		}
-		var usuartiosTxtNode = document.createTextNode(data.providers[i].nusers + nusersSuffix);
-		var regionTxtNode = document.createTextNode(data.providers[i].reg);
+		var nombreTextNode = document.createTextNode(data.users[i].name);
+		var infoEmail = data.users[i].email;
+		var infoTelefono = data.users[i].telefono;
+		var infoEmailNode = document.createTextNode(infoEmail);
+		var infoTelefonoNode = document.createTextNode(infoTelefono);
+		var confTextNode = document.createTextNode("Editar datos");
 		
 		contenedor.setAttribute("class", "contenedor");
-		contenedor.setAttribute("id", data.providers[i].id);
+		contenedor.setAttribute("id", data.users[i].id);
 		nombre.setAttribute("class", "nombre");
-		// TODO Link a los detalles
-		nombre.onclick = (new proveedor(i, data.providers[i].id)).open;
+		conf.setAttribute("class", "conf");
+		conf.onclick = (new user(i, data.users[i].id)).open;
+		img.setAttribute("src", "/static/imagenes/Supervisar/configurar.png");
 		info.setAttribute("class", "info");
 
-		nombre.appendChild(nombreTxtNode);
-		info.appendChild(usuartiosTxtNode);
+		conf.appendChild(confTextNode);
+		conf.appendChild(img);
+		nombre.appendChild(nombreTextNode);
+		nombre.appendChild(conf);
+		info.appendChild(infoEmailNode);
 		info.appendChild(document.createElement("br"));
-		info.appendChild(regionTxtNode);
+		info.appendChild(infoTelefonoNode);
 		contenedor.appendChild(nombre);
 		contenedor.appendChild(info);
 		document.querySelector("#iabc").appendChild(contenedor);
 	};
+
+	function newTd(text){
+		var textNode = document.createTextNode(text);
+		var doomNode = document.createElement("td");
+		doomNode.appendChild(textNode);
+		return doomNode;
+	}
+	var nombre = newTd(data.provider.name_provider);
+	var region = newTd("Región " + data.provider.name_region);
+	var nusers = newTd(data.provider.n_users + " Usuarios");
+	nombre.setAttribute("colspan", 3);
+	nusers.setAttribute("colspan", 2);
+	nusers.setAttribute("class", "usuariodatos");
+	region.setAttribute("colspan", 2);
+	region.setAttribute("class", "usuariodatos");
+
+	var doom = document.querySelector("#usuario #t1 td");
+	doom.parentNode.replaceChild(nombre, doom);
+
+	doom = document.querySelector("#usuario #t3 .usuariodatos");
+	doom.parentNode.replaceChild(nusers, doom);
+
+	doom = document.querySelector("#usuario #t4 .usuariodatos");
+	doom.parentNode.replaceChild(region, doom);
 };
 
 $(document).ready(function(event){
-	document.querySelector("#b_create").onclick = (new proveedor()).create;
-
-	/*
-		SELECT OPTION REGIONES
-	*/
-
-	var optionRegion = document.createElement("select");
-	optionRegion.setAttribute("class", "optionRegion");
-	optionRegion.setAttribute("style", "display:block;");
-
-	var firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode("---"));
-	optionRegion.appendChild(firstOption);
-	for (var i = 0; i < data.regiones.length; i++) {
-		var optionText = data.regiones[i].nombre;
-		var optionTextNode = document.createTextNode(optionText);
-		var option = document.createElement("option");
-		option.appendChild(optionTextNode);
-		optionRegion.appendChild(option);
-	};
-	var oldOptionsRegion = document.querySelectorAll(".optionRegion");
-	for (var i = oldOptionsRegion.length - 1; i >= 0; i--) {
-		var clone = optionRegion.cloneNode(true);
-		if(oldOptionsRegion[i].hasAttribute("id")){
-			clone.setAttribute("id", "optionRegion");
-		}
-		oldOptionsRegion[i].parentNode.replaceChild(clone, oldOptionsRegion[i]);
-	};
-	document.querySelector("#optionRegion").onchange = function(event){dataFormat(inputDOM.value);};
 
 	/*
 		SELECT OPTION SITIOS
@@ -112,7 +112,7 @@ $(document).ready(function(event){
 	firstOption.appendChild(document.createTextNode("---"));
 	optionSitio.appendChild(firstOption);
 	for (var i = 0; i < data.sites.length; i++) {
-		var optionText = data.sites[i].name;
+		var optionText = data.sites[i].name_site;
 		var optionTextNode = document.createTextNode(optionText);
 		var option = document.createElement("option");
 		option.appendChild(optionTextNode);
