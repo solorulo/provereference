@@ -7,9 +7,10 @@
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/sitiosDataFormat.js" ></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/telcelscript.js" ></script>
 	<script type="text/javascript">
-		var data = eval('{{ data|escape|safe }}')
+		eval('var data = {{ data|escape|safe }}');
 	</script>
 </head>
 <body  > 

@@ -422,7 +422,7 @@ $(document).ready(function() {
 				click: function() {
 					$( this ).dialog( "close" );
 				}
-			},
+			}
 		]
 	});
 	dataFormat('');
