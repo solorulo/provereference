@@ -2,6 +2,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+import math
+
 # Create your models here.
 # class UserProfile (models.Model):
 # 	user = models.ForeignKey(User)
@@ -75,6 +77,12 @@ class Sitio (models.Model):
 	lng = models.FloatField()
 	radio = models.FloatField()
 	region = models.ForeignKey(Region)
+
+	def distance_rel(self, lat, lng):
+		dlon = self.lng - lng
+		dlat = self.lat - lat
+		a = (math.sin(dlat/2))**2 + math.cos(lat) * math.cos(self.lat) * (math.sin(dlon/2))**2 
+		return math.atan2( math.sqrt(a), math.sqrt(1-a) )
 
 	def __unicode__(self):
 		return self.nombre

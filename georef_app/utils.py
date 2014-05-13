@@ -120,16 +120,16 @@ def dec_magic_api(method='POST', required_args=[], login_required=True):
 				if request.method != 'POST':
 					return response('method-post')
 				arg_box = request.POST
+			api_key = request.META.get('HTTP_X_GEOREF_API_KEY', None)
+			if not api_key:
+				return response("missing api key")
+			if api_key != API_KEY:
+				return response("invalid api key")
 			if login_required :
 				# print request.META
 				token = request.META.get('HTTP_X_GEOREF_TOKEN', None)
-				api_key = request.META.get('HTTP_X_GEOREF_API_KEY', None)
 				if not token:
 					return response("missing token")
-				if not api_key:
-					return response("missing api key")
-				if api_key != API_KEY:
-					return response("invalid api key")
 				try:
 					session = fetch_token(token)
 					if datetime.datetime.now().date() > session.expire_date.date() :
