@@ -267,10 +267,10 @@ function supervisor(i, id){
 			'tel':''
 		};
 		(new Bridge(i, id, "supervisores", postdata)).save(event);
-	}
+	};
 	this.delete = function(){
 		(new Bridge(i, id, "supervisores")).delete();
-	}
+	};
 };
 
 function proveedor(i, id){
@@ -292,26 +292,66 @@ function proveedor(i, id){
 		(new Bridge(i, id, "proveedores", postdata)).create(event);
 	};
 	this.save = function(event){
-		(new Bridge(i, id, "proveedores", postdata)).create(event);
+		(new Bridge(i, id, "proveedores", postdata)).save(event);
 	};
 	this.delete = function(){
 		(new Bridge(i, id, "proveedores")).delete();
 	};
-}
-function user(i, id){
+};
+function usuario(i, id){
 	this.open = function(){
-
-	}
+		document.querySelector("#popup4 .textinfo.form_nombre").value = data.users[i].first_name;
+		document.querySelector("#popup4 .textinfo.apellido").value = data.users[i].last_name;
+		document.querySelector("#popup4 .textinfo.email").value = data.users[i].email;
+		document.querySelector("#popup4 .textinfo.telefono").value = data.users[i].telefono;
+		var id_prov = 0;
+		for (var e = 0; e < data.provider.length; e++) {
+			if(data.provider[e].pk == data.users[i].empresa_id){
+				id_prov = e;
+				break;
+			}
+		};
+		document.querySelector("#popup4 .textinfo.selectProvider").selectedIndex = id_prov + 1;
+		document.querySelector("#popup4 #bazul").onclick = (new usuario(i, id)).save;
+		document.querySelector("#popup4 #beliminar").onclick = (new usuario(i, id)).delete;
+		abrir("#popup4");
+	};
 	this.create = function(event){
-
-	}
+		var nombreNode = document.querySelector("#popup3 .textinfo.form_nombre").value;
+		var apellidoNode = document.querySelector("#popup3 .textinfo.apellido").value;
+		var emailNode = document.querySelector("#popup3 .textinfo.email").value;
+		var telefonoNode = document.querySelector("#popup3 .textinfo.telefono").value;
+		var selectNode = document.querySelector("#popup3 .textinfo.selectProvider").selectedIndex-1;
+		var postdata = {
+			'email':emailNode,
+			'imei':telefonoNode,
+			'provider':data.provider[selectNode].pk,
+			'first_name':nombreNode,
+			'last_name':apellidoNode,
+			'phone':telefonoNode
+		};
+		(new Bridge(i, id, "usuarios", postdata)).create(event);
+	};
 	this.save = function(event){
-
-	}
+		var nombreNode = document.querySelector("#popup4 .textinfo.form_nombre").value;
+		var apellidoNode = document.querySelector("#popup4 .textinfo.apellido").value;
+		var emailNode = document.querySelector("#popup4 .textinfo.email").value;
+		var telefonoNode = document.querySelector("#popup4 .textinfo.telefono").value;
+		var selectNode = document.querySelector("#popup4 .textinfo.selectProvider").selectedIndex-1;
+		var postdata = {
+			'email':emailNode,
+			'imei':telefonoNode,
+			'provider':data.provider[selectNode].pk,
+			'first_name':nombreNode,
+			'last_name':apellidoNode,
+			'phone':telefonoNode
+		};
+		(new Bridge(i, id, "usuarios", postdata)).save(event);
+	};
 	this.delete = function(){
-
-	}
-}
+		(new Bridge(i, id, "usuarios")).delete();
+	};
+};
 
 function dataSort(){
 	// TODO AJAX JSON del servidor.

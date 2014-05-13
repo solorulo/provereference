@@ -53,7 +53,6 @@ def users(request, format):
 @dec_magic(method='POST', required_args=['email', 'imei', 'provider'], admin_required=True, json_res=True)
 def user_new(request):
 	try:
-
 		# TODO dar de alta el usuario
 		email = request.POST['email']
 		imei = request.POST['imei']
@@ -71,7 +70,7 @@ def user_new(request):
 			password=password,
 			imei=imei,
 			telefono=phone,
-			empresa=int(provider)
+			empresa=Empresa.objects.get(pk=int(provider))
 			)
 		new_userprov.save()
 
@@ -97,14 +96,13 @@ def user_edit(request, id_user):
 		first_name = request.POST.get('first_name', None)
 		last_name = request.POST.get('last_name', None)
 		phone = request.POST.get('phone', None)
-
 		the_userprov = InfoProv.objects.get(pk=id_user)
 		if email is not None :
 			the_userprov.email = email
 		if imei is not None :
 			the_userprov.imei = imei
 		if provider is not None :
-			the_userprov.empresa = int(provider)
+			the_userprov.empresa = Empresa.objects.get(pk=int(provider))
 		if first_name is not None :
 			the_userprov.first_name = first_name
 		if last_name is not None :
@@ -112,7 +110,7 @@ def user_edit(request, id_user):
 		if phone is not None :
 			the_userprov.telefono = phone
 
-		# the_supervisor.save()
+		the_userprov.save()
 
 		data = simplejson.dumps({
 			'code' : 1,
@@ -131,10 +129,10 @@ def user_edit(request, id_user):
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
 @dec_magic(method='POST', admin_required=True, json_res=True)
-def user_delete(request):
+def user_delete(request, id_user):
 	try:
 		# TODO Borrar Supervisor
-		the_userprov = InfoProv.objects.get(pk=id_supervisor)
+		the_userprov = InfoProv.objects.get(pk=id_user)
 		the_userprov.delete()
 		data = simplejson.dumps({
 			'code' : 1,

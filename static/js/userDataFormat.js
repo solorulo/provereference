@@ -17,22 +17,29 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		}
 
 		if(document.querySelector("#optionRegion").selectedIndex != 0){
-			var r = data.regiones[document.querySelector("#optionRegion").selectedIndex-1];
-			if("Región "+r.nombre != data.providers[i].reg){
-				continue;
-			}
-		}
-		if(document.querySelector("#optionSitio").selectedIndex != 0){
-			var s = data.sites[document.querySelector("#optionSitio").selectedIndex-1];
+			var r = data.region[document.querySelector("#optionRegion").selectedIndex-1];
 			var result = false;
-			for (var e = 0; e < s.provs.length; e++) {
-				if (s.provs[e].pk == data.providers[i].id){
+			for (var n = 0; n < r.users.length; n++) {
+				if(r.users[n].pk == data.users[i].pk){
 					result = true;
 				}
 			};
 			if(!result){
 				continue;
 			}
+		}
+		if(document.querySelector("#optionSitio").selectedIndex != 0){
+			// TODO Relación de Usuarios y sus sitios.
+			/*var s = data.site[document.querySelector("#optionSitio").selectedIndex-1];
+			var result = false;
+			for (var e = 0; e < s.users.length; e++) {
+				if (s.users[e].pk == data.users[i].pk){
+					result = true;
+				}
+			};
+			if(!result){
+				continue;
+			}*/
 		}
 
 		if (lastLetter != data.users[i].name[0].toUpperCase()){
@@ -62,7 +69,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		contenedor.setAttribute("id", data.users[i].id);
 		nombre.setAttribute("class", "nombre");
 		conf.setAttribute("class", "conf");
-		conf.onclick = (new user(i, data.users[i].id)).open;
+		conf.onclick = (new usuario(i, data.users[i].pk)).open;
 		img.setAttribute("src", "/static/imagenes/Supervisar/configurar.png");
 		info.setAttribute("class", "info");
 
@@ -80,7 +87,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 };
 
 $(document).ready(function(event){
-	document.querySelector("#b_create").onclick = (new user()).create;
+	document.querySelector("#b_create").onclick = (new usuario()).create;
 
 	/*
 		SELECT OPTION REGIONES
@@ -91,10 +98,10 @@ $(document).ready(function(event){
 	optionRegion.setAttribute("style", "display:block;");
 
 	var firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode("---"));
+	firstOption.appendChild(document.createTextNode(" TODOS "));
 	optionRegion.appendChild(firstOption);
-	for (var i = 0; i < data.regiones.length; i++) {
-		var optionText = data.regiones[i].name;
+	for (var i = 0; i < data.region.length; i++) {
+		var optionText = data.region[i].name;
 		var optionTextNode = document.createTextNode(optionText);
 		var option = document.createElement("option");
 		option.appendChild(optionTextNode);
@@ -119,10 +126,10 @@ $(document).ready(function(event){
 	optionSitio.setAttribute("style", "display:block;");
 
 	firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode("---"));
+	firstOption.appendChild(document.createTextNode(" TODOS "));
 	optionSitio.appendChild(firstOption);
-	for (var i = 0; i < data.sites.length; i++) {
-		var optionText = data.sites[i].nombre;
+	for (var i = 0; i < data.site.length; i++) {
+		var optionText = data.site[i].name;
 		var optionTextNode = document.createTextNode(optionText);
 		var option = document.createElement("option");
 		option.appendChild(optionTextNode);
@@ -136,20 +143,21 @@ $(document).ready(function(event){
 		SELECT OPTION PROVEEDOR
 	*/
 
-	var optionProvider = document.createElement("selectProvider");
+	var optionProvider = document.createElement("select");
+	optionProvider.setAttribute("class", "textinfo selectProvider");
 	optionProvider.setAttribute("style", "display:block;");
 
 	firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode("---"));
+	firstOption.appendChild(document.createTextNode(" TODOS "));
 	optionProvider.appendChild(firstOption);
-	for (var i = 0; i < data.providers.length; i++) {
-		var optionText = data.providers[i].nombre;
+	for (var i = 0; i < data.provider.length; i++) {
+		var optionText = data.provider[i].name;
 		var optionTextNode = document.createTextNode(optionText);
 		var option = document.createElement("option");
 		option.appendChild(optionTextNode);
 		optionProvider.appendChild(option);
 	};
-	var oldOptionsProvider = document.querySelectorAll(".optionSitio");
+	var oldOptionsProvider = document.querySelectorAll(".selectProvider");
 	for (var i = oldOptionsProvider.length - 1; i >= 0; i--) {
 		var clone = optionProvider.cloneNode(true);
 		oldOptionsProvider[i].parentNode.replaceChild(clone, oldOptionsProvider[i]);
