@@ -5,6 +5,7 @@ from django.core.exceptions import PermissionDenied, SuspiciousOperation
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import simplejson
+from django.views.decorators.csrf import csrf_exempt
 from georef_app.models import InfoUser, InfoProv
 from georef_app.utils import dec_magic_api, response
 
@@ -23,11 +24,13 @@ def api_log(request):
 	context = { 'session':str(s.get_decoded()), 'expire':str(s.expire_date), 'now':str(datetime.datetime.now()) }
 	return response('vientos', 1, context)
 
+@csrf_exempt
 @dec_magic_api(method='POST', required_args=['imei'], login_required=False)
 def login(request):
 	imei = request.POST['imei']
 	try:
 		user_prov = InfoProv.objects.get(imei=imei)
+		request.session['user'] = user_prov
 		request.session['user_id'] = user_prov.pk
 		request.session['imei'] = imei
 		request.session['phone'] = user_prov.telefono
@@ -43,10 +46,11 @@ def login(request):
 	except InfoProv.DoesNotExist:
 		return response('not exist')
 
+@csrf_exempt
 @dec_magic_api(method='POST', required_args=['events'])
-def event(request):
+def event(request, *args, **kwargs):
 	session = args[0]
-	
+	print str(session.get_decoded())
 	return response('ok', 1)
 
 @dec_magic_api(method='GET')
