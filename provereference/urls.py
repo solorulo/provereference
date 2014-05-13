@@ -79,4 +79,5 @@ urlpatterns += patterns('georef_app.api',
 	# url(r'^sitios/$', 'sites', name='sites'),
 )
 
-urlpatterns += staticfiles_urlpatterns()
+if settings.DEBUG:
+	urlpatterns += staticfiles_urlpatterns() 
