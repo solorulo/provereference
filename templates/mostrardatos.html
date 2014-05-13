@@ -6,15 +6,17 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/static/css/administrador.css">
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+	<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/supervisionDataFormat.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/telcelscript.js" ></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/mapa.js" ></script>
 	<script type="text/javascript">
 	eval('var data = {{ data|escape|safe }}');
 	</script>
 </head>
-<body> 
+<body>
 	<header>
 		<a name="inicio1"> </a>
 		<div class="principal">
@@ -110,6 +112,9 @@
 				</tr>
 			</table>
 			<table id="actividad"></table>
+			<div id="map_container" title="Location Map">    
+        		<div id="map_canvas" style="width:100%;height:100%;"></div>
+    		</div>
 		</div>
 	</div>
 	<div id="popup1" class="pop">
