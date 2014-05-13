@@ -180,34 +180,38 @@ def supervision(request, format):
 	regiones = Region.objects.all()
 	sitios = Sitio.objects.all()
 	actividades = Actividad.objects.all().select_related('sitio', 'infoprov')
-	_jsonactivity = {}
-	_jsonregiones = {}
-	_jsonsitios = {}
-	_jsonproviders = {}
+	_jsonactivity = []
+	_jsonregiones = []
+	_jsonsitios = []
+	_jsonproviders = []
 	for region in regiones:
-		_jsonregiones[region.pk] = {
+		_jsonregiones.append( {
+			'pk':region.pk,
 			'name':region.nombre,
 			'providers':list(providers.filter(region=region).values('pk')),
 			'sites':list(sitios.filter(region=region).values('pk')),
 			'users':list(usersprov.filter(empresa__region=region).values('pk'))
-		}
+		})
 	for sitio in sitios:
-		_jsonsitios[sitio.pk] = {
+		_jsonsitios.append( {
+			'pk':sitio.pk,
 			'name':sitio.nombre,
 			'users':list(usersprov.filter(actividad__sitio=sitio).values('pk'))
-		}
+		})
 	for provider in providers:
-		_jsonproviders[provider.pk] = {
+		_jsonproviders.append( {
+			'pk':provider.pk,
 			'name':provider.nombre,
 			'users':list(usersprov.filter(empresa=provider).values('pk'))
-		}
+		})
 	for user in usersprov:
 		try:
 			last_act = actividades.filter(infoprov=user).latest('fecha')
-			_jsonactivity[user.pk] = {
-				'date':last_act.fecha,
+			_jsonactivity.append( {
+				'user_pk':user.pk,
+				'date':str(last_act.fecha),
 				'site':last_act.sitio.nombre
-			}
+			})
 		except :
 			pass
 
