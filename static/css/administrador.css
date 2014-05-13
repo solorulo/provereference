@@ -575,6 +575,9 @@ margin-bottom: 2%;
 box-shadow: rgb(150,150,150) 0px 0px 10px ;
 
 }
+table#actividad{
+	margin-top: -2%;
+}
  .t1, .t3 {
  	background-color:#0064BF;
  color: rgb(180,195,236);
@@ -677,7 +680,7 @@ display: inline-block;
 
 	}
 #encabezado{
-background-color: #0064BF;
+	background-color: #0064BF;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 20px;
 	 color: rgb(180,195,236);
@@ -692,16 +695,16 @@ background-color: #0064BF;
 #fila1 td{
 	
 	border-left: solid 2px;
-border-color: rgb(180,195,236);
-color: #0064BF;
+	border-color: rgb(180,195,236);
+	color: #0064BF;
 	height: 100%;
 
 }
 #fila2 td{
 	
 	border-left: solid 2px;
-border-color: rgb(180,195,236);
-color: #0064BF;
+	border-color: rgb(180,195,236);
+	color: #0064BF;
 	height: 100%;
 	background-color: #F1FAFF;
 
