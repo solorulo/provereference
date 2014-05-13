@@ -32,8 +32,6 @@ LOGIN_URL='/login/'
 # Application definition
 
 INSTALLED_APPS = (
-	# 'django_mongodb_engine',
-	# 'djangotoolbox',
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -99,11 +97,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-import os
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-PROJECT_DIR = os.path.join(PROJECT_ROOT,'../georef_app')
-STATIC_ROOT = os.path.join(PROJECT_ROOT,'staticfiles/')
 STATIC_URL = '/static/'
+
+STATIC_ROOT= os.path.join(BASE_DIR,'staticfiles/')
 STATICFILES_DIRS = (
-    '/static/',
+    os.path.join(BASE_DIR,'static/'),
 )
