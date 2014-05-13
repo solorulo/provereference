@@ -43,6 +43,12 @@ def login(request):
 	except InfoProv.DoesNotExist:
 		return response('not exist')
 
+@dec_magic_api(method='POST', required_args=['events'])
+def event(request):
+	session = args[0]
+	
+	return response('ok', 1)
+
 @dec_magic_api(method='GET')
 def logout(request, *args, **kwargs):
 	session = args[0]
