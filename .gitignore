@@ -3,5 +3,6 @@
 *.pyc
 local_settings.py
 venv/*
+staticfiles
 .DS_Store
 *.sqlite3

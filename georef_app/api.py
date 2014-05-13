@@ -63,6 +63,7 @@ def event(request, *args, **kwargs):
 	for event in events:
 		# https://docs.python.org/2/library/time.html#time.strptime
 		# datetime YYYY-mm-dd HH:MM
+		print event['datetime']
 		tiempo = dateparse.parse_datetime(event['datetime'])
 		tipo_evento = event['tipo']
 		lat = float(event['lat'])
