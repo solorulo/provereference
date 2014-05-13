@@ -98,7 +98,7 @@ $(document).ready(function(event){
 	optionRegion.setAttribute("style", "display:block;");
 
 	var firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode(" TODOS "));
+	firstOption.appendChild(document.createTextNode(" ---- "));
 	optionRegion.appendChild(firstOption);
 	for (var i = 0; i < data.region.length; i++) {
 		var optionText = data.region[i].name;
@@ -126,7 +126,7 @@ $(document).ready(function(event){
 	optionSitio.setAttribute("style", "display:block;");
 
 	firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode(" TODOS "));
+	firstOption.appendChild(document.createTextNode(" ---- "));
 	optionSitio.appendChild(firstOption);
 	for (var i = 0; i < data.site.length; i++) {
 		var optionText = data.site[i].name;
@@ -148,7 +148,7 @@ $(document).ready(function(event){
 	optionProvider.setAttribute("style", "display:block;");
 
 	firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode(" TODOS "));
+	firstOption.appendChild(document.createTextNode(" ---- "));
 	optionProvider.appendChild(firstOption);
 	for (var i = 0; i < data.provider.length; i++) {
 		var optionText = data.provider[i].name;

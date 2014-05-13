@@ -322,6 +322,10 @@ function usuario(i, id){
 		var emailNode = document.querySelector("#popup3 .textinfo.email").value;
 		var telefonoNode = document.querySelector("#popup3 .textinfo.telefono").value;
 		var selectNode = document.querySelector("#popup3 .textinfo.selectProvider").selectedIndex-1;
+		if (selectNode < 0) {
+			alert("Debes seleccionar un Proveedor para continuar");
+			return;
+		};
 		var postdata = {
 			'email':emailNode,
 			'imei':telefonoNode,
@@ -338,6 +342,10 @@ function usuario(i, id){
 		var emailNode = document.querySelector("#popup4 .textinfo.email").value;
 		var telefonoNode = document.querySelector("#popup4 .textinfo.telefono").value;
 		var selectNode = document.querySelector("#popup4 .textinfo.selectProvider").selectedIndex-1;
+		if (selectNode < 0) {
+			alert("Debes seleccionar un Proveedor para continuar");
+			return;
+		};
 		var postdata = {
 			'email':emailNode,
 			'imei':telefonoNode,

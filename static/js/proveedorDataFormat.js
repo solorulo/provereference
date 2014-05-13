@@ -109,7 +109,7 @@ $(document).ready(function(event){
 	optionSitio.setAttribute("style", "display:block;");
 
 	firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode("---"));
+	firstOption.appendChild(document.createTextNode(" ---- "));
 	optionSitio.appendChild(firstOption);
 	for (var i = 0; i < data.sites.length; i++) {
 		var optionText = data.sites[i].name_site;
