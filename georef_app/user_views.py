@@ -152,9 +152,12 @@ def user(request, id_user, format):
 	try:
 		actividades = Actividad.objects.filter(infoprov_id=id_user).order_by('-fecha').select_related()
 		_json['activity'] = list(actividades.values('fecha', 'tipo_evento', 'lat', 'lng', 'margen_error', 'sitio__nombre'))
+		for element in _json['activity']:
+			element['fecha'] = str(element['fecha'])
+
 		last_act = actividades.latest('fecha')
 		_json['last_act'] = {
-			'date':last_act.fecha,
+			'date':str(last_act.fecha),
 			'site':last_act.sitio.nombre,
 		}
 	except Actividad.DoesNotExist:
