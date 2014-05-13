@@ -13,29 +13,38 @@ from provereference.settings import API_KEY
 @dec_magic(method='GET', admin_required=True)
 def users(request, format):
 	_json = {}
-	# sites_provs = []
-	# mSites = Sitio.objects.all().select_related()
-	mRegions = Region.objects.all().select_related()
-	mAllUsers = InfoProv.objects.all()
-	mSites = Sitio.objects.all().select_related()
-	mProviders = Empresa.objects.all()
-	regiones = []
+	usersprov = InfoProv.objects.all().select_related('empresa')
+	providers = Empresa.objects.all()
+	regiones = Region.objects.all()
+	sitios = Sitio.objects.all()
+	_jsonregiones = []
+	_jsonsitios = []
+	_jsonproviders = []
+	for region in regiones:
+		_jsonregiones.append( {
+			'pk' : region.pk,
+			'name':region.nombre,
+			'providers':list(providers.filter(region=region).values('pk')),
+			'sites':list(sitios.filter(region=region).values('pk')),
+			'users':list(usersprov.filter(empresa__region=region).values('pk'))
+		})
+	for sitio in sitios:
+		_jsonsitios.append ({
+			'pk':sitio.pk,
+			'name':sitio.nombre,
+			'users':list(usersprov.filter(actividad__sitio=sitio).values('pk'))
+		})
+	for provider in providers:
+		_jsonproviders.append( {
+			'pk':provider.pk,
+			'name':provider.nombre,
+			'users':list(usersprov.filter(empresa=provider).values('pk'))
+		})
 
-	for region in mRegions:
-		_jsonreg = {}
-		region_users = mAllUsers.filter(empresa__region=region.pk).values('pk')
-		region_sites = mSites.filter(region=region.pk).values('pk')
-		_jsonreg['pk'] = region.pk
-		_jsonreg['name'] = region.nombre
-		_jsonreg['users'] = list(region_users)
-		_jsonreg['sites'] = list(region_sites)
-		regiones.append(_jsonreg)
-
-	# print simplejson.dumps(list(mSites.values()))
-	_json["users"] = list(mAllUsers.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id'))
-	_json["sites"] = list(mSites.values('pk', 'nombre'))
-	_json["providers"] = list(mProviders.values('pk', 'nombre'))
-	_json["regiones"] = regiones
+	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id'))
+	_json['provider'] = _jsonproviders
+	_json['site'] = _jsonsitios
+	_json['region'] = _jsonregiones
 	data = simplejson.dumps(_json)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
@@ -198,7 +207,6 @@ def supervision(request, format):
 				'date':last_act.fecha,
 				'site':last_act.sitio.nombre
 			}
-			# TODO agregar last_act al json
 		except :
 			pass
 
