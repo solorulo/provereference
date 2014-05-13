@@ -19,8 +19,18 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var tdLng = td(data.activity[i].lng);
 		var tdFecha = td(Date(data.activity[i].fecha).toString());
 		var tdSitio = td(data.activity[i].sitio__nombre);
-		var tdMapa = td("");
-
+		var tdMapa = td("Mapa");
+		tdMapa.setAttribute("id", "showMap");
+		tdMapa.setAttribute("name", "showMap");
+		var mapaFunct = function(lat, lng){
+			this.mapa = function(){
+				$( "#map_container" ).dialog( "open" );
+				map.setCenter(new google.maps.LatLng(lat, lng), 10);
+				return false;
+			};
+		}
+		var mapa = (new mapaFunct(data.activity[i].lat, data.activity[i].lng)).mapa;
+		tdMapa.onclick = mapa;
 		tr.appendChild(tdTipo);
 		tr.appendChild(tdMargen);
 		tr.appendChild(tdLat);
