@@ -403,6 +403,8 @@ function dataFormat(query){
 		innerDataFormat(element, lastLetter, query, reg, usr);
 	} else if((/^\/usuarios/i).test(document.location.pathname)){
 		innerDataFormat(element, lastLetter, query, reg, usr);
+	} else if((/^\/usuario/i).test(document.location.pathname)){
+		innerDataFormat(element, lastLetter, query, reg, usr);
 	} else {
 		return;
 	}
@@ -427,5 +429,7 @@ $(document).ready(function() {
 	});
 	dataFormat('');
 	inputDOM = document.querySelector("#busqueda input");
-	inputDOM.oninput = function (event) { dataFormat(inputDOM.value); };
+	if (inputDOM) {
+		inputDOM.oninput = function (event) { dataFormat(inputDOM.value); };
+	};
 });
