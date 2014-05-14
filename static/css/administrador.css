@@ -64,7 +64,7 @@ top:12px;
 #gradiant{/*linea entre el menu y el cuerpo degradada*/
 	width: 100%;
 	height:3px !important;
-background:linear-gradient(45deg,#fff ,#AAA5A5,#fff);
+background:#D3D3D3;
 margin: 0 auto;
 
 }
@@ -83,7 +83,7 @@ margin: 0 auto;
 }
 #izquierda4{
 	
-background: linear-gradient(#002160,#004588);/*gradiante de azules*/
+background: rgb(0, 33, 96);/*gradiante de azules*/
 
 font-family: 'Source Sans Pro', sans-serif;
 color: #FFF;
@@ -94,7 +94,7 @@ text-align: center;
 #izquierda{/*menu lateral*/
 width: 330px;
 height: 520px !important;
-background: linear-gradient(#002160,#004588);/*gradiante de azules*/
+background: rgb(0, 33, 96);/*gradiante de azules*/
 position: absolute;
 
 z-index: 1;
@@ -102,7 +102,7 @@ z-index: 1;
 #izquierda1{/*menu lateral*/
 width: 330px;
 height: 520px !important;
-background: linear-gradient(#002160,#004588);/*gradiante de azules*/
+background: rgb(0, 33, 96);/*gradiante de azules*/
 position: absolute;
 
 
@@ -111,7 +111,7 @@ position: absolute;
 #izquierda2{/*menu lateral*/
 width: 330px;
 height: 520px !important;
-background: linear-gradient(#002160,#004588);/*gradiante de azules*/
+background: rgb(0, 33, 96);
 position: absolute;
 
 
@@ -200,14 +200,14 @@ top:2px;
 
 	width: 85%;
 	height:3px !important;
-background:linear-gradient(45deg,#0164BF 50%,transparent 100%);
+background:rgb(1, 100, 191);
 
 }
 #linea2{/*linea inferior*/
 top: 15px;
 	width: 100%;
 	height:3px !important;
-background:linear-gradient(45deg,#0164BF 50%,transparent 100%);
+background:rgb(1, 100, 191);
 position: relative;
 right: 13.8%;
 }
