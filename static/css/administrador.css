@@ -48,8 +48,7 @@ bottom: 18px;}
 /*	margin-right:10px;*/
 }
 #flecha{
-	position: fixed;
-	right: 20px;
+	float: right;
 }
 
 
@@ -668,12 +667,9 @@ background-color:#0064BF;
  	text-align:left;
  width: 100%;}
 	#filtrosbusqueda{
+float: right;
 display: inline-block;
-    position: absolute;
-    display: inline-block;
-    top: 67px;
-    right: 265px;
-	}
+padding-right: 109px;	}
 	#filtrosbusqueda table{
 	box-shadow: none;
 	
