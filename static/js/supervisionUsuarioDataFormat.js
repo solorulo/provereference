@@ -15,7 +15,6 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 	var fecha_final = new Date(document.querySelector("#fecha_final").value);
 
 	for (var i = 0; i < data.activity.length; i++) {
-		console.log(data.activity[i].fecha, (new Date(data.activity[i].fecha)).getTime());
 		if((new Date(data.activity[i].fecha)).getTime() < fecha_inicial.getTime()){
 			continue;
 		}

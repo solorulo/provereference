@@ -21,6 +21,10 @@ def sites(request, format):
 		sites_provs.append({
 			'id':site.id,
 			'name':site.nombre,
+			'neumonico':site.neumonico,
+			'lat':site.lat,
+			'lng':site.lng,
+			'reg':site.region.pk
 			})
 	_json["sites"] = sites_provs
 	_json["regiones"] = list(mRegions)
@@ -45,7 +49,7 @@ def site_new(request):
 			lat=lat,
 			lng=lng,
 			radio=float(radio),
-			region=int(region))
+			region=Region.objects.get(pk=int(region)))
 		new_site.save()
 		data = simplejson.dumps({
 			'code' : 1,
@@ -75,7 +79,7 @@ def site_edit(request, id_site):
 		if neumonico is not None :
 			the_site.neumonico = neumonico
 		if id_region is not None :
-			the_site.region_id = id_region
+			the_site.region_id = Region.objects.get(pk=int(id_region))
 		if lat is not None :
 			the_site.lat = lat
 		if lng is not None :
