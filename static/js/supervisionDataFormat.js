@@ -16,11 +16,11 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 	var fecha_final = new Date(document.querySelector("#fecha_final").value);
 
 	for (var i = 0; i < data.activity.length; i++) {
-		console.log(data.activity[i].fecha, (new Date(data.activity[i].fecha)).getMilliseconds());
-		if((new Date(data.activity[i].fecha)).getMilliseconds() < fecha_inicial.getMilliseconds()){
+		console.log(data.activity[i].fecha, (new Date(data.activity[i].fecha)).getTime());
+		if((new Date(data.activity[i].fecha)).getTime() < fecha_inicial.getTime()){
 			continue;
 		}
-		if((new Date(data.activity[i].fecha)).getMilliseconds() > fecha_final.getMilliseconds()){
+		if((new Date(data.activity[i].fecha)).getTime() > fecha_final.getTime()){
 			continue;
 		}
 		var siteSelected = data.sites[document.querySelector("#select_sitios").selectedIndex - 1];
@@ -88,9 +88,9 @@ $(document).ready(function(){
 	// Relleno de datos de usuario.
 	remplazarTexto("#usuario #t1 td", data.first_name + " " + data.last_name);
 
-	var ultimotd = createTd("Último Registro");
-	var sitetd = createTd(data.last_act.site);
-	var fechatd = createTd((new Date(data.last_act.date)).toString());
+	var ultimotd = createTd("Último Registro:");
+	var sitetd = createTd("Sitio: "+data.last_act.site);
+	var fechatd = createTd("Fecha: "+(new Date(data.last_act.date)).toString());
 	remplazarTexto("#usuario #t2", "");
 	document.querySelector("#usuario #t2").appendChild(ultimotd);
 	document.querySelector("#usuario #t2").appendChild(sitetd);
@@ -126,4 +126,5 @@ $(document).ready(function(){
 	// Trigger de filtros.
 
 	document.querySelector("#select_sitios").onchange = function(){dataFormat('')};
+	document.querySelector("#fecha_inicial").onkeydown = function(){dataFormat('')}
 });
