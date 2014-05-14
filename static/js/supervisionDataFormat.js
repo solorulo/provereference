@@ -1,6 +1,7 @@
 function innerDataFormat (element, lastLetter, query, reg, usr) {
+	console.log(":)");
 	var clone = document.querySelector("#actividadTemplate").cloneNode(true);
-	clone.setAttribute("id", "#actividad");
+	clone.setAttribute("id", "actividad");
 	clone.setAttribute("style", "");
 	var actividadNode = document.querySelector("#actividad");
 	actividadNode.parentNode.replaceChild(clone, actividadNode);
@@ -11,13 +12,30 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		td.appendChild(tdText);
 		return td;
 	}
+	var fecha_inicial = new Date(document.querySelector("#fecha_inicial").value);
+	var fecha_final = new Date(document.querySelector("#fecha_final").value);
+
 	for (var i = 0; i < data.activity.length; i++) {
+		console.log(data.activity[i].fecha, (new Date(data.activity[i].fecha)).getMilliseconds());
+		if((new Date(data.activity[i].fecha)).getMilliseconds() < fecha_inicial.getMilliseconds()){
+			continue;
+		}
+		if((new Date(data.activity[i].fecha)).getMilliseconds() > fecha_final.getMilliseconds()){
+			continue;
+		}
+		var siteSelected = data.sites[document.querySelector("#select_sitios").selectedIndex - 1];
+		if(siteSelected){
+			if(siteSelected.name != data.activity[i].sitio__nombre){
+				continue;
+			}
+		}
+
 		var tr = document.createElement("tr");
 		var tdTipo = td(data.activity[i].tipo_evento);
 		var tdMargen = td(data.activity[i].margen_error);
 		var tdLat = td(data.activity[i].lat);
 		var tdLng = td(data.activity[i].lng);
-		var tdFecha = td(new Date(data.activity[i].fecha).toString());
+		var tdFecha = td((new Date(data.activity[i].fecha)).toString());
 		var tdSitio = td(data.activity[i].sitio__nombre);
 		var tdMapa = td("Mapa");
 		tdMapa.setAttribute("id", "showMap");
@@ -27,7 +45,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 				initialize();
 				$( "#map_container" ).dialog( "open" );
 				map.setCenter(new google.maps.LatLng(lat, lng));
-				map.setZoom(20);
+				map.setZoom(16);
 				plotPoint(lat,lng,name,'<span class="gBubble"><b>'+(new Date(fecha)).toString()+'</b></span>');
 				return false;
 			};
@@ -51,6 +69,12 @@ $(document).ready(function(){
 	var remplazarTexto = function(query, texto){
 		return remplazar(query, document.createTextNode(texto));
 	}
+	var createTd = function(texto){
+		var td = document.createElement("td");
+		var textNode = document.createTextNode(texto);
+		td.appendChild(textNode);
+		return td;
+	}
 	var remplazar = function(query, node){
 		var parentNode = document.querySelector(query);
 		var childs = parentNode.childNodes;
@@ -60,11 +84,46 @@ $(document).ready(function(){
 		parentNode.appendChild(node);
 		return parentNode
 	}
-	remplazarTexto("#usuario #t1 td", data.first_name + " " + data.last_name);
-	var ultimotd = document.createTextNode("Ultimo Registro");
-	var td = document.createElement("td");
 
-	// remplazarTexto("#usuario #t2 td.usuariodatos");
+	// Relleno de datos de usuario.
+	remplazarTexto("#usuario #t1 td", data.first_name + " " + data.last_name);
+
+	var ultimotd = createTd("Último Registro");
+	var sitetd = createTd(data.last_act.site);
+	var fechatd = createTd((new Date(data.last_act.date)).toString());
+	remplazarTexto("#usuario #t2", "");
+	document.querySelector("#usuario #t2").appendChild(ultimotd);
+	document.querySelector("#usuario #t2").appendChild(sitetd);
+	document.querySelector("#usuario #t2").appendChild(fechatd);
+
 	remplazarTexto("#usuario #t3 td.usuariodatos", data.provider);
 	remplazarTexto("#usuario #t4 td.usuariodatos", data.phone);
+
+	// Pone datepicker para las fechas.
+	$("#fecha_inicial, #fecha_final").datepicker({
+		onSelect:function(dateText){
+			dataFormat('');
+		},
+		dateFormat: "yy-mm-dd"
+	});
+
+	// Llena el filtro de sitios.
+	var parentNode = document.querySelector("#select_sitios");
+	var childs = parentNode.childNodes;
+	for (var i = childs.length - 1; i >= 0; i--) {
+		parentNode.removeChild(childs[i]);
+	};
+	var firstOption = document.createElement("option");
+	firstOption.setAttribute("selected", true);
+	firstOption.appendChild(document.createTextNode(" ---- "));
+	parentNode.appendChild(firstOption);
+	for (var i = 0; i < data.sites.length; i++) {
+		var option = document.createElement("option");
+		option.appendChild(document.createTextNode(data.sites[i].nombre));
+		parentNode.appendChild(option);
+	};
+
+	// Trigger de filtros.
+
+	document.querySelector("#select_sitios").onchange = function(){dataFormat('')};
 });
