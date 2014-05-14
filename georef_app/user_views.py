@@ -149,6 +149,7 @@ def user_delete(request, id_user):
 def user(request, id_user, format):
 	_json = {}
 	the_userprov = get_object_or_404(InfoProv, pk=id_user)
+	mSites = Sitio.objects.all()
 	try:
 		actividades = Actividad.objects.filter(infoprov_id=id_user).order_by('-fecha').select_related()
 		_json['activity'] = list(actividades.values('fecha', 'tipo_evento', 'lat', 'lng', 'margen_error', 'sitio__nombre'))
@@ -167,6 +168,7 @@ def user(request, id_user, format):
 	_json['last_name'] = the_userprov.last_name
 	_json['phone'] = the_userprov.telefono
 	_json['imei'] = the_userprov.imei
+	_json['sites'] = list(mSites.values('nombre'))
 	_json['provider'] = the_userprov.empresa.nombre
 	data = simplejson.dumps(_json)
 	if format:
