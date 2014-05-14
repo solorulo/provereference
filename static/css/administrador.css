@@ -707,14 +707,10 @@ padding-right: 109px;	}
 	background-color: #F1FAFF;
 
 }
-a:link{
+#izquierda > a:link{
   cursor:  pointer;
   color:white;
 }
-a:visited {
-
-
+#izquierda a:visited {
 color: white; /* verde */
-
-
 }
