@@ -6,7 +6,6 @@ coords.lng = -93.242539;
 
 $(document).ready(function() 
 {
-
 	$( "#map_container" ).dialog({
 		autoOpen:false,
 		width: 555,
@@ -15,8 +14,6 @@ $(document).ready(function()
 		open: function(event, ui) {google.maps.event.trigger(map, 'resize'); }      
 	});
 	$(  "input:submit,input:button, a, button", "#controls" ).button();
-	initialize();
-	plotPoint(coords.lat,coords.lng,'Mall of America','<span class="gBubble"><b>Mall of America</b><br>60 East Brodway<br>Bloomington, MN 55425</span>');
 });
 
 function plotPoint(srcLat,srcLon,title,popUpContent,markerIcon)
@@ -38,7 +35,6 @@ function plotPoint(srcLat,srcLon,title,popUpContent,markerIcon)
 }
 function initialize() 
 {      
-
 	var latlng = new google.maps.LatLng(coords.lat, coords.lng);
 	var myOptions = {
 		zoom: 10,

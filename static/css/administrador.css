@@ -574,9 +574,6 @@ margin-bottom: 2%;
 box-shadow: rgb(150,150,150) 0px 0px 10px ;
 
 }
-table#actividad{
-	margin-top: -2%;
-}
  .t1, .t3 {
  	background-color:#0064BF;
  color: rgb(180,195,236);
@@ -604,10 +601,12 @@ background-position: 80% 50%;
 }
 
 a:link{
-text-decoration: none;
+	text-decoration: none;
+	color: inherit;
 }
 a:visited{
 	text-decoration: none;
+	color: inherit;
 }
 
 #regresar img{
