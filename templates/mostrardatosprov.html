@@ -70,7 +70,7 @@
 			</div>
 		</div>
 		<div id="derecha5" class="interior1">
-			<div><li id="nuevo" style="color:blue;" onclick="abrir1()"><div id="linea1"></div></br><dd>Nuevo usuario <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li></div>
+			<div><li id="nuevo" style="color:blue;" onclick="abrir2()"><div id="linea1"></div></br><dd>Nuevo usuario <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li></div>
 			
 			<a name="inicio"> </a>
 			<div id="iabc">
@@ -83,7 +83,63 @@
 		</div>
 	</div>
 	<div id="popup4" class="pop">
-		<div id="popsuperior"> <img src="/static/imagenes/Supervisar/usuario.png"> Proveedores > Editar <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
+		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Usuarios > Editar <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
+		<div id="gradiant"></div>
+		<div id="popcontenido">
+			<div id="poplateral" class="poplateral3">
+				<ul id="popul">
+					<li> Nombre</li>
+					<div id="linea1"></div>
+					<li>Apellido</li>
+					<div id="linea1"></div>
+					<li>Mail</li>
+					<div id="linea1"></div>
+					<li>Telefono</li>
+				</ul>
+			</div>
+			<div id="popinfo" class="popinfo3">
+				<input type="text" class="textinfo form_nombre">
+				<input type="text" class="textinfo apellido">
+				<input type="text" class="textinfo email">
+				<input type="text" class="textinfo telefono">
+				<select class="textinfo selectProvider" style="display:none;">
+					<option></option>
+					<option selected> TODO </option>
+				</select> 
+				<button id="beliminar">Eliminar</button> <button id="bazul">Guardar</button><button id="bblanco" onclick="cerrarTodo()">Cancelar</button>
+			</div>
+		</div>
+	</div>
+	<div id="popup3" class="pop">
+		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Usuario > Nuevo <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
+		<div id="gradiant"></div>
+		<div id="popcontenido">
+			<div id="poplateral" class="poplateral3">
+				<ul id="popul">
+					<li> Nombre</li>
+					<div id="linea1"></div>
+					<li>Apellido</li>
+					<div id="linea1"></div>
+					<li>Mail</li>
+					<div id="linea1"></div>
+					<li>Telefono</li>
+				</ul>
+			</div>
+			<div id="popinfo" class="popinfo3">
+				<input type="text" class="textinfo form_nombre">
+				<input type="text" class="textinfo apellido">
+				<input type="text" class="textinfo email">
+				<input type="text" class="textinfo telefono">
+				<select class="textinfo selectProvider" style="display:none;">
+					<option></option>
+					<option selected> TODO </option>
+				</select> 
+				<button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrarTodo(); return false;">Cancelar</button>
+			</div>
+		</div>
+	</div>
+	<div id="popup2" class="pop">
+		<div id="popsuperior"> <img src="/static/imagenes/Supervisar/usuario.png"> Proveedor > Editar <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
 		<div id="gradiant"></div>
 		<div id="popcontenido">
 			<div id="poplateral" class="poplateral3">
@@ -92,62 +148,16 @@
 					<div id="linea1"></div>
 					<li>Región</li>
 				</ul>
+
+
 			</div>
 			<div id="popinfo" class="popinfo3">
-				<div><input type="text" class="textinfo">
-					<select class="textinfo optionRegion">
-						<option selected> Select Box </option>
-						<option>Short Option</option>
-						<option>This Is A Longer Option</option>
-					</select>
-				</div>
-				<button id="beliminar">Eliminar</button><button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrar2()">Cancelar</button>
-			</div>
-		</div>
-	</div>
-	<div id="popup1" class="pop">
-		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Usuario > Editar <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
-		<div id="gradiant"></div>
-		<div id="popcontenido">
-			<div id="poplateral">
-				<ul id="popul">
-					<li> Nombre</li>
-					<div id="linea1"></div>
-					<li>Apellido</li>
-					<div id="linea1"></div>
-					<li>Mail</li>
-					<div id="linea1"></div>
-				</ul>
-			</div>
-			<div id="popinfo">
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
-				<div id="popadministrador">Administrador<label class="switch"><input type="checkbox" checked=""><span></span></label></div>
-				<button id="beliminar">Eliminar</button> <button id="bazul">Guardar</button><button id="bblanco" onclick="cerrar()">Cancelar</button>
-			</div>
-		</div>
-	</div>
-	<div id="popup2" class="pop">
-		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Usuario > Nuevo <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
-		<div id="gradiant"></div>
-		<div id="popcontenido">
-			<div id="poplateral">
-				<ul id="popul">
-					<li> Nombre</li>
-					<div id="linea1"></div>
-					<li>Apellido</li>
-					<div id="linea1"></div>
-					<li>Mail</li>
-					<div id="linea1"></div>
-				</ul>
-			</div>
-			<div id="popinfo">
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
-				<div id="popadministrador">Administrador<label class="switch"><input type="checkbox" checked=""><span></span></label></div>
-				<button id="bazul">Crear</button><button id="bblanco" onclick="cerrar1()">Cancelar</button>
+				<div><input type="text" class="textinfo form_nombre">
+				<select class="textinfo optionRegion">
+					<option selected> ---- </option>
+				</select> </div>
+
+				 <button id="beliminar">Eliminar</button><button id="b_save" class="bazul">Guardar</button><button id="bblanco">Cancelar</button>
 			</div>
 		</div>
 	</div>
