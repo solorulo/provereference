@@ -1,5 +1,4 @@
 function innerDataFormat (element, lastLetter, query, reg, usr) {
-	console.log(":)");
 	var clone = document.querySelector("#actividadTemplate").cloneNode(true);
 	clone.setAttribute("id", "actividad");
 	clone.setAttribute("style", "");
@@ -89,6 +88,11 @@ $(document).ready(function(){
 	remplazarTexto("#usuario #t1 td", data.first_name + " " + data.last_name);
 
 	var ultimotd = createTd("Último Registro:");
+	if(!data.last_act){
+		data.last_act = {};
+		data.last_act.site = "Ninguno";
+		data.last_act.date = null;
+	}
 	var sitetd = createTd("Sitio: "+data.last_act.site);
 	var fechatd = createTd("Fecha: "+(new Date(data.last_act.date)).toString());
 	remplazarTexto("#usuario #t2", "");
@@ -126,5 +130,5 @@ $(document).ready(function(){
 	// Trigger de filtros.
 
 	document.querySelector("#select_sitios").onchange = function(){dataFormat('')};
-	document.querySelector("#fecha_inicial").onkeydown = function(){dataFormat('')}
+	document.querySelector("#fecha_inicial").onkeydown = function(){dataFormat('')};
 });
