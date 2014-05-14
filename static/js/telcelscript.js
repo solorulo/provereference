@@ -499,6 +499,18 @@ function dataFormat(query){
 	}
 }
 
+function fechaToString(fecha){
+	fecha = (new Date(fecha));
+	fecha.setTime(fecha.valueOf() + (fecha.getTimezoneOffset()*60*1000));
+	var pad = function(n){
+		if(n < 10){
+			return '0'+n;
+		}
+		return n;
+	}
+	return fecha.getFullYear() + "-" + pad(fecha.getMonth()) + "-" + pad(fecha.getDate()) + " " + pad(fecha.getHours()) + ":" + pad(fecha.getMinutes());
+}
+
 var csrftoken;
 
 var inputDOM;
