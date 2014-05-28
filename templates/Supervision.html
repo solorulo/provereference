@@ -8,6 +8,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/supervisionDataFormat.js" ></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/telcelscript.js" ></script>
 	<script type="text/javascript">
 		eval('var data = {{ data|escape|safe }}');
@@ -33,6 +34,7 @@
 	
 
 	<div id="gradiant"></div>
+	<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 
 	<div id="cuerpo">
 		<div id="izquierda2" class="interior">
 			<li id="administrador1"> Filtros de busqueda </li>
@@ -88,7 +90,7 @@
 			
 		</div>
 		<div id="derecha" class="interior">
-		<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 	
+			
 			<a name="inicio"> </a>
 			<div id="busqueda"> Tu busqueda : <input type="text" size="15"></div>
 			

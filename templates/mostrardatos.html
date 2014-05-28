@@ -5,11 +5,12 @@
 	
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/static/css/administrador.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/cupertino/jquery-ui.css">
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 	<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/supervisionDataFormat.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/supervisionUsuarioDataFormat.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/telcelscript.js" ></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/mapa.js" ></script>
 	<script type="text/javascript">
@@ -30,6 +31,7 @@
 			</nav>
 		</div>
 	</header>
+	<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 
 	<div id="cuerpo">
 		<div id="izquierda4" class="interior1">
 			<div id="regresar"><a href="/supervision"> <img src="/static/imagenes/Supervisar/flecha_regresar.png">Regresar a Resultados</a> </div>	
@@ -61,18 +63,8 @@
 						<td>Fecha Final</td>
 					</tr>
 					<tr>
-						<td> <select>
-							<option selected> Select Box </option>
-							<option>Short Option</option>
-							<option>This Is A Longer Option</option>
-						</select> </td>
-						<td>
-							<select >
-								<option selected> Select Box </option>
-								<option>Short Option</option>
-								<option>This Is A Longer Option</option>
-							</select> 
-						</td>
+						<td><input type="text" id="fecha_inicial"></td>
+						<td><input type="text" id="fecha_final"></td>
 					</tr>
 				</table>
 				
@@ -83,7 +75,7 @@
 					</tr>
 					<tr>
 						<td>
-							<select >
+							<select id="select_sitios">
 								<option selected> Select Box </option>
 								<option>Short Option</option>
 								<option>This Is A Longer Option</option>
@@ -98,7 +90,7 @@
 
 		</div>
 		<div id="derecha5" class="interior1">
-			<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 	
+				
 			<a name="inicio"> </a>
 			<table id="actividadTemplate">
 				<tr id="encabezado">
@@ -112,7 +104,7 @@
 				</tr>
 			</table>
 			<table id="actividad"></table>
-			<div id="map_container" title="Location Map">    
+			<div id="map_container">    
         		<div id="map_canvas" style="width:100%;height:100%;"></div>
     		</div>
 		</div>

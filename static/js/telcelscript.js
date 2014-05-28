@@ -292,6 +292,16 @@ function proveedor(i, id){
 		(new Bridge(i, id, "proveedores", postdata)).create(event);
 	};
 	this.save = function(event){
+		var name = $("#popup2 input.textinfo").val();
+		var selected = document.querySelector("#popup2 .optionRegion").selectedIndex;
+		if (selected == 0) {
+			return;
+		}
+		var region = data.regiones[selected-1].id;
+		var postdata = {
+			'name':name,
+			'region':region
+		};
 		(new Bridge(i, id, "proveedores", postdata)).save(event);
 	};
 	this.delete = function(){
@@ -326,10 +336,15 @@ function usuario(i, id){
 			alert("Debes seleccionar un Proveedor para continuar");
 			return;
 		};
+		var optionSelected = data.provider[selectNode];
+		if(!optionSelected)
+			optionSelected = data.provider.id;
+		else
+			optionSelected = optionSelected.pk;
 		var postdata = {
 			'email':emailNode,
 			'imei':telefonoNode,
-			'provider':data.provider[selectNode].pk,
+			'provider':optionSelected,
 			'first_name':nombreNode,
 			'last_name':apellidoNode,
 			'phone':telefonoNode
@@ -346,10 +361,15 @@ function usuario(i, id){
 			alert("Debes seleccionar un Proveedor para continuar");
 			return;
 		};
+		var optionSelected = data.provider[selectNode];
+		if(!optionSelected)
+			optionSelected = data.provider.id;
+		else
+			optionSelected = optionSelected.pk;
 		var postdata = {
 			'email':emailNode,
 			'imei':telefonoNode,
-			'provider':data.provider[selectNode].pk,
+			'provider':optionSelected,
 			'first_name':nombreNode,
 			'last_name':apellidoNode,
 			'phone':telefonoNode
@@ -404,6 +424,8 @@ function dataFormat(query){
 	} else if((/^\/usuarios/i).test(document.location.pathname)){
 		innerDataFormat(element, lastLetter, query, reg, usr);
 	} else if((/^\/usuario/i).test(document.location.pathname)){
+		innerDataFormat(element, lastLetter, query, reg, usr);
+	} else if((/^\/supervision/i).test(document.location.pathname)){
 		innerDataFormat(element, lastLetter, query, reg, usr);
 	} else {
 		return;

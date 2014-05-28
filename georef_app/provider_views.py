@@ -78,7 +78,7 @@ def provider_edit(request, id_provider):
 		the_provider.save()
 
 		data = simplejson.dumps({
-			'code' : code,
+			'code' : 1,
 			'msg' : "Bien"
 		})
 	except Empresa.DoesNotExist:
@@ -115,6 +115,7 @@ def provider(request, id_provider, format):
 	userprovs = []
 	mProvider = get_object_or_404(Empresa, pk=id_provider)
 	mAllUsers = InfoProv.objects.filter(empresa_id=id_provider)
+	mRegions = Region.objects.all().values()
 	mSites = Sitio.objects.all()
 	_jsonSites = []
 
@@ -131,10 +132,12 @@ def provider(request, id_provider, format):
 		'name_provider':mProvider.nombre, 
 		'id_region':mProvider.region_id,
 		'name_region':mProvider.region.nombre,
-		'n_users':mAllUsers.count() 
+		'n_users':mAllUsers.count(),
+		'id':int(id_provider)
 		}
 	_json["users"] = list(mAllUsers.values('pk', 'first_name', 'last_name', 'imei', 'email', 'telefono'))
 	_json["sites"] = _jsonSites
+	_json["regiones"] = list(mRegions)
 	data = simplejson.dumps(_json)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')

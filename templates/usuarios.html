@@ -30,6 +30,7 @@
 		</div>
 	</header>
 	<div id="gradiant"></div>
+	<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 
 	<div id="cuerpo">
 		<div id="izquierda1" class="interior">
 			<li id="administrador"> Usuarios <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
@@ -58,7 +59,7 @@
 			</ul>
 		</div>
 		<div id="derecha" class="interior">
-			<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 	
+				
 			<a name="inicio"> </a>
 			<div id="busqueda"> Tu busqueda : <input type="text" size="15"></div>
 			<div id="iabc">
@@ -175,7 +176,10 @@
 					<div id="linea1"></div>
 					<li>Telefono</li>
 					<div id="linea1"></div>
-					<li>Proveedor</li>
+					<li>Contraseña</li>
+					<div id="linea1"></div>
+					
+					
 				</ul>
 			</div>
 			<div id="popinfo" class="popinfo3">
@@ -183,9 +187,8 @@
 				<input type="text" class="textinfo apellido">
 				<input type="text" class="textinfo email">
 				<input type="text" class="textinfo telefono">
-				<select class="textinfo selectProvider">
-					<option selected> TODO </option>
-				</select> 
+				<input type="text" class="textinfo contraena">
+			 
 				<button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrarTodo(); return false;">Cancelar</button>
 			</div>
 		</div>

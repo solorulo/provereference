@@ -48,8 +48,7 @@ bottom: 18px;}
 /*	margin-right:10px;*/
 }
 #flecha{
-	position: fixed;
-	right: 20px;
+	float: right;
 }
 
 
@@ -181,6 +180,7 @@ top: 5%;
 list-style-type: none;
 text-align: left;
 font-family: 'Source Sans Pro', sans-serif;
+cursor: pointer;
 
  }
  #nuevo img{ /*signo de mas*/
@@ -192,9 +192,11 @@ top:2px;
 
  #nuevo :hover{/*camvia de color el texto de nuevo*/
  	color: #0164BF;
+ 	 cursor:  pointer;
  	
 
  }
+
 
 #linea1{/*linea superior*/
 
@@ -310,10 +312,12 @@ margin: 10px auto;
 	text-align: right;
 	position: relative;
 	left: 15%;
+	cursor: pointer;
 
 }
 .conf:hover{
 	color: #002160;
+	cursor: pointer;
 }
 
 .info{/*informacion del personal*/
@@ -350,7 +354,7 @@ top: 15px;
 #popup2{
 font-family: 'Source Sans Pro', sans-serif;
 width: 40%;
-height: 355px;
+height: 450px;
 border-radius: 5px;
 box-shadow: 0px 0px 600px 0px #000;
 position: fixed;
@@ -377,7 +381,7 @@ top: 15px;
 #popup3{
 font-family: 'Source Sans Pro', sans-serif;
 width: 40%;
-height: 470px !important;
+height: 540px !important;
 border-radius: 5px;
 box-shadow: 0px 0px 600px 0px #000;
 position: fixed;
@@ -438,7 +442,7 @@ top: 50px;
 #poplateral{
 	position: absolute;
 	width: 40%;
-	height: 78%;
+	height: 82.7%;
 	border-radius:0px 0px 0px 5px;
 	background-color: #002160;
 	display: inline-block;
@@ -446,7 +450,7 @@ top: 50px;
 color: #000
 }
 .poplateral3{/*lateral de usuarios*/
-	height: 83.5% !important;
+	height: 85.48% !important;
 }
 
 #popul li{
@@ -491,7 +495,7 @@ top: 30%;
 	
 	width: 80%;
 	background-color: #FFF;
-	margin-bottom:35px; 
+	margin-bottom:32px; 
 	border-top-color: #FFF;
 	border-left-color: #FFF;
 	border-color: #FFF;
@@ -499,7 +503,7 @@ top: 30%;
 	border-left-style: none;
 	border-bottom-color: #0164BF;
 	background-image: ;
-	top: 10px;
+	
 }
 
 
@@ -574,9 +578,6 @@ margin-top: 2%;
 margin-bottom: 2%;
 box-shadow: rgb(150,150,150) 0px 0px 10px ;
 
-}
-table#actividad{
-	margin-top: -2%;
 }
  .t1, .t3 {
  	background-color:#0064BF;
@@ -668,12 +669,9 @@ background-color:#0064BF;
  	text-align:left;
  width: 100%;}
 	#filtrosbusqueda{
+float: right;
 display: inline-block;
-    position: absolute;
-    display: inline-block;
-    top: 67px;
-    right: 265px;
-	}
+padding-right: 109px;	}
 	#filtrosbusqueda table{
 	box-shadow: none;
 	
@@ -708,4 +706,11 @@ display: inline-block;
 	height: 100%;
 	background-color: #F1FAFF;
 
+}
+#izquierda > a:link{
+  cursor:  pointer;
+  color:white;
+}
+#izquierda a:visited {
+color: white; /* verde */
 }

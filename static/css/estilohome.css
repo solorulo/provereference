@@ -38,6 +38,7 @@ height: 568px;
 	padding:3px 41px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #636363;
+	margin-top: 13px;
 }
 .myButton:hover {
 	background-color:#6c7c7c;
