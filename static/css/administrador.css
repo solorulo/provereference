@@ -707,10 +707,25 @@ padding-right: 109px;	}
 	background-color: #F1FAFF;
 
 }
+#superior a:link{
+  cursor:  pointer;
+  color: #5B87DA;
+}
+#superior a:visited{
+  cursor:  pointer;
+  color: #5B87DA;
+}
 #izquierda > a:link{
   cursor:  pointer;
   color:white;
 }
 #izquierda a:visited {
+color: white; /* verde */
+}
+#izquierda1 > a:link{
+  cursor:  pointer;
+  color:white;
+}
+#izquierda1 a:visited {
 color: white; /* verde */
 }

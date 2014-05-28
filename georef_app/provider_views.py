@@ -1,144 +1,229 @@
-# -*- coding: utf-8 -*-
-from django.core import serializers
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied, SuspiciousOperation
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.utils import simplejson
-from georef_app.models import InfoProv, Empresa, Sitio, Region
-from georef_app.utils import dec_magic
+from georef_app.models import *
+from georef_app.utils import dec_magic, check_admin
+import hashlib
+from provereference.settings import API_KEY
 
+# Create your views here.
 @dec_magic(method='GET', admin_required=True)
-def providers(request, format):
+def users(request, format):
 	_json = {}
-	providers = []
-	sites_provs = []
-	mProviders = Empresa.objects.all().select_related().order_by('nombre')
-	mSites = Sitio.objects.all().select_related()
-	mRegions = Region.objects.all().values()
-	mAllUsers = InfoProv.objects.all()
-	# print simplejson.dumps(list(mSites.values()))
-	for site in mSites:
-		mSiteProvs = mProviders.filter(region=site.region).values('pk')
-		sites_provs.append({
-			'id':site.id,
-			'name':site.nombre,
-			'provs':list(mSiteProvs)
-			})
-	for prov in mProviders:
-		nusers = mAllUsers.filter(empresa=prov).count()
-		# sites = Sitio.objects.filter(region=prov.region).values('pk', 'nombre')
-		providers.append({
-			'id':prov.id,
-			'name':prov.nombre,
-			'nusers':nusers,
-			'reg': u'Región '+prov.region.nombre, 
-			# 'sites':list(sites)
-			})
-	_json["providers"] = providers
-	_json["sites"] = sites_provs
-	_json["regiones"] = list(mRegions)
+	usersprov = InfoProv.objects.all().select_related('empresa')
+	providers = Empresa.objects.all()
+	regiones = Region.objects.all()
+	sitios = Sitio.objects.all()
+	_jsonregiones = []
+	_jsonsitios = []
+	_jsonproviders = []
+	for region in regiones:
+		_jsonregiones.append( {
+			'pk' : region.pk,
+			'name':region.nombre,
+			'providers':list(providers.filter(region=region).values('pk')),
+			'sites':list(sitios.filter(region=region).values('pk')),
+			'users':list(usersprov.filter(empresa__region=region).values('pk'))
+		})
+	for sitio in sitios:
+		_jsonsitios.append ({
+			'pk':sitio.pk,
+			'name':sitio.nombre,
+			'users':list(usersprov.filter(actividad__sitio=sitio).values('pk'))
+		})
+	for provider in providers:
+		_jsonproviders.append( {
+			'pk':provider.pk,
+			'name':provider.nombre,
+			'users':list(usersprov.filter(empresa=provider).values('pk'))
+		})
+
+	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id'))
+	_json['provider'] = _jsonproviders
+	_json['site'] = _jsonsitios
+	_json['region'] = _jsonregiones
 	data = simplejson.dumps(_json)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
-	return render(request, 'proveedor.html', {"data":data})
+	return render(request, 'usuarios.html', {"data":data})
 
-@dec_magic(method='POST', required_args=['name', 'region'], admin_required=True, json_res=True)
-def provider_new(request):
+@dec_magic(method='POST', required_args=['email', 'imei', 'provider'], admin_required=True, json_res=True)
+def user_new(request):
 	try:
-		name = request.POST['name']
-		region = request.POST['region']
+		# TODO dar de alta el usuario
+		email = request.POST['email']
+		imei = request.POST['imei']
+		provider = request.POST['provider']
+		first_name = request.POST.get('first_name', '')
+		last_name = request.POST.get('last_name', '')
+		phone = request.POST.get('phone', '')
+		password = hashlib.md5(imei+API_KEY)
 
-		new_provider = Empresa(
-			nombre=name,
-			region_id=int(region)
+		new_userprov = InfoProv(
+			username=imei,
+			first_name=first_name,
+			last_name=last_name,
+			email=email,
+			password=password,
+			imei=imei,
+			telefono=phone,
+			empresa=Empresa.objects.get(pk=int(provider))
 			)
-		new_provider.save()
+		new_userprov.save()
+
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Bien",
-			'provider_id' : new_provider.pk
+			'user_id':new_userprov.pk
 		})
 	except :
 		data = simplejson.dumps({
 			'code' : 0,
 			'msg' : "Fallo"
 		})
-	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
 @dec_magic(method='POST', admin_required=True, json_res=True)
-def provider_edit(request, id_provider):
+def user_edit(request, id_user):
 	try:
-		name = request.POST.get('name', None)
-		id_region = request.POST.get('region', None)
+		# TODO Editar al usuario
+		email = request.POST.get('email', None)
+		imei = request.POST.get('imei',None)
+		provider = request.POST.get('provider', None)
+		first_name = request.POST.get('first_name', None)
+		last_name = request.POST.get('last_name', None)
+		phone = request.POST.get('phone', None)
+		the_userprov = InfoProv.objects.get(pk=id_user)
+		if email is not None :
+			the_userprov.email = email
+		if imei is not None :
+			the_userprov.imei = imei
+		if provider is not None :
+			the_userprov.empresa = Empresa.objects.get(pk=int(provider))
+		if first_name is not None :
+			the_userprov.first_name = first_name
+		if last_name is not None :
+			the_userprov.last_name = last_name
+		if phone is not None :
+			the_userprov.telefono = phone
 
-		the_provider = Empresa.objects.get(pk=id_provider)
-		if name is not None :
-			the_provider.nombre = name
-		if id_region is not None :
-			the_provider.region_id = int(id_region)
-
-		the_provider.save()
+		the_userprov.save()
 
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Bien"
 		})
-	except Empresa.DoesNotExist:
+	except InfoProv.DoesNotExist:
 		data = simplejson.dumps({
 			'code' : 0,
-			'msg' : "No existe el proveedor"
+			'msg' : "No existe el usuario"
 		})
 	except:
 		data = simplejson.dumps({
 			'code' : 0,
 			'msg' : "Ocurrio un error desconocido"
 		})
-	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
 @dec_magic(method='POST', admin_required=True, json_res=True)
-def provider_delete(request, id_provider):
+def user_delete(request, id_user):
 	try:
-		the_provider = Empresa.objects.get(pk=id_provider)
-		the_provider.delete()
+		# TODO Borrar Supervisor
+		the_userprov = InfoProv.objects.get(pk=id_user)
+		the_userprov.delete()
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Borrado"
 		})
-	except Empresa.DoesNotExist:
+	except InfoProv.DoesNotExist:
 		data = simplejson.dumps({
 			'code' : 0,
-			'msg' : "No existe el proveedor"
+			'msg' : "No existe el usuario"
 		})
-	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
-@dec_magic(method='GET', admin_required=True)
-def provider(request, id_provider, format):
+@dec_magic(method='GET', admin_required=False)
+def user(request, id_user, format):
 	_json = {}
-	userprovs = []
-	mProvider = get_object_or_404(Empresa, pk=id_provider)
-	mAllUsers = InfoProv.objects.filter(empresa_id=id_provider)
-	mRegions = Region.objects.all().values()
+	the_userprov = get_object_or_404(InfoProv, pk=id_user)
 	mSites = Sitio.objects.all()
-	_jsonSites = []
+	try:
+		actividades = Actividad.objects.filter(infoprov_id=id_user).order_by('-fecha').select_related()
+		_json['activity'] = list(actividades.values('fecha', 'tipo_evento', 'lat', 'lng', 'margen_error', 'sitio__nombre'))
+		for element in _json['activity']:
+			fech = str(element['fecha'])
+			element['fecha'] = fech
 
-	for site in mSites:
-		site_users = mAllUsers.filter(actividad__sitio=site)
-		_jsonSites.append({
-			'id_site':site.pk,
-			'name_site':site.nombre,
-			'user_ids':list(site_users.values('pk'))
-			})
-	# print simplejson.dumps(list(mSites.values()))
-
-	_json["provider"] = { 
-		'name_provider':mProvider.nombre, 
-		'id_region':mProvider.region_id,
-		'name_region':mProvider.region.nombre,
-		'n_users':mAllUsers.count(),
-		'id':int(id_provider)
+		last_act = actividades.latest('fecha')
+		_json['last_act'] = {
+			'date':str(last_act.fecha),
+			'site':last_act.sitio.nombre,
 		}
-	_json["users"] = list(mAllUsers.values('pk', 'first_name', 'last_name', 'imei', 'email', 'telefono'))
-	_json["sites"] = _jsonSites
-	_json["regiones"] = list(mRegions)
+	except Actividad.DoesNotExist:
+		pass
+	_json['first_name'] = the_userprov.first_name
+	_json['last_name'] = the_userprov.last_name
+	_json['phone'] = the_userprov.telefono
+	_json['imei'] = the_userprov.imei
+	_json['sites'] = list(mSites.values('nombre'))
+	_json['provider'] = the_userprov.empresa.nombre
 	data = simplejson.dumps(_json)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
-	return render(request, 'mostrardatosprov.html', {"data":data})
+	return render(request, 'mostrardatos.html', {"data":data})
+
+@dec_magic(method='GET', admin_required=False)
+def supervision(request, format):
+	_json = {}
+	usersprov = InfoProv.objects.all().select_related('empresa')
+	providers = Empresa.objects.all()
+	regiones = Region.objects.all()
+	sitios = Sitio.objects.all()
+	actividades = Actividad.objects.all().select_related('sitio', 'infoprov')
+	_jsonactivity = []
+	_jsonregiones = []
+	_jsonsitios = []
+	_jsonproviders = []
+	for region in regiones:
+		_jsonregiones.append( {
+			'pk':region.pk,
+			'name':region.nombre,
+			'providers':list(providers.filter(region=region).values('pk')),
+			'sites':list(sitios.filter(region=region).values('pk')),
+			'users':list(usersprov.filter(empresa__region=region).values('pk'))
+		})
+	for sitio in sitios:
+		_jsonsitios.append( {
+			'pk':sitio.pk,
+			'name':sitio.nombre,
+			'users':list(usersprov.filter(actividad__sitio=sitio).values('pk'))
+		})
+	for provider in providers:
+		_jsonproviders.append( {
+			'pk':provider.pk,
+			'name':provider.nombre,
+			'users':list(usersprov.filter(empresa=provider).values('pk'))
+		})
+	for user in usersprov:
+		try:
+			last_act = actividades.filter(infoprov=user).latest('fecha')
+			_jsonactivity.append( {
+				'user_pk':user.pk,
+				'date':str(last_act.fecha),
+				'site':last_act.sitio.nombre
+			})
+		except :
+			pass
+
+	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei'))
+	_json['activity'] = _jsonactivity
+	_json['provider'] = _jsonproviders
+	_json['site'] = _jsonsitios
+	_json['region'] = _jsonregiones
+	data = simplejson.dumps(_json)
+	if format:
+		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+	return render(request, 'Supervision.html', {"data":data})

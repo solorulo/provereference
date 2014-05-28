@@ -41,12 +41,24 @@ urlpatterns += patterns('georef_app.supervisor_views',
 
 urlpatterns += patterns('georef_app.provider_views',
 	# Examples:
-	url(r'^proveedores/(?P<format>[a-z]{1,5})?$', 'providers', name='providers'),
-	url(r'^proveedores/new/$', 'provider_new', name='provider_new'),
-	url(r'^proveedores/(?P<id_provider>\d{1,5})/edit/$', 'provider_edit', name='provider_edit'),
-	url(r'^proveedores/(?P<id_provider>\d{1,5})/delete/$', 'provider_delete', name='provider_delete'),
+	url(r'^proveedores/(?P<format>json)?$', 'users', name='users'),
+	url(r'^proveedores/new/$', 'user_new', name='user_new'),
+	url(r'^proveedores/(?P<id_user>\d{1,5})/edit/$', 'user_edit', name='user_edit'),
+	url(r'^proveedores/(?P<id_user>\d{1,5})/delete/$', 'user_delete', name='user_delete'),
 
-	url(r'^proveedor/(?P<id_provider>\d{1,5})/(?P<format>json)?$', 'provider', name='provider'),
+	url(r'^proveedor/(?P<id_user>\d{1,5})/(?P<format>json)?$', 'user', name='user'),
+
+	url(r'^supervision/(?P<format>json)?$', 'supervision', name='supervision'),
+)
+
+urlpatterns += patterns('georef_app.company_views',
+	# Examples:
+	url(r'^companias/(?P<format>json)?$', 'providers', name='providers'),
+	url(r'^companias/new/$', 'provider_new', name='provider_new'),
+	url(r'^companias/(?P<id_provider>\d{1,5})/edit/$', 'provider_edit', name='provider_edit'),
+	url(r'^companias/(?P<id_provider>\d{1,5})/delete/$', 'provider_delete', name='provider_delete'),
+
+	url(r'^compania/(?P<id_provider>\d{1,5})/(?P<format>json)?$', 'provider', name='provider'),
 )
 
 urlpatterns += patterns('georef_app.user_views',
@@ -56,9 +68,8 @@ urlpatterns += patterns('georef_app.user_views',
 	url(r'^usuarios/(?P<id_user>\d{1,5})/edit/$', 'user_edit', name='user_edit'),
 	url(r'^usuarios/(?P<id_user>\d{1,5})/delete/$', 'user_delete', name='user_delete'),
 
-	url(r'^usuario/(?P<id_user>\d{1,5})/(?P<format>json)?$', 'user', name='user'),
+	# url(r'^usuario/(?P<id_user>\d{1,5})/(?P<format>json)?$', 'user', name='user'),
 
-	url(r'^supervision/(?P<format>json)?$', 'supervision', name='supervision'),
 )
 
 urlpatterns += patterns('georef_app.sites_views',
