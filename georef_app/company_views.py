@@ -6,7 +6,7 @@ from georef_app.models import InfoProv, Empresa, Sitio, Region
 from georef_app.utils import dec_magic
 
 @dec_magic(method='GET', admin_required=True)
-def providers(request, format):
+def companies(request, format):
 	_json = {}
 	providers = []
 	sites_provs = []
@@ -41,7 +41,7 @@ def providers(request, format):
 	return render(request, 'compania.html', {"data":data})
 
 @dec_magic(method='POST', required_args=['name', 'region'], admin_required=True, json_res=True)
-def provider_new(request):
+def company_new(request):
 	try:
 		name = request.POST['name']
 		region = request.POST['region']
@@ -64,7 +64,7 @@ def provider_new(request):
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
 @dec_magic(method='POST', admin_required=True, json_res=True)
-def provider_edit(request, id_provider):
+def company_edit(request, id_provider):
 	try:
 		name = request.POST.get('name', None)
 		id_region = request.POST.get('region', None)
@@ -94,7 +94,7 @@ def provider_edit(request, id_provider):
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
 @dec_magic(method='POST', admin_required=True, json_res=True)
-def provider_delete(request, id_provider):
+def company_delete(request, id_provider):
 	try:
 		the_provider = Empresa.objects.get(pk=id_provider)
 		the_provider.delete()
@@ -110,7 +110,7 @@ def provider_delete(request, id_provider):
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
 @dec_magic(method='GET', admin_required=True)
-def provider(request, id_provider, format):
+def company(request, id_provider, format):
 	_json = {}
 	userprovs = []
 	mProvider = get_object_or_404(Empresa, pk=id_provider)

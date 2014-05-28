@@ -53,12 +53,12 @@ urlpatterns += patterns('georef_app.provider_views',
 
 urlpatterns += patterns('georef_app.company_views',
 	# Examples:
-	url(r'^companias/(?P<format>json)?$', 'providers', name='providers'),
-	url(r'^companias/new/$', 'provider_new', name='provider_new'),
-	url(r'^companias/(?P<id_provider>\d{1,5})/edit/$', 'provider_edit', name='provider_edit'),
-	url(r'^companias/(?P<id_provider>\d{1,5})/delete/$', 'provider_delete', name='provider_delete'),
+	url(r'^companias/(?P<format>json)?$', 'companies', name='companies'),
+	url(r'^companias/new/$', 'company_new', name='company_new'),
+	url(r'^companias/(?P<id_provider>\d{1,5})/edit/$', 'company_edit', name='company_edit'),
+	url(r'^companias/(?P<id_provider>\d{1,5})/delete/$', 'company_delete', name='company_delete'),
 
-	url(r'^compania/(?P<id_provider>\d{1,5})/(?P<format>json)?$', 'provider', name='provider'),
+	url(r'^compania/(?P<id_provider>\d{1,5})/(?P<format>json)?$', 'company', name='company'),
 )
 
 urlpatterns += patterns('georef_app.user_views',

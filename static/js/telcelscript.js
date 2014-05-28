@@ -209,10 +209,12 @@ function admin(i, id){
 		var email = $('#email').val();
 		var first_name = $('#first_name').val();
 		var last_name = $('#last_name').val();
+		var password = $('#password').val();
 		var postdata = {
 			'email':email, 
 			'first_name':first_name,
 			'last_name':last_name,
+			'password':password,
 			'is_admin':true,
 			'tel':''
 		};

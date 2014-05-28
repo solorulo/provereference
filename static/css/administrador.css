@@ -295,7 +295,7 @@ td #busqueda{
 #popup2{
 	font-family: 'Source Sans Pro', sans-serif;
 	width: 40%;
-	height: 450px;
+	height: 420px;
 	border-radius: 5px;
 	box-shadow: 0px 0px 600px 0px #000;
 	position: fixed;
@@ -318,7 +318,7 @@ td #busqueda{
 #popup3{
 	font-family: 'Source Sans Pro', sans-serif;
 	width: 40%;
-	height: 540px !important;
+	height: 575px !important;
 	border-radius: 5px;
 	box-shadow: 0px 0px 600px 0px #000;
 	position: fixed;
@@ -378,7 +378,7 @@ td #busqueda{
 	color: #000
 }
 .poplateral3{/*lateral de usuarios*/
-	height: 85.48% !important;
+	height: 86.5% !important;
 }
 #popul li{
 	text-decoration: none;
@@ -403,16 +403,16 @@ input #check{
 	height: 78%;
 	text-align: center;
 	left: 40%;
-	top: 30%;
+	top: 24%;
 }
 .popinfo3{
-	top: 23% !important;
+	top: 20% !important;
 }
 .textinfo{
 	position: relative;
 	width: 80%;
 	background-color: #FFF;
-	margin-bottom:32px; 
+	margin-bottom:40px; 
 	border-top-color: #FFF;
 	border-left-color: #FFF;
 	border-color: #FFF;

@@ -2,37 +2,18 @@
 <html>
 <head>
 	<title>Datos</title>
-	
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="/static/css/administrador.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/cupertino/jquery-ui.css">
-	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+	{% include "common_headers.html" %}
 	<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/supervisionUsuarioDataFormat.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/telcelscript.js" ></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/mapa.js" ></script>
 	<script type="text/javascript">
 	eval('var data = {{ data|escape|safe }}');
 	</script>
 </head>
 <body>
-	<header>
-		<a name="inicio1"> </a>
-		<div class="principal">
-			<nav id="superior">
-				<ul >
-					<li id="s1" class="iconosuperior"><img src="/static/imagenes/Supervisar/supervisor_big.png" border="0"><a href="/supervision">Supervisión</a></li>
-					{% if user.infouser.is_admin %}
-					<li id="s2" class="iconosuperior"><img src="/static/imagenes/Supervisar/administrar.png" border="0"><a href="/administradores">Administrar </a></li>
-					{% endif %}
-					<li id="s3" class="iconosuperior"><img src="/static/imagenes/Supervisar/usuario.png" border="0">{{ user.first_name }}</li>
-					<li id="s4" class="iconosuperior"><img src="/static/imagenes/Supervisar/cerrar.png" border="0"><a href="/logout">Cerrar sesión</a></li>
-				</ul>
-			</nav>
-		</div>
-	</header>
+	
+	{% include "header_supervision.html" %}
+
 	<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 
 	<div id="cuerpo">
 		<div id="izquierda4" class="interior1">

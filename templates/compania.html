@@ -2,36 +2,16 @@
 <html>
 <head>
 	<title>Compañia</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="/static/css/administrador.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/cupertino/jquery-ui.css">
-	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-	<script type="text/javascript" src="/static/js/jquery.js"></script>
-	<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
-	<script type="text/javascript" src="/static/js/telcelscript.js" ></script>
-	<script type="text/javascript" src="/static/js/adminDataFormat.js"></script>
+	{% include "common_headers.html" %}
+	<script type="text/javascript" src="/static/js/proveedoresDataFormat.js"></script>
 
 	<script type="text/javascript">
 		var data = eval('{{ data|escape|safe }}')
-		$(document).ready(function() {
-			$('#b_create').click(new admin().create);
-		});
 	</script>
 </head>
 <body  > 
 	{% csrf_token %}
-	<header >
-		<a name="inicio1"> </a>
-		<div class="principal">
-			<nav id="superior">
-				<ul >
-					<li id="s2" class="iconosuperior"><img src="/static/imagenes/Supervisar/supervisor_big.png" border="0"><a href="/supervision/">Supervisión</a></li>
-					<li id="s3" class="iconosuperior"><img src="/static/imagenes/Supervisar/usuario.png" border="0">{{ user.first_name }}</li>
-					<li id="s4" class="iconosuperior"><img src="/static/imagenes/Supervisar/cerrar.png" border="0"><a href="/logout">Cerrar sesión</a></li>
-				</ul>
-			</nav>
-		</div>
-	</header>
+	{% include "header_admins.html" %}
 	
 	<div id="gradiant"></div>
 	<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()">
