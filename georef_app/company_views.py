@@ -38,7 +38,7 @@ def providers(request, format):
 	data = simplejson.dumps(_json)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
-	return render(request, 'proveedor.html', {"data":data})
+	return render(request, 'compania.html', {"data":data})
 
 @dec_magic(method='POST', required_args=['name', 'region'], admin_required=True, json_res=True)
 def provider_new(request):

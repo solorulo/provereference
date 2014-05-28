@@ -36,13 +36,11 @@
 			<li id="administrador"> Sitios <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
 
 
-			<li id="nuevo" onclick="abrir1()"><div id="linea1"></div></br><dd>Nuevo Sitio <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
+			<li id="nuevo" onclick="abrir2()"><div id="linea1"></div></br><dd>Nuevo Sitio <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
 			<li id="nuevo"></br></br><dd>Región 
-		<select style="display:block;">
-		<option selected> Select Box </option>
-		<option>Short Option</option>
-		<option>This Is A Longer Option</option>
-		</select> 
+		<select class="textinfo optionRegion" id="optionRegion">
+			<option selected> ---- </option>
+		</select>
 		<div id="linea2"></div>
 			</li>
 
@@ -139,63 +137,58 @@
 		<div id="popcontenido">
 			<div id="poplateral" class="poplateral3">
 				<ul id="popul">
-					<li> Nombre</li>
+					<li>Nombre</li>
 					<div id="linea1"></div>
 					<li>Neumonico</li>
 					<div id="linea1"></div>
-					<li>Lat-Long</li>
+					<li>Lat</li>
 					<div id="linea1"></div>
-					<li>Telefono</li>
+					<li>Long</li>
 					<div id="linea1"></div>
-					<li>Proveedor</li>
+					<li>Región</li>
 				</ul>
 
 			</div>
 			<div id="popinfo" class="popinfo3">
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
-
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
-				<select class="textinfo">
-		<option selected> Select Box </option>
-		<option>Short Option</option>
-		<option>This Is A Longer Option</option>
-		</select> 
-				<button id="beliminar">Eliminar</button> <button id="bazul">Guardar</button><button id="bblanco" onclick="cerrar('#popup4');">Cancelar</button>
+				<input type="text" class="textinfo form_nombre">
+				<input type="text" class="textinfo neumonico">
+				<input type="text" class="textinfo lat">
+				<input type="text" class="textinfo long">
+				<select class="textinfo optionRegion" id="optionRegion">
+					<option selected> ---- </option>
+				</select>
+				<button id="beliminar">Eliminar</button> <button id="bazul">Guardar</button><button id="bblanco" onclick="cerrarTodo();">Cancelar</button>
 			</div>
 		</div>
 	</div>
-	<div id="popup2" class="pop">
+	<div id="popup3" class="pop">
 		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Sitio > Nuevo <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
 		<div id="gradiant"></div>
 		<div id="popcontenido">
 			<div id="poplateral" >
 				<ul id="popul">
-					<li> Nombre</li>
+					<li>Nombre</li>
 					<div id="linea1"></div>
-					<li>Apellido</li>
+					<li>Neumonico</li>
 					<div id="linea1"></div>
-					<li>Mail</li>
+					<li>Lat</li>
 					<div id="linea1"></div>
-					<li>Telefono</li>
+					<li>Long</li>
 					<div id="linea1"></div>
-					<li>Contraseña</li>
-					<div id="linea1"></div>
+					<li>Región</li>
 				</ul>
 
 
 			</div>
 			<div id="popinfo">
-				<div><input type="text" class="textinfo">
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
-				<input type="text" class="textinfo">
-				
-				
-				
-				 <button class="bazul">Crear</button><button id="bblanco" onclick="cerrar('#popup2');">Cancelar</button>
+				<input type="text" class="textinfo form_nombre">
+				<input type="text" class="textinfo neumonico">
+				<input type="text" class="textinfo lat">
+				<input type="text" class="textinfo long">
+				<select class="textinfo optionRegion" id="optionRegion">
+					<option selected> ---- </option>
+				</select>
+				<button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrarTodo();">Cancelar</button>
 			</div>
 		</div>
 	</div>

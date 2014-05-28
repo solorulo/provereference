@@ -15,7 +15,6 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 	var fecha_final = new Date(document.querySelector("#fecha_final").value);
 
 	for (var i = 0; i < data.activity.length; i++) {
-		console.log(data.activity[i].fecha, (new Date(data.activity[i].fecha)).getTime());
 		if((new Date(data.activity[i].fecha)).getTime() < fecha_inicial.getTime()){
 			continue;
 		}
@@ -34,7 +33,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var tdMargen = td(data.activity[i].margen_error);
 		var tdLat = td(data.activity[i].lat);
 		var tdLng = td(data.activity[i].lng);
-		var tdFecha = td((new Date(data.activity[i].fecha)).toString());
+		var tdFecha = td(fechaToString(data.activity[i].fecha));
 		var tdSitio = td(data.activity[i].sitio__nombre);
 		var tdMapa = td("Mapa");
 		tdMapa.setAttribute("id", "showMap");
@@ -45,11 +44,11 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 				$( "#map_container" ).dialog( "open" );
 				map.setCenter(new google.maps.LatLng(lat, lng));
 				map.setZoom(16);
-				plotPoint(lat,lng,name,'<span class="gBubble"><b>'+(new Date(fecha)).toString()+'</b></span>');
+				plotPoint(lat,lng,name,'<span class="gBubble"><b>'+fecha+'</b></span>');
 				return false;
 			};
 		}
-		var mapa = (new mapaFunct(data.activity[i].lat, data.activity[i].lng, data.activity[i].sitio__nombre, (new Date(data.activity[i].fecha)).toString())).mapa;
+		var mapa = (new mapaFunct(data.activity[i].lat, data.activity[i].lng, data.activity[i].sitio__nombre, fechaToString(data.activity[i].fecha))).mapa;
 		tdMapa.onclick = mapa;
 		tr.appendChild(tdTipo);
 		tr.appendChild(tdMargen);
