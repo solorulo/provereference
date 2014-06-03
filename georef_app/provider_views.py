@@ -41,7 +41,7 @@ def users(request, format):
 			'users':list(usersprov.filter(empresa=provider).values('pk'))
 		})
 
-	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id'))
+	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id', 'empresa__region'))
 	_json['companies'] = _jsonproviders
 	_json['site'] = _jsonsitios
 	_json['region'] = _jsonregiones
