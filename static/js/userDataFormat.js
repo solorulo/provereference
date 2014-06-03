@@ -140,6 +140,30 @@ $(document).ready(function(event){
 	document.querySelector("#optionSitio").onchange = function(event){dataFormat(inputDOM.value);};
 
 	/*
+		SELECT OPTION COMPANY
+	*/
+
+	var optionCompany = document.createElement("select");
+	optionCompany.setAttribute("class", "optionCompany");
+	optionCompany.setAttribute("style", "display:block;");
+
+	var firstOption = document.createElement("option");
+	firstOption.appendChild(document.createTextNode(" ---- "));
+	optionCompany.appendChild(firstOption);
+	for (var i = 0; i < data.provider.length; i++) {
+		var optionText = data.provider[i].name;
+		var optionTextNode = document.createTextNode(optionText);
+		var option = document.createElement("option");
+		option.appendChild(optionTextNode);
+		optionCompany.appendChild(option);
+	};
+	var oldOptionsRegion = document.querySelectorAll(".optionCompany");
+	for (var i = oldOptionsRegion.length - 1; i >= 0; i--) {
+		var clone = optionCompany.cloneNode(true);
+		oldOptionsRegion[i].parentNode.replaceChild(clone, oldOptionsRegion[i]);
+	};
+
+	/*
 		SELECT OPTION PROVEEDOR
 	*/
 
@@ -162,4 +186,10 @@ $(document).ready(function(event){
 		var clone = optionProvider.cloneNode(true);
 		oldOptionsProvider[i].parentNode.replaceChild(clone, oldOptionsProvider[i]);
 	};
+
+	/*
+		REPARAR LOS ESTILOS DENTRO DEL POPUP
+	*/
+
+	$("#popcontenido select").addClass("textinfo");
 });

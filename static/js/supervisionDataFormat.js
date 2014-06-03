@@ -73,7 +73,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var tdTelefono = document.createElement("td");
 		var txtTelefono = document.createTextNode("Teléfono:"+telefono);
 		tdNombre.setAttribute("class", "t1");
-		aNombre.setAttribute("href", "/usuario/"+id);
+		aNombre.setAttribute("href", "/proveedor/"+id);
 		tdActivo.setAttribute("class", "t1");
 		if(Date.now()-5*60*1000 < fecha.getTime())
 			tdActivo.setAttribute("id", "tactivo");

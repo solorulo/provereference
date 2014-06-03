@@ -15,10 +15,10 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 	var fecha_final = new Date(document.querySelector("#fecha_final").value);
 
 	for (var i = 0; i < data.activity.length; i++) {
-		if((new Date(data.activity[i].fecha)).getTime() < fecha_inicial.getTime()){
+		if((new Date(data.activity[i].fecha.replace(/ /, "T"))).getTime() < fecha_inicial.getTime()){
 			continue;
 		}
-		if((new Date(data.activity[i].fecha)).getTime() > fecha_final.getTime()){
+		if((new Date(data.activity[i].fecha.replace(/ /, "T"))).getTime() > fecha_final.getTime()+24*60*60*1000){
 			continue;
 		}
 		var siteSelected = data.sites[document.querySelector("#select_sitios").selectedIndex - 1];
@@ -93,7 +93,7 @@ $(document).ready(function(){
 		data.last_act.date = null;
 	}
 	var sitetd = createTd("Sitio: "+data.last_act.site);
-	var fechatd = createTd("Fecha: "+(new Date(data.last_act.date)).toString());
+	var fechatd = createTd("Fecha: "+(fechaToString(data.last_act.date)));
 	remplazarTexto("#usuario #t2", "");
 	document.querySelector("#usuario #t2").appendChild(ultimotd);
 	document.querySelector("#usuario #t2").appendChild(sitetd);
