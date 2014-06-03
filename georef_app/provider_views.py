@@ -42,7 +42,7 @@ def users(request, format):
 		})
 
 	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id'))
-	_json['provider'] = _jsonproviders
+	_json['companies'] = _jsonproviders
 	_json['site'] = _jsonsitios
 	_json['region'] = _jsonregiones
 	data = simplejson.dumps(_json)
