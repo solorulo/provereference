@@ -3,10 +3,9 @@
 <head>
 	<title>Compañia</title>
 	{% include "common_headers.html" %}
-	<script type="text/javascript" src="/static/js/proveedoresDataFormat.js"></script>
-
+	<script type="text/javascript" src="/static/js/companyDataFormat.js"></script>
 	<script type="text/javascript">
-		var data = eval('{{ data|escape|safe }}')
+		eval('var data = {{ data|escape|safe }}')
 	</script>
 </head>
 <body  > 
@@ -33,36 +32,27 @@
 		 	
 			<a name="inicio"> </a>
 			<div id="busqueda"> Tu búsqueda : <input type="text" size="15"></div>
-			
 			<div id="iabc">
 			</div>
-
 			</div>
 		</div>
 	</div>
 	<div id="popup1" class="pop">
-		<div id="popsuperior"> <img src="/static/imagenes/Supervisar/usuario.png"> Compañia > Editar <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
+		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Compañia > Editar <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
 		<div id="gradiant"></div>
 		<div id="popcontenido">
 			<div id="poplateral">
 				<ul id="popul">
-					<li> Nombre</li>
+					<li>Nombre</li>
 					<div id="linea1"></div>
-					<li>Region</li>
+					<li>Región</li>
 					<div id="linea1"></div>
-					
 				</ul>
-
-
 			</div>
 			<div id="popinfo">
-				<input type="text" class="textinfo form_nombre">
-				<input type="text" class="textinfo form_apellido">
-
-				
-				<div id="popadministrador">Compañia<label class="switch"><input type="checkbox" checked=""><span></span></label></div>
-
-				<button id="beliminar">Eliminar</button> <button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrar('#popup1')">Cancelar</button>
+				<input id="name" name="name" type="text" class="textinfo form_nombre">
+				<select id="optionRegion" class="optionRegion textinfo" style="display:block;"></select>
+				<button id="beliminar">Eliminar</button><button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrarTodo()">Cancelar</button>
 			</div>
 		</div>
 	</div>
@@ -72,22 +62,16 @@
 		<div id="popcontenido">
 			<div id="poplateral">
 				<ul id="popul">
-					<li> Nombre</li>
+					<li>Nombre</li>
 					<div id="linea1"></div>
-					<li>Region</li>
+					<li>Región</li>
 					<div id="linea1"></div>
-					
 				</ul>
-
-
 			</div>
 			<div id="popinfo">
-				<input id="first_name" name="first_name" type="text" class="textinfo">
-				<input id="last_name" name="last_name" type="text" class="textinfo">
-				
-				<div id="popadministrador">Compañia<label class="switch"><input id="is_admin" name="is_admin" type="checkbox" checked/><span></span></label></div>
-
-				<button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrar1(); return false;">Cancelar</button>
+				<input id="name" name="name" type="text" class="textinfo form_nombre">
+				<select id="optionRegion" class="optionRegion textinfo" style="display:block;"></select>
+				<button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrarTodo()">Cancelar</button>
 			</div>
 		</div>
 	</div>
