@@ -22,22 +22,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 	newElement = document.createElement("div");
 	newElement.setAttribute("id", "iabc");
 	element.parentNode.replaceChild(newElement, element);
-	/*
-		tr
-			td.t1
-				a[href="/usuario/id"]
-					-Nombre
-			td.t1#tactivo
-			td.t2
-				-Proveedor
-		tr
-			td.t3
-				-Ultimo Registro
-			td.t3
-				-Valor Último Registro
-			td.t4
-				-Telefono
-	*/
+
 	for (var i = 0; i < data.users.length; i++) {
 		var nombre, proveedor, fecha, sitio, telefono, id, contenedor;
 		id = data.users[i].pk;

@@ -151,7 +151,7 @@ def user(request, id_user, format):
 	the_userprov = get_object_or_404(InfoProv, pk=id_user)
 	mSites = Sitio.objects.all()
 	try:
-		actividades = Actividad.objects.filter(infoprov_id=id_user).order_by('-fecha').select_related()
+		actividades = Actividad.objects.filter(infoprov_id=id_user).order_by('-pk').select_related()
 		_json['activity'] = list(actividades.values('fecha', 'tipo_evento', 'lat', 'lng', 'margen_error', 'sitio__nombre'))
 		for element in _json['activity']:
 			fech = str(element['fecha'])

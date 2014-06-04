@@ -32,7 +32,7 @@ def companies(request, format):
 			'reg': u'Región '+prov.region.nombre, 
 			# 'sites':list(sites)
 			})
-	_json["providers"] = providers
+	_json["companies"] = providers
 	_json["sites"] = sites_provs
 	_json["regiones"] = list(mRegions)
 	data = simplejson.dumps(_json)
