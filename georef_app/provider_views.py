@@ -41,8 +41,8 @@ def users(request, format):
 			'users':list(usersprov.filter(empresa=provider).values('pk'))
 		})
 
-	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id'))
-	_json['provider'] = _jsonproviders
+	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id', 'empresa__region'))
+	_json['companies'] = _jsonproviders
 	_json['site'] = _jsonsitios
 	_json['region'] = _jsonregiones
 	data = simplejson.dumps(_json)
@@ -50,13 +50,13 @@ def users(request, format):
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'proveedor.html', {"data":data})
 
-@dec_magic(method='POST', required_args=['email', 'imei', 'provider'], admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['email', 'imei', 'empresa'], admin_required=True, json_res=True)
 def user_new(request):
 	try:
 		# TODO dar de alta el usuario
 		email = request.POST['email']
 		imei = request.POST['imei']
-		provider = request.POST['provider']
+		provider = request.POST['empresa']
 		first_name = request.POST.get('first_name', '')
 		last_name = request.POST.get('last_name', '')
 		phone = request.POST.get('phone', '')

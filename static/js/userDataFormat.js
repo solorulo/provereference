@@ -140,26 +140,32 @@ $(document).ready(function(event){
 	document.querySelector("#optionSitio").onchange = function(event){dataFormat(inputDOM.value);};
 
 	/*
-		SELECT OPTION PROVEEDOR
+		SELECT OPTION COMPANY
 	*/
 
-	var optionProvider = document.createElement("select");
-	optionProvider.setAttribute("class", "textinfo selectProvider");
-	optionProvider.setAttribute("style", "display:block;");
+	var optionCompany = document.createElement("select");
+	optionCompany.setAttribute("class", "optionCompany");
+	optionCompany.setAttribute("style", "display:block;");
 
-	firstOption = document.createElement("option");
+	var firstOption = document.createElement("option");
 	firstOption.appendChild(document.createTextNode(" ---- "));
-	optionProvider.appendChild(firstOption);
-	for (var i = 0; i < data.provider.length; i++) {
-		var optionText = data.provider[i].name;
+	optionCompany.appendChild(firstOption);
+	for (var i = 0; i < data.companies.length; i++) {
+		var optionText = data.companies[i].name;
 		var optionTextNode = document.createTextNode(optionText);
 		var option = document.createElement("option");
 		option.appendChild(optionTextNode);
-		optionProvider.appendChild(option);
+		optionCompany.appendChild(option);
 	};
-	var oldOptionsProvider = document.querySelectorAll(".selectProvider");
-	for (var i = oldOptionsProvider.length - 1; i >= 0; i--) {
-		var clone = optionProvider.cloneNode(true);
-		oldOptionsProvider[i].parentNode.replaceChild(clone, oldOptionsProvider[i]);
+	var oldOptionsRegion = document.querySelectorAll(".optionCompany");
+	for (var i = oldOptionsRegion.length - 1; i >= 0; i--) {
+		var clone = optionCompany.cloneNode(true);
+		oldOptionsRegion[i].parentNode.replaceChild(clone, oldOptionsRegion[i]);
 	};
+
+	/*
+		REPARAR LOS ESTILOS DENTRO DEL POPUP
+	*/
+
+	$("#popcontenido select").addClass("textinfo");
 });
