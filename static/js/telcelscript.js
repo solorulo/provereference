@@ -452,6 +452,52 @@ function sitio(i, id){
 		(new Bridge(i, id, "proveedores")).delete();
 	};
 }
+function companie(i, id){
+	this.open = function(){
+		abrir0();
+		document.querySelector("#popup1 .form_nombre").value = data.companies[i].name;
+		function searchRegion(){
+			for (var i = 0; i < data.regiones.length; i++) {
+				if ("Región "+data.regiones[i].nombre == data.companies[i].reg){
+					return i+1;
+				}
+			}
+		}
+		document.querySelector("#popup1 .optionRegion").selectedIndex = searchRegion();
+		document.querySelector("#popup1 #beliminar").onclick = (new companie(i, id)).delete
+	}
+	this.create = function(event){
+		var name = document.querySelector("#popup2 .form_nombre").value;
+		var reg = document.querySelector("#popup2 .optionRegion").selectedIndex;
+		if(reg == 0){
+			alert("Debe seleccionar una región primero.");
+			return;
+		}
+		reg = data.regiones[reg-1].id;
+		var postdata = {
+			'name':name,
+			'region':reg
+		};
+		(new Bridge(i, id, "companias", postdata)).create(event);
+	}
+	this.save = function(event){
+		var name = document.querySelector("#popup1 .form_nombre").value;
+		var reg = document.querySelector("#popup1 .optionRegion").selectedIndex;
+		if(reg == 0){
+			alert("Debe seleccionar una región primero.");
+			return;
+		}
+		reg = data.regiones[reg-1].id;
+		var postdata = {
+			'name':name,
+			'region':reg
+		};
+		(new Bridge(i, id, "companias", postdata)).save(event);
+	}
+	this.delete = function(event){
+		(new Bridge(i, id, "companias")).delete();
+	}
+}
 
 function dataSort(){
 	// TODO AJAX JSON del servidor.
@@ -501,7 +547,8 @@ function dataFormat(query){
 		innerDataFormat(element, lastLetter, query, reg, usr);
 	} else if((/^\/sitios/i).test(document.location.pathname)){
 		innerDataFormat(element, lastLetter, query, reg, usr);
-	} else {
+	} else if((/^\/companias/i).test(document.location.pathname)){
+		innerDataFormat(element, lastLetter, query, reg, usr);
 		return;
 	}
 }

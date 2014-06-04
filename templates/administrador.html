@@ -6,7 +6,7 @@
 	<script type="text/javascript" src="/static/js/adminDataFormat.js"></script>
 
 	<script type="text/javascript">
-		var data = eval('{{ data|escape|safe }}')
+		eval('var data = {{ data|escape|safe }}')
 		$(document).ready(function() {
 			$('#b_create').click(new admin().create);
 		});
