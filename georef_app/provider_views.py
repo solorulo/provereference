@@ -50,13 +50,13 @@ def users(request, format):
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'proveedor.html', {"data":data})
 
-@dec_magic(method='POST', required_args=['email', 'imei', 'provider'], admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['email', 'imei', 'empresa'], admin_required=True, json_res=True)
 def user_new(request):
 	try:
 		# TODO dar de alta el usuario
 		email = request.POST['email']
 		imei = request.POST['imei']
-		provider = request.POST['provider']
+		provider = request.POST['empresa']
 		first_name = request.POST.get('first_name', '')
 		last_name = request.POST.get('last_name', '')
 		phone = request.POST.get('phone', '')
