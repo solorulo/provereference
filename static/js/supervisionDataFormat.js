@@ -43,8 +43,10 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		id = data.users[i].pk;
 		nombre = data.users[i].first_name + " " + data.users[i].last_name;
 		proveedor = data.provider[searchProveedor(data.provider, id)].name;
-		fecha = new Date(data.activity[searchActivity(data.activity, id)].date);
-		sitio = data.activity[searchActivity(data.activity, id)].site;
+		if (data.activity != null) {
+			sitio = data.activity[searchActivity(data.activity, id)].site;
+			fecha = new Date(data.activity[searchActivity(data.activity, id)].date);	
+		}
 		telefono = data.users[i].telefono;
 		// Dividiendo en cajas por letra
 		if (lastLetter != data.users[i].first_name[0].toUpperCase()){
