@@ -352,7 +352,7 @@ function usuario(i, id){
 			companieSelected = companieSelected.pk;
 		var postdata = {
 			'email':emailNode,
-			'imei':telefonoNode,
+			'imei':imeiNode,
 			'empresa':companieSelected,
 			'first_name':nombreNode,
 			'last_name':apellidoNode,
@@ -375,7 +375,7 @@ function usuario(i, id){
 			companieSelected = companieSelected.pk;
 		var postdata = {
 			'email':emailNode,
-			'imei':telefonoNode,
+			'imei':imeiNode,
 			'empresa':companieSelected,
 			'first_name':nombreNode,
 			'last_name':apellidoNode,
