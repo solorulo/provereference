@@ -106,4 +106,38 @@ $(document).ready(function(event){
 		oldOptionsRegion[i].parentNode.replaceChild(clone, oldOptionsRegion[i]);
 	};
 	document.querySelector("#optionRegion").onchange = function(event){dataFormat(inputDOM.value);};
+
+	/*
+		MAPA
+	*/
+
+	$(".btnMap").click( function(){
+		initialize();
+		$( "#map_container" ).dialog( "open" );
+		var myLatlng = map.getCenter();
+		var marker = new google.maps.Marker({
+			position: myLatlng, 
+			map: map,
+			draggable: true
+		});
+		var infowindow = new google.maps.InfoWindow({
+			content: ":)"
+		});
+		var openInfo = function(){
+			marker.setTitle(marker.getPosition().lat()+", "+marker.getPosition().lng());
+			infowindow.setContent('<span class="gBubble"><b>'+marker.getTitle()+'</b></span>');
+			infowindow.open(map,marker);
+			console.log(marker.getTitle());
+			$(".lat").val(marker.getPosition().lat())
+			$(".lng").val(marker.getPosition().lng())
+		};
+		google.maps.event.addListener(marker, 'dragend', openInfo)
+		google.maps.event.addListener(map, 'dblclick', function(e){
+			e.stop();
+			marker.setPosition(e.latLng);
+			openInfo();
+			return false;
+		})
+		markersArray.push(marker);
+	});
 });
