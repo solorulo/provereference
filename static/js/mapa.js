@@ -1,8 +1,8 @@
 var map;
 var coords = new Object();
 var markersArray = [];
-coords.lat = 44.856051;
-coords.lng = -93.242539;
+coords.lat = 19.432391;
+coords.lng = -99.132767;
 
 $(document).ready(function() 
 {
@@ -32,14 +32,15 @@ function plotPoint(srcLat,srcLon,title,popUpContent,markerIcon)
 	google.maps.event.addListener(marker, 'click', function() {
 		infowindow.open(map,marker);
 	});                                          
-}
+};
 function initialize() 
 {      
 	var latlng = new google.maps.LatLng(coords.lat, coords.lng);
 	var myOptions = {
-		zoom: 10,
+		zoom: 12,
 		center: latlng,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		disableDoubleClickZoom: true
 	};
 	map = new google.maps.Map(document.getElementById("map_canvas"),  myOptions);                         
 }        

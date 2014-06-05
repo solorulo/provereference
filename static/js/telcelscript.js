@@ -400,7 +400,7 @@ function sitio(i, id){
 		document.querySelector("#popup4 .form_nombre").value = data.sites[i].name;
 		document.querySelector("#popup4 .neumonico").value = data.sites[i].neumonico;
 		document.querySelector("#popup4 .lat").value = data.sites[i].lat;
-		document.querySelector("#popup4 .long").value = data.sites[i].lng;
+		document.querySelector("#popup4 .lng").value = data.sites[i].lng;
 		document.querySelector("#popup4 .optionRegion").selectedIndex = searchRegionIndexByID(data.sites[i].reg)+1;
 		document.querySelector("#popup4 #bazul").onclick = (new sitio(i, id)).save;
 		abrir3();
@@ -410,7 +410,7 @@ function sitio(i, id){
 		var name = document.querySelector("#popup3 .form_nombre").value;
 		var neumonico = document.querySelector("#popup3 .neumonico").value;
 		var lat = document.querySelector("#popup3 .lat").value;
-		var lng = document.querySelector("#popup3 .long").value;
+		var lng = document.querySelector("#popup3 .lng").value;
 		var reg = document.querySelector("#popup3 .optionRegion").selectedIndex;
 		if(reg == 0){
 			alert("Debe seleccionar una región primero.");
@@ -431,7 +431,7 @@ function sitio(i, id){
 		var name = document.querySelector("#popup4 .form_nombre").value;
 		var neumonico = document.querySelector("#popup4 .neumonico").value;
 		var lat = document.querySelector("#popup4 .lat").value;
-		var lng = document.querySelector("#popup4 .long").value;
+		var lng = document.querySelector("#popup4 .lng").value;
 		var reg = document.querySelector("#popup4 .optionRegion").selectedIndex;
 		if(reg == 0){
 			alert("Debe seleccionar una región primero.");
