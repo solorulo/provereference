@@ -60,14 +60,12 @@ def user_new(request):
 		first_name = request.POST.get('first_name', '')
 		last_name = request.POST.get('last_name', '')
 		phone = request.POST.get('phone', '')
-		password = hashlib.md5(imei+API_KEY)
 
 		new_userprov = InfoProv(
 			username=imei,
 			first_name=first_name,
 			last_name=last_name,
 			email=email,
-			password=password,
 			imei=imei,
 			telefono=phone,
 			empresa=Empresa.objects.get(pk=int(provider))

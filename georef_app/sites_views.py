@@ -14,7 +14,7 @@ from georef_app.utils import dec_magic
 def sites(request, format):
 	_json = {}
 	sites_provs = []
-	mSites = Sitio.objects.all().select_related()
+	mSites = Sitio.objects.all().order_by('nombre').select_related()
 	mRegions = Region.objects.all().values()
 	# print simplejson.dumps(list(mSites.values()))
 	for site in mSites:
