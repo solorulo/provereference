@@ -131,27 +131,3 @@ $(document).ready(function(){
 	document.querySelector("#select_sitios").onchange = function(){dataFormat('')};
 	document.querySelector("#fecha_inicial").onkeydown = function(){dataFormat('')};
 });
-
-$(document).ready(function(event){
-	/*
-		SELECT OPTION SITIOS
-	*/
-
-	var optionSitio = document.createElement("select");
-	optionSitio.setAttribute("id", "optionSitio");
-	optionSitio.setAttribute("style", "display:block;");
-
-	firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode(" ---- "));
-	optionSitio.appendChild(firstOption);
-	for (var i = 0; i < data.sites.length; i++) {
-		var optionText = data.sites[i].nombre;
-		var optionTextNode = document.createTextNode(optionText);
-		var option = document.createElement("option");
-		option.appendChild(optionTextNode);
-		optionSitio.appendChild(option);
-	};
-	var oldOptionSitio = document.querySelector(".optionSitio");
-	oldOptionSitio.parentNode.replaceChild(optionSitio, oldOptionSitio);
-	document.querySelector("#optionSitio").onchange = function(event){dataFormat(inputDOM.value);};
-});
