@@ -98,7 +98,6 @@ $(document).ready(function(event){
 	};
 	var oldOptionsRegion = document.querySelectorAll(".optionRegion");
 	for (var i = oldOptionsRegion.length - 1; i >= 0; i--) {
-		console.log("Hola");
 		var clone = optionRegion.cloneNode(true);
 		if(oldOptionsRegion[i].hasAttribute("id")){
 			clone.setAttribute("id", "optionRegion");

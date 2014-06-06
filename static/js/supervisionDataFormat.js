@@ -30,7 +30,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		proveedor = data.provider[searchProveedor(data.provider, id)].name;
 		if (data.activity.length > 0) {
 			sitio = data.activity[searchActivity(data.activity, id)].site;
-			fecha = new Date(data.activity[searchActivity(data.activity, id)].date);	
+			fecha = new Date(data.activity[searchActivity(data.activity, id)].date.replace(/ /, "T"));	
 		} else {
 			sitio = ""
 			fecha = new Date("2014")
