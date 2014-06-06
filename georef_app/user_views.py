@@ -13,7 +13,7 @@ from provereference.settings import API_KEY
 @dec_magic(method='GET', admin_required=True)
 def users(request, format):
 	_json = {}
-	usersprov = InfoProv.objects.all().select_related('empresa')
+	usersprov = InfoProv.objects.all().order_by('first_name').select_related('empresa')
 	providers = Empresa.objects.all()
 	regiones = Region.objects.all()
 	sitios = Sitio.objects.all()

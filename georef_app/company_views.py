@@ -114,7 +114,7 @@ def company(request, id_provider, format):
 	_json = {}
 	userprovs = []
 	mProvider = get_object_or_404(Empresa, pk=id_provider)
-	mAllUsers = InfoProv.objects.filter(empresa_id=id_provider)
+	mAllUsers = InfoProv.objects.filter(empresa_id=id_provider).order_by('first_name')
 	mRegions = Region.objects.all().values()
 	mSites = Sitio.objects.all()
 	_jsonSites = []
