@@ -4,4 +4,3 @@
 local_settings.py
 venv/*
 .DS_Store
-db.sqlite3

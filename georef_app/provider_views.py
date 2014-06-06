@@ -145,7 +145,7 @@ def user_delete(request, id_user):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
-@dec_magic(method='GET', admin_required=False)
+@dec_magic(method='GET', login_required=True)
 def user(request, id_user, format):
 	_json = {}
 	the_userprov = get_object_or_404(InfoProv, pk=id_user)
@@ -175,7 +175,7 @@ def user(request, id_user, format):
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'mostrardatos.html', {"data":data})
 
-@dec_magic(method='GET', admin_required=False)
+@dec_magic(method='GET', login_required=True)
 def supervision(request, format):
 	_json = {}
 	usersprov = InfoProv.objects.all().select_related('empresa')
