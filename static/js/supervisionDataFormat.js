@@ -33,7 +33,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 			fecha = new Date(data.activity[searchActivity(data.activity, id)].date.replace(/ /, "T"));	
 		} else {
 			sitio = ""
-			fecha = new Date("2014")
+			fecha = null
 		}
 		telefono = data.users[i].telefono;
 		// Dividiendo en cajas por letra
@@ -57,7 +57,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var tdProvedor = document.createElement("td");
 		var txtProveedor = document.createTextNode("Proveedor:"+proveedor);
 		var tdRegistro = document.createElement("td");
-		var txtFechaRegistro = document.createTextNode("Último Registro:"+fecha.toString());
+		var txtFechaRegistro = document.createTextNode("Último Registro:"+fechaToString((fecha != null)? fecha.toISOString() : null));
 		var tdValorRegistro = document.createElement("td");
 		var txtSitioRegistro = document.createTextNode(sitio);
 		var tdTelefono = document.createElement("td");
@@ -65,7 +65,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		tdNombre.setAttribute("class", "t1");
 		aNombre.setAttribute("href", "/proveedor/"+id);
 		tdActivo.setAttribute("class", "t1");
-		if(Date.now()-5*60*1000 < fecha.getTime())
+		if(Date.now()-5*60*1000 < (fecha != null)? fecha.getTime() : Date.now())
 			tdActivo.setAttribute("id", "tactivo");
 		tdProvedor.setAttribute("class", "t2");
 		tdRegistro.setAttribute("class", "t3");
