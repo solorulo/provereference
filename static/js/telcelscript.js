@@ -554,6 +554,10 @@ function dataFormat(query){
 }
 
 function fechaToString(fecha){
+	if (fecha == null) {
+		return ""
+	} 
+	console.log(fecha)
 	fecha = fecha.replace(/ /, "T")
 	fecha = (new Date(fecha));
 	fecha.setTime(fecha.valueOf() + (fecha.getTimezoneOffset()*60*1000));
