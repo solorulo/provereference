@@ -33,7 +33,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 			fecha = new Date(data.activity[searchActivity(data.activity, id)].date.replace(/ /, "T"));	
 		} else {
 			sitio = ""
-			fecha = new Date("2014")
+			fecha = null
 		}
 		telefono = data.users[i].telefono;
 		// Dividiendo en cajas por letra
@@ -57,7 +57,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var tdProvedor = document.createElement("td");
 		var txtProveedor = document.createTextNode("Proveedor:"+proveedor);
 		var tdRegistro = document.createElement("td");
-		var txtFechaRegistro = document.createTextNode("Último Registro:"+fecha.toString());
+		var txtFechaRegistro = document.createTextNode("Último Registro:"+fechaToString((fecha != null)? fecha.toISOString() : null));
 		var tdValorRegistro = document.createElement("td");
 		var txtSitioRegistro = document.createTextNode(sitio);
 		var tdTelefono = document.createElement("td");
@@ -65,7 +65,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		tdNombre.setAttribute("class", "t1");
 		aNombre.setAttribute("href", "/proveedor/"+id);
 		tdActivo.setAttribute("class", "t1");
-		if(Date.now()-5*60*1000 < fecha.getTime())
+		if(Date.now()-5*60*1000 < (fecha != null)? fecha.getTime() : Date.now())
 			tdActivo.setAttribute("id", "tactivo");
 		tdProvedor.setAttribute("class", "t2");
 		tdRegistro.setAttribute("class", "t3");
@@ -90,4 +90,62 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 };
 
 $(document).ready(function(event){
+	// Pone datepicker para las fechas.
+	$("#fecha_inicial, #fecha_final").datepicker({
+		onSelect:function(dateText){
+			dataFormat('');
+		},
+		dateFormat: "yy-mm-dd"
+	});
+	// Región Select Option
+	(function (){
+		var option = document.createElement("select");
+		option.setAttribute("class", "optionRegion");
+		option.setAttribute("style", "display:block;");
+
+		var firstOption = document.createElement("option");
+		firstOption.appendChild(document.createTextNode(" ---- "));
+		option.appendChild(firstOption);
+		for (var i = 0; i < data.region.length; i++) {
+			var optionText = data.region[i].name;
+			var optionTextNode = document.createTextNode(optionText);
+			var optionNode = document.createElement("option");
+			optionNode.appendChild(optionTextNode);
+			option.appendChild(optionNode);
+		};
+		var oldOptions = document.querySelectorAll(".optionRegion");
+		for (var i = oldOptions.length - 1; i >= 0; i--) {
+			var clone = option.cloneNode(true);
+			if(oldOptions[i].hasAttribute("id")){
+				clone.setAttribute("id", "optionRegion");
+			}
+			oldOptions[i].parentNode.replaceChild(clone, oldOptions[i]);
+		};
+	})();
+	// Sitio Select Option
+	(function (){
+		var option = document.createElement("select");
+		option.setAttribute("class", "optionSite");
+		option.setAttribute("style", "display:block;");
+
+		var firstOption = document.createElement("option");
+		firstOption.appendChild(document.createTextNode(" ---- "));
+		option.appendChild(firstOption);
+		for (var i = 0; i < data.site.length; i++) {
+			var optionText = data.site[i].name;
+			var optionTextNode = document.createTextNode(optionText);
+			var optionNode = document.createElement("option");
+			optionNode.appendChild(optionTextNode);
+			option.appendChild(optionNode);
+		};
+		var oldOptions = document.querySelectorAll(".optionSite");
+		for (var i = oldOptions.length - 1; i >= 0; i--) {
+			var clone = option.cloneNode(true);
+			if(oldOptions[i].hasAttribute("id")){
+				clone.setAttribute("id", "optionSite");
+			}
+			oldOptions[i].parentNode.replaceChild(clone, oldOptions[i]);
+		};
+	})();
+
 });

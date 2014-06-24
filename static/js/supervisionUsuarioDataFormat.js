@@ -89,7 +89,7 @@ $(document).ready(function(){
 	var ultimotd = createTd("Último Registro:");
 	if(!data.last_act){
 		data.last_act = {};
-		data.last_act.site = "Ninguno";
+		data.last_act.site = "";
 		data.last_act.date = null;
 	}
 	var sitetd = createTd("Sitio: "+data.last_act.site);

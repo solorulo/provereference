@@ -403,6 +403,7 @@ function sitio(i, id){
 		document.querySelector("#popup4 .lng").value = data.sites[i].lng;
 		document.querySelector("#popup4 .optionRegion").selectedIndex = searchRegionIndexByID(data.sites[i].reg)+1;
 		document.querySelector("#popup4 #bazul").onclick = (new sitio(i, id)).save;
+		document.querySelector("#popup1 #beliminar").onclick = (new sitio(i, id)).delete
 		abrir3();
 
 	};
@@ -457,9 +458,9 @@ function companie(i, id){
 		abrir0();
 		document.querySelector("#popup1 .form_nombre").value = data.companies[i].name;
 		function searchRegion(){
-			for (var i = 0; i < data.regiones.length; i++) {
-				if ("Región "+data.regiones[i].nombre == data.companies[i].reg){
-					return i+1;
+			for (var e = 0; e < data.regiones.length; e++) {
+				if ("Región "+data.regiones[e].nombre == data.companies[i].reg){
+					return e+1;
 				}
 			}
 		}
@@ -554,6 +555,10 @@ function dataFormat(query){
 }
 
 function fechaToString(fecha){
+	if (fecha == null) {
+		return ""
+	} 
+	console.log(fecha)
 	fecha = fecha.replace(/ /, "T")
 	fecha = (new Date(fecha));
 	fecha.setTime(fecha.valueOf() + (fecha.getTimezoneOffset()*60*1000));
