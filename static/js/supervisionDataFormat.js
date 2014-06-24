@@ -90,4 +90,62 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 };
 
 $(document).ready(function(event){
+	// Pone datepicker para las fechas.
+	$("#fecha_inicial, #fecha_final").datepicker({
+		onSelect:function(dateText){
+			dataFormat('');
+		},
+		dateFormat: "yy-mm-dd"
+	});
+	// Región Select Option
+	(function (){
+		var option = document.createElement("select");
+		option.setAttribute("class", "optionRegion");
+		option.setAttribute("style", "display:block;");
+
+		var firstOption = document.createElement("option");
+		firstOption.appendChild(document.createTextNode(" ---- "));
+		option.appendChild(firstOption);
+		for (var i = 0; i < data.region.length; i++) {
+			var optionText = data.region[i].name;
+			var optionTextNode = document.createTextNode(optionText);
+			var optionNode = document.createElement("option");
+			optionNode.appendChild(optionTextNode);
+			option.appendChild(optionNode);
+		};
+		var oldOptions = document.querySelectorAll(".optionRegion");
+		for (var i = oldOptions.length - 1; i >= 0; i--) {
+			var clone = option.cloneNode(true);
+			if(oldOptions[i].hasAttribute("id")){
+				clone.setAttribute("id", "optionRegion");
+			}
+			oldOptions[i].parentNode.replaceChild(clone, oldOptions[i]);
+		};
+	})();
+	// Sitio Select Option
+	(function (){
+		var option = document.createElement("select");
+		option.setAttribute("class", "optionSite");
+		option.setAttribute("style", "display:block;");
+
+		var firstOption = document.createElement("option");
+		firstOption.appendChild(document.createTextNode(" ---- "));
+		option.appendChild(firstOption);
+		for (var i = 0; i < data.site.length; i++) {
+			var optionText = data.site[i].name;
+			var optionTextNode = document.createTextNode(optionText);
+			var optionNode = document.createElement("option");
+			optionNode.appendChild(optionTextNode);
+			option.appendChild(optionNode);
+		};
+		var oldOptions = document.querySelectorAll(".optionSite");
+		for (var i = oldOptions.length - 1; i >= 0; i--) {
+			var clone = option.cloneNode(true);
+			if(oldOptions[i].hasAttribute("id")){
+				clone.setAttribute("id", "optionSite");
+			}
+			oldOptions[i].parentNode.replaceChild(clone, oldOptions[i]);
+		};
+	})();
+
 });
