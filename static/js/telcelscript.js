@@ -403,6 +403,7 @@ function sitio(i, id){
 		document.querySelector("#popup4 .lng").value = data.sites[i].lng;
 		document.querySelector("#popup4 .optionRegion").selectedIndex = searchRegionIndexByID(data.sites[i].reg)+1;
 		document.querySelector("#popup4 #bazul").onclick = (new sitio(i, id)).save;
+		document.querySelector("#popup1 #beliminar").onclick = (new sitio(i, id)).delete
 		abrir3();
 
 	};
