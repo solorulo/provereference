@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.utils import simplejson
 from georef_app.models import InfoUser
@@ -22,18 +23,22 @@ def admins(request, format):
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'administrador.html', {"data":data})
 
-@dec_magic(method='POST', required_args=['last_name', 'email'], admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['password', 'email', 'my_password'], admin_required=True, json_res=True)
 def admin_new(request):
 	try:
 		first_name = request.POST.get('first_name', '')
 		last_name = request.POST['last_name']
 		email = request.POST['email']
 		phone = request.POST.get('tel', '')
+		password = request.POST.get('password', '')
 
-		if 'password' in request.POST:
-			password = request.POST['password']
-		else:
-			password = last_name
+		my_password = request.POST.get('my_password', None)
+		if not request.user.check_password(my_password):
+			data = simplejson.dumps({
+				'code' : 0,
+				'msg' : "Contraseña incorrecta"
+			})
+			return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
 		new_admin = InfoUser(
 			username=email,
@@ -56,7 +61,7 @@ def admin_new(request):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
-@dec_magic(method='POST', admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['my_password'], admin_required=True, json_res=True)
 def admin_edit(request, id_admin):
 	try:
 		first_name = request.POST.get('first_name', None)
@@ -64,7 +69,16 @@ def admin_edit(request, id_admin):
 		email = request.POST.get('email', None)
 		phone = request.POST.get('tel', None)
 		is_admin = request.POST.get('is_admin', None)
+		password = request.POST.get('password', None)
 		the_admin = InfoUser.objects.get(pk=id_admin)
+
+		my_password = request.POST.get('my_password', None)
+		if not request.user.check_password(my_password):
+			data = simplejson.dumps({
+				'code' : 0,
+				'msg' : "Contraseña incorrecta"
+			})
+			return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
 		if first_name is not None :
 			the_admin.first_name = first_name
@@ -102,9 +116,17 @@ def admin_edit(request, id_admin):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
-@dec_magic(method='POST', admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['my_password'], admin_required=True, json_res=True)
 def admin_delete(request, id_admin):
 	try:
+		my_password = request.POST.get('my_password', None)
+		if not request.user.check_password(my_password):
+			data = simplejson.dumps({
+				'code' : 0,
+				'msg' : "Contraseña incorrecta"
+			})
+			return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+
 		the_admin = InfoUser.objects.get(pk=id_admin)
 		the_admin.delete()
 		data = simplejson.dumps({

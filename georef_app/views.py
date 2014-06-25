@@ -10,6 +10,8 @@ from georef_app.utils import check_admin
 
 # Create your views here.
 def login(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/')
 	if request.method == 'GET' or not 'username' in request.POST or not 'password' in request.POST:
 		next = request.GET.get('next', None)
 		return render(request, 'login.html', {'next':next})
@@ -19,12 +21,6 @@ def login(request):
 	password = request.POST.get("password", None)
 	
 	next = request.POST.get('next', None)
-
-	# user = User.objects.get(username=username)
-	# print user.check_password(password)
-	# user.set_password(password)
-	# user.save()
-	# print user.check_password(password)
 
 	user = authenticate(username=username, password=password)
 	print user
@@ -37,7 +33,7 @@ def login(request):
 	print 'Login fail: ' + username
 	return render(request, 'login.html', {'wrong_data':True, 'username':username})
 
-
+@login_required
 def logout(request):
 	auth_logout(request)
 	return HttpResponseRedirect('/')

@@ -8,7 +8,9 @@
 	<script type="text/javascript">
 		eval('var data = {{ data|escape|safe }}')
 		$(document).ready(function() {
-			$('#b_create').click(new admin().create);
+			$('#b_create').click(function(event) {
+				confirm_action(event, new admin().create);
+			});
 		});
 	</script>
 </head>
@@ -49,11 +51,13 @@
 		<div id="popcontenido">
 			<div id="poplateral">
 				<ul id="popul">
-					<li> Nombre</li>
+					<li>Nombre</li>
 					<div id="linea1"></div>
 					<li>Apellido</li>
 					<div id="linea1"></div>
 					<li>Mail</li>
+					<div id="linea1"></div>
+					<li>Nueva contraseña</li>
 					<div id="linea1"></div>
 				</ul>
 
@@ -64,6 +68,7 @@
 				<input type="text" class="textinfo form_apellido">
 
 				<input type="text" class="textinfo form_mail">
+				<input type="text" class="textinfo form_password">
 				<div id="popadministrador">Administrador<label class="switch"><input type="checkbox" checked=""><span></span></label></div>
 
 				<button id="beliminar">Eliminar</button> <button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrar('#popup1')">Cancelar</button>
@@ -76,7 +81,7 @@
 		<div id="popcontenido">
 			<div id="poplateral">
 				<ul id="popul">
-					<li> Nombre</li>
+					<li>Nombre</li>
 					<div id="linea1"></div>
 					<li>Apellido</li>
 					<div id="linea1"></div>
@@ -103,6 +108,11 @@
 	<!-- ui-dialog -->
 	<div id="dialogError" title="Error">
 		<p>No se pudo procesar la petici&oacute;n</p>
+	</div>
+	<!-- ui-dialog -->
+	<div id="dialogPass" title="Confirmación">
+		<p>Escribe tu contraseña</p>
+		<input placeholder="Contraseña" type="password" class="textinfo myp" />
 	</div>
 
 </body>
