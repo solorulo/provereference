@@ -13,64 +13,29 @@ from provereference.settings import API_KEY
 @dec_magic(method='GET', admin_required=True)
 def users(request, format):
 	_json = {}
-	usersprov = InfoProv.objects.all().order_by('first_name').select_related('empresa')
-	providers = Empresa.objects.all()
-	regiones = Region.objects.all()
-	sitios = Sitio.objects.all()
-	_jsonregiones = []
-	_jsonsitios = []
-	_jsonproviders = []
-	for region in regiones:
-		_jsonregiones.append( {
-			'pk' : region.pk,
-			'name':region.nombre,
-			'providers':list(providers.filter(region=region).values('pk')),
-			'sites':list(sitios.filter(region=region).values('pk')),
-			'users':list(usersprov.filter(empresa__region=region).values('pk'))
-		})
-	for sitio in sitios:
-		_jsonsitios.append ({
-			'pk':sitio.pk,
-			'name':sitio.nombre,
-			'users':list(usersprov.filter(actividad__sitio=sitio).values('pk'))
-		})
-	for provider in providers:
-		_jsonproviders.append( {
-			'pk':provider.pk,
-			'name':provider.nombre,
-			'users':list(usersprov.filter(empresa=provider).values('pk'))
-		})
-
-	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id'))
-	_json['provider'] = _jsonproviders
-	_json['site'] = _jsonsitios
-	_json['region'] = _jsonregiones
+	usersprov = InfoOther.objects.all().order_by('first_name')
+	
+	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono'))
 	data = simplejson.dumps(_json)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'usuarios.html', {"data":data})
 
-@dec_magic(method='POST', required_args=['email', 'imei', 'provider'], admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['email', 'password'], admin_required=True, json_res=True)
 def user_new(request):
 	try:
-		# TODO dar de alta el usuario
 		email = request.POST['email']
-		imei = request.POST['imei']
-		provider = request.POST['provider']
 		first_name = request.POST.get('first_name', '')
 		last_name = request.POST.get('last_name', '')
 		phone = request.POST.get('phone', '')
-		password = hashlib.md5(imei+API_KEY)
+		password = request.POST.get('password', None)
 
-		new_userprov = InfoProv(
-			username=imei,
+		new_userprov = InfoOther(
 			first_name=first_name,
 			last_name=last_name,
 			email=email,
 			password=password,
-			imei=imei,
 			telefono=phone,
-			empresa=Empresa.objects.get(pk=int(provider))
 			)
 		new_userprov.save()
 
@@ -89,20 +54,13 @@ def user_new(request):
 @dec_magic(method='POST', admin_required=True, json_res=True)
 def user_edit(request, id_user):
 	try:
-		# TODO Editar al usuario
 		email = request.POST.get('email', None)
-		imei = request.POST.get('imei',None)
-		provider = request.POST.get('provider', None)
 		first_name = request.POST.get('first_name', None)
 		last_name = request.POST.get('last_name', None)
 		phone = request.POST.get('phone', None)
-		the_userprov = InfoProv.objects.get(pk=id_user)
+		the_userprov = InfoOther.objects.get(pk=id_user)
 		if email is not None :
 			the_userprov.email = email
-		if imei is not None :
-			the_userprov.imei = imei
-		if provider is not None :
-			the_userprov.empresa = Empresa.objects.get(pk=int(provider))
 		if first_name is not None :
 			the_userprov.first_name = first_name
 		if last_name is not None :
@@ -116,7 +74,7 @@ def user_edit(request, id_user):
 			'code' : 1,
 			'msg' : "Bien"
 		})
-	except InfoProv.DoesNotExist:
+	except InfoOther.DoesNotExist:
 		data = simplejson.dumps({
 			'code' : 0,
 			'msg' : "No existe el usuario"
@@ -131,14 +89,13 @@ def user_edit(request, id_user):
 @dec_magic(method='POST', admin_required=True, json_res=True)
 def user_delete(request, id_user):
 	try:
-		# TODO Borrar Supervisor
-		the_userprov = InfoProv.objects.get(pk=id_user)
+		the_userprov = InfoOther.objects.get(pk=id_user)
 		the_userprov.delete()
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Borrado"
 		})
-	except InfoProv.DoesNotExist:
+	except InfoOther.DoesNotExist:
 		data = simplejson.dumps({
 			'code' : 0,
 			'msg' : "No existe el usuario"

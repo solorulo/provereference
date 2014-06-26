@@ -5,12 +5,6 @@ from django.contrib.auth.models import User
 import math
 
 # Create your models here.
-# class UserProfile (models.Model):
-# 	user = models.ForeignKey(User)
-
-# 	def __unicode__(self):
-# 		return self.user.first_name + " " + self.user.last_name
-		
 class Region (models.Model):
 	nombre = models.CharField(max_length=45)
 
@@ -71,7 +65,6 @@ class InfoProv (User):
 			self.set_password(self.password)
 		super(InfoProv, self).save(*args, **kwargs)
 
-
 class Sitio (models.Model):
 	neumonico = models.CharField(max_length=45)
 	nombre = models.CharField(max_length=45)
@@ -100,3 +93,18 @@ class Actividad (models.Model):
 
 	def __unicode__(self):
 		return self.tipo_evento
+
+class InfoOther (User):
+	telefono = models.CharField(max_length=45, blank=True, null=True)
+	class Meta:
+		db_table = 'info_other'
+
+	def __unicode__(self):
+		return self.get_full_name()
+
+	def save(self, *args, **kwargs):
+		print 'saving infoother'
+		if self.pk is None:
+			print 'first save'
+			self.set_password(self.password)
+		super(InfoOther, self).save(*args, **kwargs)
