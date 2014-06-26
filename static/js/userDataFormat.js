@@ -9,37 +9,10 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		}
 		if (query != '' && !(
 			reg.test((data.users[i].name).toLowerCase().replace(/[\s-]/g, '')) || 
-			reg.test((data.users[i].imei).toLowerCase().replace(/[\s-]/g, '')) || 
 			reg.test((data.users[i].telefono).toLowerCase().replace(/[\s-]/g, '')) || 
 			reg.test((data.users[i].email).toLowerCase().replace(/[\s-]/g, ''))
 			)) {
 			continue;
-		}
-
-		if(document.querySelector("#optionRegion").selectedIndex != 0){
-			var r = data.region[document.querySelector("#optionRegion").selectedIndex-1];
-			var result = false;
-			for (var n = 0; n < r.users.length; n++) {
-				if(r.users[n].pk == data.users[i].pk){
-					result = true;
-				}
-			};
-			if(!result){
-				continue;
-			}
-		}
-		if(document.querySelector("#optionSitio").selectedIndex != 0){
-			// TODO Relación de Usuarios y sus sitios.
-			/*var s = data.site[document.querySelector("#optionSitio").selectedIndex-1];
-			var result = false;
-			for (var e = 0; e < s.users.length; e++) {
-				if (s.users[e].pk == data.users[i].pk){
-					result = true;
-				}
-			};
-			if(!result){
-				continue;
-			}*/
 		}
 
 		if (lastLetter != data.users[i].name[0].toUpperCase()){
@@ -88,80 +61,6 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 
 $(document).ready(function(event){
 	document.querySelector("#b_create").onclick = (new usuario()).create;
-
-	/*
-		SELECT OPTION REGIONES
-	*/
-
-	var optionRegion = document.createElement("select");
-	optionRegion.setAttribute("class", "optionRegion");
-	optionRegion.setAttribute("style", "display:block;");
-
-	var firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode(" ---- "));
-	optionRegion.appendChild(firstOption);
-	for (var i = 0; i < data.region.length; i++) {
-		var optionText = data.region[i].name;
-		var optionTextNode = document.createTextNode(optionText);
-		var option = document.createElement("option");
-		option.appendChild(optionTextNode);
-		optionRegion.appendChild(option);
-	};
-	var oldOptionsRegion = document.querySelectorAll(".optionRegion");
-	for (var i = oldOptionsRegion.length - 1; i >= 0; i--) {
-		var clone = optionRegion.cloneNode(true);
-		if(oldOptionsRegion[i].hasAttribute("id")){
-			clone.setAttribute("id", "optionRegion");
-		}
-		oldOptionsRegion[i].parentNode.replaceChild(clone, oldOptionsRegion[i]);
-	};
-	document.querySelector("#optionRegion").onchange = function(event){dataFormat(inputDOM.value);};
-
-	/*
-		SELECT OPTION SITIOS
-	*/
-
-	var optionSitio = document.createElement("select");
-	optionSitio.setAttribute("id", "optionSitio");
-	optionSitio.setAttribute("style", "display:block;");
-
-	firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode(" ---- "));
-	optionSitio.appendChild(firstOption);
-	for (var i = 0; i < data.site.length; i++) {
-		var optionText = data.site[i].name;
-		var optionTextNode = document.createTextNode(optionText);
-		var option = document.createElement("option");
-		option.appendChild(optionTextNode);
-		optionSitio.appendChild(option);
-	};
-	var oldOptionSitio = document.querySelector(".optionSitio");
-	oldOptionSitio.parentNode.replaceChild(optionSitio, oldOptionSitio);
-	document.querySelector("#optionSitio").onchange = function(event){dataFormat(inputDOM.value);};
-
-	/*
-		SELECT OPTION COMPANY
-	*/
-
-	var optionCompany = document.createElement("select");
-	optionCompany.setAttribute("class", "optionCompany");
-	optionCompany.setAttribute("style", "display:block;");
-
-	var firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode(" ---- "));
-	optionCompany.appendChild(firstOption);
-	for (var i = 0; i < data.companies.length; i++) {
-		var optionText = data.companies[i].name;
-		var optionTextNode = document.createTextNode(optionText);
-		var option = document.createElement("option");
-		option.appendChild(optionTextNode);
-		optionCompany.appendChild(option);
-	};
-	var oldOptionsRegion = document.querySelectorAll(".optionCompany");
-	for (var i = oldOptionsRegion.length - 1; i >= 0; i--) {
-		var clone = optionCompany.cloneNode(true);
-		oldOptionsRegion[i].parentNode.replaceChild(clone, oldOptionsRegion[i]);
-	};
 
 	/*
 		REPARAR LOS ESTILOS DENTRO DEL POPUP

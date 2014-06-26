@@ -21,9 +21,7 @@ def check_admin(user):
 	try:
 		return user.infouser.is_admin()
 	except InfoUser.DoesNotExist:
-		# TODO Eliminar este if
-		if DEBUG:
-			return True
+		pass
 	return False
 
 def dec_magic(method='POST', required_args=[], admin_required=False, login_required=False, json_res=False):
@@ -47,7 +45,7 @@ def dec_magic(method='POST', required_args=[], admin_required=False, login_requi
 					else :
 						return HttpResponseRedirect("/login?next="+request.path)
 				if not check_admin(request.user):
-					raise PermissionDenied
+					return HttpResponseRedirect("/login?next="+request.path)
 			# Validate call method and get the arguments
 			if method == 'GET':
 				if request.method != 'GET':

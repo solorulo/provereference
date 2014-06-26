@@ -339,24 +339,9 @@ function usuario(i, id) {
 		document.querySelector("#popup4 .textinfo.form_nombre").value = data.users[i].first_name;
 		document.querySelector("#popup4 .textinfo.apellido").value = data.users[i].last_name;
 		document.querySelector("#popup4 .textinfo.email").value = data.users[i].email;
-		document.querySelector("#popup4 .textinfo.imei").value = data.users[i].imei;
+		document.querySelector("#popup4 .textinfo.password").value = '';
 		document.querySelector("#popup4 .textinfo.telefono").value = data.users[i].telefono;
-		// var id_reg = 0;
-		// for (var e = 0; e < data.region.length; e++) {
-		// 	if(data.region[e].pk == data.users[i].empresa__region){
-		// 		id_reg = e;
-		// 		break;
-		// 	}
-		// };
-		// document.querySelector("#popup4 .textinfo.optionRegion").selectedIndex = id_reg + 1;
-		var id_comp = 0;
-		for (var e = 0; e < data.companies.length; e++) {
-			if (data.companies[e].pk == data.users[i].empresa_id) {
-				id_comp = e;
-				break;
-			}
-		};
-		document.querySelector("#popup4 .textinfo.optionCompany").selectedIndex = id_comp + 1;
+		
 		document.querySelector("#popup4 .bazul").onclick = (new usuario(i, id)).save;
 		document.querySelector("#popup4 #beliminar").onclick = (new usuario(i, id)).delete;
 		abrir("#popup4");
@@ -365,50 +350,34 @@ function usuario(i, id) {
 		var nombreNode = document.querySelector("#popup3 .textinfo.form_nombre").value;
 		var apellidoNode = document.querySelector("#popup3 .textinfo.apellido").value;
 		var emailNode = document.querySelector("#popup3 .textinfo.email").value;
-		var imeiNode = document.querySelector("#popup3 .textinfo.imei").value
+		var passwordNode = document.querySelector("#popup3 .textinfo.password").value
 		var telefonoNode = document.querySelector("#popup3 .textinfo.telefono").value;
-		var companieNode = document.querySelector("#popup3 .textinfo.optionCompany").selectedIndex - 1;
-		if (companieNode < 0) {
-			alert("Debes seleccionar una Compañía para continuar");
-			return;
-		};
-		var companieSelected = data.companies[companieNode];
-		companieSelected = companieSelected.pk;
 		var postdata = {
 			'email': emailNode,
-			'imei': imeiNode,
-			'empresa': companieSelected,
+			'password': passwordNode,
 			'first_name': nombreNode,
 			'last_name': apellidoNode,
 			'phone': telefonoNode
 		};
-		(new Bridge(i, id, "proveedores", postdata)).create(event);
+		(new Bridge(i, id, "usuarios", postdata)).create(event);
 	};
 	this.save = function(event) {
 		var nombreNode = document.querySelector("#popup4 .textinfo.form_nombre").value;
 		var apellidoNode = document.querySelector("#popup4 .textinfo.apellido").value;
 		var emailNode = document.querySelector("#popup4 .textinfo.email").value;
-		var imeiNode = document.querySelector("#popup4 .textinfo.imei").value
-		var telefonoNode = document.querySelector("#popup4 .textinfo.telefono").value;
-		var companieNode = document.querySelector("#popup4 .textinfo.optionCompany").selectedIndex - 1;
-		if (companieNode < 0) {
-			alert("Debes seleccionar una Compañía para continuar");
-			return;
-		};
-		var companieSelected = data.companies[companieNode];
-		companieSelected = companieSelected.pk;
+		var passwordNode = document.querySelector("#popup4 .textinfo.password").value
+		var telefonoNode = document.querySelector("#popup4 .textinfo.telefono").value;		
 		var postdata = {
 			'email': emailNode,
-			'imei': imeiNode,
-			'empresa': companieSelected,
+			'password': passwordNode,
 			'first_name': nombreNode,
 			'last_name': apellidoNode,
 			'phone': telefonoNode
 		};
-		(new Bridge(i, id, "proveedores", postdata)).save(event);
+		(new Bridge(i, id, "usuarios", postdata)).save(event);
 	};
 	this.delete = function() {
-		(new Bridge(i, id, "proveedores")).delete();
+		(new Bridge(i, id, "usuarios")).delete();
 	};
 };
 
