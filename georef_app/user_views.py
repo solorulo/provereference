@@ -31,6 +31,7 @@ def user_new(request):
 		password = request.POST.get('password', None)
 
 		new_userprov = InfoOther(
+			username=email,
 			first_name=first_name,
 			last_name=last_name,
 			email=email,
@@ -44,7 +45,7 @@ def user_new(request):
 			'msg' : "Bien",
 			'user_id':new_userprov.pk
 		})
-	except :
+	except Exception, e :
 		data = simplejson.dumps({
 			'code' : 0,
 			'msg' : "Fallo"
