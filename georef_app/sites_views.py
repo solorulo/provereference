@@ -13,21 +13,24 @@ from georef_app.utils import dec_magic
 @dec_magic(method='GET', admin_required=True)
 def sites(request, format):
 	_json = {}
-	sites_provs = []
 	mSites = Sitio.objects.all().order_by('nombre').select_related()
-	mRegions = Region.objects.all().values()
+	mRegions = Region.objects.all()
 	# print simplejson.dumps(list(mSites.values()))
-	for site in mSites:
-		sites_provs.append({
-			'id':site.id,
-			'name':site.nombre,
-			'neumonico':site.neumonico,
-			'lat':site.lat,
-			'lng':site.lng,
-			'reg':site.region.pk
-			})
-	_json["sites"] = sites_provs
-	_json["regiones"] = list(mRegions)
+	_jsonRegiones = []
+	for region in mRegions:
+		_jsonRegiones.append( {
+			'pk' : region.pk,
+			'nombre':region.nombre,
+			'sites':list(mSites.filter(region=region).values('pk')),
+		})
+		# 'id':site.id,
+		# 'name':site.nombre,
+		# 'neumonico':site.neumonico,
+		# 'lat':site.lat,
+		# 'lng':site.lng,
+		# 'reg':site.region.pk
+	_json["sites"] = list(mSites.extra(select={'reg': 'region_id', 'name':'nombre'}).values('pk', 'name', 'neumonico', 'lat', 'lng', 'reg'))
+	_json["regiones"] = _jsonRegiones
 	data = simplejson.dumps(_json)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')

@@ -58,20 +58,29 @@ AUTHENTICATION_BACKENDS = (
 	'django.contrib.auth.backends.ModelBackend',
 )
 
-
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
-DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.sqlite3',
-		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-	# }
-	# 'default' : {
-	#     'ENGINE' : 'django_mongodb_engine',
-	#     'NAME' : 'my_database'
-   }
-}
+if DEBUG:
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.sqlite3',
+			'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+		}
+	}
+else:
+	DATABASES = {
+		'default': {
+	        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+	        'NAME': 'proverefdb',                      # Or path to database file if using sqlite3.
+	        'USER': 'root',                      # Not used with sqlite3.
+	        'PASSWORD': 'rulo',                  # Not used with sqlite3.
+	        # 'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+	        # 'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+	    }
+	}
 
 TEMPLATE_DIRS = (
 	# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".

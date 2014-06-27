@@ -5,7 +5,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 
 	var getReg = function(id){
 		for (var i = data.regiones.length - 1; i >= 0; i--) {
-			if(data.regiones[i].id == id)
+			if(data.regiones[i].pk == id)
 				return data.regiones[i];
 		};
 	}
@@ -55,10 +55,10 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var confTextNode = document.createTextNode("Editar datos");
 		
 		contenedor.setAttribute("class", "contenedor");
-		contenedor.setAttribute("id", data.sites[i].id);
+		contenedor.setAttribute("id", data.sites[i].pk);
 		nombre.setAttribute("class", "nombre");
 		conf.setAttribute("class", "conf");
-		conf.onclick = (new sitio(i, data.sites[i].id)).open;
+		conf.onclick = (new sitio(i, data.sites[i].pk)).open;
 		img.setAttribute("src", "/static/imagenes/Supervisar/configurar.png");
 		info.setAttribute("class", "info");
 
