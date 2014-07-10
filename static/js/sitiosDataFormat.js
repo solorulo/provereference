@@ -109,9 +109,15 @@ $(document).ready(function(event){
 	/*
 		MAPA
 	*/
-
-	$(".btnMap").click( function(){
+	$("#popup4 .btnMap").click(function() {
+		var lat_ = document.querySelector("#popup4 .lat").value;
+		var lng_ = document.querySelector("#popup4 .lng").value;
+		initialize(lat_, lng_);
+	});
+	$("#popup3 .btnMap").click(function() {
 		initialize();
+	});
+	$(".btnMap").click( function(){
 		$( "#map_container" ).dialog( "open" );
 		var myLatlng = map.getCenter();
 		var marker = new google.maps.Marker({
@@ -126,7 +132,7 @@ $(document).ready(function(event){
 			marker.setTitle(marker.getPosition().lat()+", "+marker.getPosition().lng());
 			infowindow.setContent('<span class="gBubble"><b>'+marker.getTitle()+'</b></span>');
 			infowindow.open(map,marker);
-			console.log(marker.getTitle());
+			// console.log(marker.getTitle());
 			$(".lat").val(marker.getPosition().lat())
 			$(".lng").val(marker.getPosition().lng())
 		};

@@ -33,9 +33,11 @@ function plotPoint(srcLat,srcLon,title,popUpContent,markerIcon)
 		infowindow.open(map,marker);
 	});                                          
 };
-function initialize() 
-{      
-	var latlng = new google.maps.LatLng(coords.lat, coords.lng);
+function initialize(lat, lng) 
+{
+	lat = (lat === undefined) ? coords.lat : lat;
+	lng = (lng === undefined) ? coords.lng : lng;
+	var latlng = new google.maps.LatLng(lat, lng);
 	var myOptions = {
 		zoom: 12,
 		center: latlng,
