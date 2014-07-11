@@ -10,6 +10,16 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		};
 		return 0;
 	}
+	var searchRegion = function(array, userpk){
+		for (var i = 0; i < array.length; i++) {
+			for (var e = 0; e < array[i].users.length; e++) {
+				if(array[i].users[e].pk == userpk){
+					return i;
+				}
+			};
+		};
+		return 0;
+	}
 	var searchActivity = function(array, userpk){
 		for (var i = 0; i < array.length; i++) {
 			if(array[i].user_pk == userpk){
@@ -30,12 +40,35 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		proveedor = data.provider[searchProveedor(data.provider, id)].name;
 		if (data.activity.length > 0) {
 			sitio = data.activity[searchActivity(data.activity, id)].site;
-			fecha = new Date(data.activity[searchActivity(data.activity, id)].date.replace(/ /, "T"));	
+			fecha = new Date(data.activity[searchActivity(data.activity, id)].date.replace(/ /, "T"));
 		} else {
 			sitio = ""
 			fecha = null
 		}
 		telefono = data.users[i].telefono;
+
+		var fecha_inicial = new Date(document.querySelector("#fecha_inicial").value);
+		var fecha_final = new Date(document.querySelector("#fecha_final").value);
+		if (!((Date.now()-5*60*1000 < (fecha != null)? fecha.getTime() : Date.now()) && document.querySelector("#checkActivos").checked)) continue;
+		if (!(Date.now()-5*60*1000 < (fecha != null)? fecha.getTime() : Date.now()) && document.querySelector("#checkInactivos").checked) continue;
+		if (fecha.getTime() < fecha_inicial.getTime()) continue;
+		if (fecha.getTime() > fecha_final.getTime()+24*60*60*1000) continue;
+		if (document.querySelector("#optionRegion").selectedIndex != 0 &&
+			document.querySelector("#optionRegion").selectedIndex != searchRegion(data.region, id)+1) continue;
+		if (document.querySelector("#optionSite").selectedIndex != 0 &&
+			document.querySelector("#optionSite").selectedIndex != searchRegion(data.site, id)+1) continue;
+		if (document.querySelector("#optionProveedor").selectedIndex != 0 &&
+			document.querySelector("#optionProveedor").selectedIndex != searchProveedor(data.provider, id)+1) continue;
+		// Query
+		if (query != '' && !(
+			reg.test((data.users[i].first_name).toLowerCase().replace(/[\s-]/g, '')) || 
+			reg.test((data.users[i].last_name).toLowerCase().replace(/[\s-]/g, '')) || 
+			reg.test((data.users[i].imei).toLowerCase().replace(/[\s-]/g, '')) ||
+			reg.test((data.users[i].telefono).toLowerCase().replace(/[\s-]/g, '')) ||
+			reg.test((data.users[i].email).toLowerCase().replace(/[\s-]/g, ''))
+			)) {
+			continue;
+		}
 		// Dividiendo en cajas por letra
 		if (lastLetter != data.users[i].first_name[0].toUpperCase()){
 			lastLetter = data.users[i].first_name[0].toUpperCase();
@@ -90,15 +123,9 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 };
 
 $(document).ready(function(event){
-	// Pone datepicker para las fechas.
-	$("#fecha_inicial, #fecha_final").datepicker({
-		onSelect:function(dateText){
-			dataFormat('');
-		},
-		dateFormat: "yy-mm-dd"
-	});
+	// ####################
 	// Región Select Option
-	(function (){
+	(function(){
 		var option = document.createElement("select");
 		option.setAttribute("class", "optionRegion");
 		option.setAttribute("style", "display:block;");
@@ -122,8 +149,10 @@ $(document).ready(function(event){
 			oldOptions[i].parentNode.replaceChild(clone, oldOptions[i]);
 		};
 	})();
+
+	// ###################
 	// Sitio Select Option
-	(function (){
+	(function(){
 		var option = document.createElement("select");
 		option.setAttribute("class", "optionSite");
 		option.setAttribute("style", "display:block;");
@@ -148,4 +177,50 @@ $(document).ready(function(event){
 		};
 	})();
 
+	// ##################
+	// Proveedor Select Option
+	(function(optionName, data){
+		var option = document.createElement("select");
+		option.setAttribute("class", optionName);
+		option.setAttribute("style", "display:block;");
+
+		var firstOption = document.createElement("option");
+		firstOption.appendChild(document.createTextNode(" ---- "));
+		option.appendChild(firstOption);
+		for (var i = 0; i < data.length; i++) {
+			var optionText = data[i].name;
+			var optionTextNode = document.createTextNode(optionText);
+			var optionNode = document.createElement("option");
+			optionNode.appendChild(optionTextNode);
+			option.appendChild(optionNode);
+		};
+		var oldOptions = document.querySelectorAll("."+ optionName);
+		for (var i = oldOptions.length - 1; i >= 0; i--) {
+			var clone = option.cloneNode(true);
+			if(oldOptions[i].hasAttribute("id")){
+				clone.setAttribute("id", optionName);
+			}
+			oldOptions[i].parentNode.replaceChild(clone, oldOptions[i]);
+		};
+	})("optionProveedor", data.provider);
+
+	var formatHandler = function(event) {
+		console.log("hola");
+		dataFormat(document.querySelector("#busqueda input").value);
+	};
+	document.querySelector("#optionRegion").onchange =
+	document.querySelector("#optionSite").onchange = 
+	document.querySelector("#fecha_inicial").onchange =
+	document.querySelector("#fecha_final").onchange = 
+	document.querySelector("#optionProveedor").onchange =
+	document.querySelector("#checkInactivos").onchange =
+	document.querySelector("#checkActivos").onchange =
+	formatHandler;
+	// Pone datepicker para las fechas.
+	$("#fecha_inicial, #fecha_final").datepicker({
+		onSelect:function(dateText){
+			formatHandler();
+		},
+		dateFormat: "yy-mm-dd"
+	});
 });

@@ -384,7 +384,7 @@ function usuario(i, id) {
 function sitio(i, id) {
 	var searchRegionIndexByID = function(id) {
 		for (var i = 0; i < data.regiones.length; i++) {
-			if (data.regiones[i].id == id)
+			if (data.regiones[i].pk == id)
 				return i;
 		};
 	};
