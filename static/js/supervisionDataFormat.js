@@ -205,7 +205,6 @@ $(document).ready(function(event){
 	})("optionProveedor", data.provider);
 
 	var formatHandler = function(event) {
-		console.log("hola");
 		dataFormat(document.querySelector("#busqueda input").value);
 	};
 	document.querySelector("#optionRegion").onchange =
