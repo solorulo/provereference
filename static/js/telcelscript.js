@@ -300,32 +300,43 @@ function supervisor(i, id) {
 
 function proveedor(i, id) {
 	this.open = function() {
-		window.location.pathname = "/proveedor/" + id + "/";
-		// console.log(i, id);
+		document.querySelector("#popup4 .textinfo.form_nombre").value = data.users[i].first_name;
+		document.querySelector("#popup4 .textinfo.apellido").value = data.users[i].last_name;
+		document.querySelector("#popup4 .textinfo.email").value = data.users[i].email;
+		document.querySelector("#popup4 .textinfo.imei").value = data.users[i].imei;
+		document.querySelector("#popup4 .textinfo.telefono").value = data.users[i].telefono;
+		document.querySelector("#popup4 .optionCompany").selectedIndex = searchRegion(data.companies, id) + 1;
+		document.querySelector("#popup4 .bazul").onclick = (new proveedor(i, id)).save;
+		document.querySelector("#popup4 #beliminar").onclick = (new proveedor(i, id)).delete;
+		abrir("#popup4");
 	};
 	this.create = function(event) {
-		var name = $("#popup3 input.textinfo").val();
-		var selected = document.querySelector("#popup3 .optionRegion").selectedIndex;
-		if (selected == 0) {
-			return;
-		}
-		var region = data.regiones[selected - 1].id;
+		var nombreNode = document.querySelector("#popup3 .textinfo.form_nombre").value;
+		var apellidoNode = document.querySelector("#popup3 .textinfo.apellido").value;
+		var emailNode = document.querySelector("#popup3 .textinfo.email").value;
+		var imeiNode = document.querySelector("#popup3 .textinfo.imei").value;
+		var telefonoNode = document.querySelector("#popup3 .textinfo.telefono").value;
 		var postdata = {
-			'name': name,
-			'region': region
+			'email': emailNode,
+			'first_name': nombreNode,
+			'last_name': apellidoNode,
+			'imei': imeiNode,
+			'phone': telefonoNode
 		};
 		(new Bridge(i, id, "proveedores", postdata)).create(event);
 	};
 	this.save = function(event) {
-		var name = $("#popup2 input.textinfo").val();
-		var selected = document.querySelector("#popup2 .optionRegion").selectedIndex;
-		if (selected == 0) {
-			return;
-		}
-		var region = data.regiones[selected - 1].id;
+		var nombreNode = document.querySelector("#popup4 .textinfo.form_nombre").value;
+		var apellidoNode = document.querySelector("#popup4 .textinfo.apellido").value;
+		var emailNode = document.querySelector("#popup4 .textinfo.email").value;
+		var imeiNode = document.querySelector("#popup3 .textinfo.imei").value;
+		var telefonoNode = document.querySelector("#popup4 .textinfo.telefono").value;		
 		var postdata = {
-			'name': name,
-			'region': region
+			'email': emailNode,
+			'first_name': nombreNode,
+			'last_name': apellidoNode,
+			'imei': imeiNode,
+			'phone': telefonoNode
 		};
 		(new Bridge(i, id, "proveedores", postdata)).save(event);
 	};
@@ -339,10 +350,8 @@ function usuario(i, id) {
 		document.querySelector("#popup4 .textinfo.form_nombre").value = data.users[i].first_name;
 		document.querySelector("#popup4 .textinfo.apellido").value = data.users[i].last_name;
 		document.querySelector("#popup4 .textinfo.email").value = data.users[i].email;
-		// document.querySelector("#popup4 .textinfo.password").value = '';
+		document.querySelector("#popup4 .textinfo.password").value = '';
 		document.querySelector("#popup4 .textinfo.telefono").value = data.users[i].telefono;
-		console.log(data.companies, id, searchRegion(data.companies, id));
-		document.querySelector("#popup4 .optionCompany").selectedIndex = searchRegion(data.companies, id) + 1;
 		document.querySelector("#popup4 .bazul").onclick = (new usuario(i, id)).save;
 		document.querySelector("#popup4 #beliminar").onclick = (new usuario(i, id)).delete;
 		abrir("#popup4");
@@ -351,11 +360,11 @@ function usuario(i, id) {
 		var nombreNode = document.querySelector("#popup3 .textinfo.form_nombre").value;
 		var apellidoNode = document.querySelector("#popup3 .textinfo.apellido").value;
 		var emailNode = document.querySelector("#popup3 .textinfo.email").value;
-		// var passwordNode = document.querySelector("#popup3 .textinfo.password").value;
+		var passwordNode = document.querySelector("#popup3 .textinfo.password").value;
 		var telefonoNode = document.querySelector("#popup3 .textinfo.telefono").value;
 		var postdata = {
 			'email': emailNode,
-			'password': emailNode,
+			'password': passwordNode,
 			'first_name': nombreNode,
 			'last_name': apellidoNode,
 			'phone': telefonoNode
@@ -366,11 +375,11 @@ function usuario(i, id) {
 		var nombreNode = document.querySelector("#popup4 .textinfo.form_nombre").value;
 		var apellidoNode = document.querySelector("#popup4 .textinfo.apellido").value;
 		var emailNode = document.querySelector("#popup4 .textinfo.email").value;
-		// var passwordNode = document.querySelector("#popup4 .textinfo.password").value
+		var passwordNode = document.querySelector("#popup4 .textinfo.password").value
 		var telefonoNode = document.querySelector("#popup4 .textinfo.telefono").value;		
 		var postdata = {
 			'email': emailNode,
-			'password': emailNode,
+			'password': passwordNode,
 			'first_name': nombreNode,
 			'last_name': apellidoNode,
 			'phone': telefonoNode
