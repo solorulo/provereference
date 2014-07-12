@@ -339,9 +339,10 @@ function usuario(i, id) {
 		document.querySelector("#popup4 .textinfo.form_nombre").value = data.users[i].first_name;
 		document.querySelector("#popup4 .textinfo.apellido").value = data.users[i].last_name;
 		document.querySelector("#popup4 .textinfo.email").value = data.users[i].email;
-		document.querySelector("#popup4 .textinfo.password").value = '';
+		// document.querySelector("#popup4 .textinfo.password").value = '';
 		document.querySelector("#popup4 .textinfo.telefono").value = data.users[i].telefono;
-		
+		console.log(data.companies, id, searchRegion(data.companies, id));
+		document.querySelector("#popup4 .optionCompany").selectedIndex = searchRegion(data.companies, id) + 1;
 		document.querySelector("#popup4 .bazul").onclick = (new usuario(i, id)).save;
 		document.querySelector("#popup4 #beliminar").onclick = (new usuario(i, id)).delete;
 		abrir("#popup4");
@@ -350,11 +351,11 @@ function usuario(i, id) {
 		var nombreNode = document.querySelector("#popup3 .textinfo.form_nombre").value;
 		var apellidoNode = document.querySelector("#popup3 .textinfo.apellido").value;
 		var emailNode = document.querySelector("#popup3 .textinfo.email").value;
-		var passwordNode = document.querySelector("#popup3 .textinfo.password").value
+		// var passwordNode = document.querySelector("#popup3 .textinfo.password").value;
 		var telefonoNode = document.querySelector("#popup3 .textinfo.telefono").value;
 		var postdata = {
 			'email': emailNode,
-			'password': passwordNode,
+			'password': emailNode,
 			'first_name': nombreNode,
 			'last_name': apellidoNode,
 			'phone': telefonoNode
@@ -365,11 +366,11 @@ function usuario(i, id) {
 		var nombreNode = document.querySelector("#popup4 .textinfo.form_nombre").value;
 		var apellidoNode = document.querySelector("#popup4 .textinfo.apellido").value;
 		var emailNode = document.querySelector("#popup4 .textinfo.email").value;
-		var passwordNode = document.querySelector("#popup4 .textinfo.password").value
+		// var passwordNode = document.querySelector("#popup4 .textinfo.password").value
 		var telefonoNode = document.querySelector("#popup4 .textinfo.telefono").value;		
 		var postdata = {
 			'email': emailNode,
-			'password': passwordNode,
+			'password': emailNode,
 			'first_name': nombreNode,
 			'last_name': apellidoNode,
 			'phone': telefonoNode
