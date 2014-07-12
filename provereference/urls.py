@@ -16,14 +16,14 @@ urlpatterns = patterns('',
 	url(r'^forgot_password/complete/$',auth_views.password_reset_complete,name='forgot_password4'),
 )
 
-urlpatterns += patterns('georef_app.views',
+urlpatterns += patterns('georef_app.views.views',
 	# Examples:
 	url(r'^$', 'home', name='home'),
 	url(r'^login/$', 'login', name='login'),
 	url(r'^logout/$', 'logout', name='logout'),
 )
 
-urlpatterns += patterns('georef_app.admin_views',
+urlpatterns += patterns('georef_app.views.admin_views',
 	# Examples:
 	url(r'^administradores/(?P<format>json)?$', 'admins', name='admins'),
 	url(r'^administradores/new/$', 'admin_new', name='admin_new'),
@@ -31,7 +31,7 @@ urlpatterns += patterns('georef_app.admin_views',
 	url(r'^administradores/(?P<id_admin>\d{1,5})/delete/$', 'admin_delete', name='admin_delete'),
 )
 
-urlpatterns += patterns('georef_app.supervisor_views',
+urlpatterns += patterns('georef_app.views.supervisor_views',
 	# Examples:
 	url(r'^supervisores/(?P<format>json)?$', 'supervisors', name='supervisors'),
 	url(r'^supervisores/new/$', 'supervisor_new', name='supervisor_new'),
@@ -39,7 +39,7 @@ urlpatterns += patterns('georef_app.supervisor_views',
 	url(r'^supervisores/(?P<id_supervisor>\d{1,5})/delete/$', 'supervisor_delete', name='supervisor_delete'),
 )
 
-urlpatterns += patterns('georef_app.provider_views',
+urlpatterns += patterns('georef_app.views.provider_views',
 	# Examples:
 	url(r'^proveedores/(?P<format>json)?$', 'users', name='users'),
 	url(r'^proveedores/new/$', 'user_new', name='user_new'),
@@ -51,7 +51,7 @@ urlpatterns += patterns('georef_app.provider_views',
 	url(r'^supervision/(?P<format>json)?$', 'supervision', name='supervision'),
 )
 
-urlpatterns += patterns('georef_app.company_views',
+urlpatterns += patterns('georef_app.views.company_views',
 	# Examples:
 	url(r'^companias/(?P<format>json)?$', 'companies', name='companies'),
 	url(r'^companias/new/$', 'company_new', name='company_new'),
@@ -61,7 +61,7 @@ urlpatterns += patterns('georef_app.company_views',
 	url(r'^compania/(?P<id_provider>\d{1,5})/(?P<format>json)?$', 'company', name='company'),
 )
 
-urlpatterns += patterns('georef_app.user_views',
+urlpatterns += patterns('georef_app.views.user_views',
 	# Examples:
 	url(r'^usuarios/(?P<format>json)?$', 'users', name='users'),
 	url(r'^usuarios/new/$', 'user_new', name='user_new'),
@@ -72,7 +72,7 @@ urlpatterns += patterns('georef_app.user_views',
 
 )
 
-urlpatterns += patterns('georef_app.sites_views',
+urlpatterns += patterns('georef_app.views.sites_views',
 	# Examples:
 	url(r'^sitios/(?P<format>json)?$', 'sites', name='sites'),
 	url(r'^sitios/new/$', 'site_new', name='site_new'),
