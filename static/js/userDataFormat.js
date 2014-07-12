@@ -29,15 +29,9 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 			continue;
 		}
 
-		if (document.querySelector("#optionRegion").selectedIndex != 0 &&
-			document.querySelector("#optionRegion").selectedIndex != searchRegion(data.region, id)+1) continue;
-		if (document.querySelector("#optionSitio").selectedIndex != 0 &&
-			document.querySelector("#optionSitio").selectedIndex != searchRegion(data.site, id)+1) continue;
-
 		if (query != '' && !(
 			reg.test((data.users[i].first_name).toLowerCase().replace(/[\s-]/g, '')) || 
 			reg.test((data.users[i].last_name).toLowerCase().replace(/[\s-]/g, '')) || 
-			reg.test((data.users[i].imei).toLowerCase().replace(/[\s-]/g, '')) ||
 			reg.test((data.users[i].telefono).toLowerCase().replace(/[\s-]/g, '')) ||
 			reg.test((data.users[i].email).toLowerCase().replace(/[\s-]/g, ''))
 			)) {
@@ -95,93 +89,4 @@ $(document).ready(function(event){
 		REPARAR LOS ESTILOS DENTRO DEL POPUP
 	*/
 	$("#popcontenido select").addClass("textinfo");
-
-	// ####################
-	// Región Select Option
-	(function(){
-		var option = document.createElement("select");
-		option.setAttribute("class", "optionRegion");
-		option.setAttribute("style", "display:block;");
-
-		var firstOption = document.createElement("option");
-		firstOption.appendChild(document.createTextNode(" ---- "));
-		option.appendChild(firstOption);
-		for (var i = 0; i < data.region.length; i++) {
-			var optionText = data.region[i].name;
-			var optionTextNode = document.createTextNode(optionText);
-			var optionNode = document.createElement("option");
-			optionNode.appendChild(optionTextNode);
-			option.appendChild(optionNode);
-		};
-		var oldOptions = document.querySelectorAll(".optionRegion");
-		for (var i = oldOptions.length - 1; i >= 0; i--) {
-			var clone = option.cloneNode(true);
-			if(oldOptions[i].hasAttribute("id")){
-				clone.setAttribute("id", "optionRegion");
-			}
-			oldOptions[i].parentNode.replaceChild(clone, oldOptions[i]);
-		};
-	})();
-
-	// ###################
-	// Sitio Select Option
-	(function(){
-		var option = document.createElement("select");
-		option.setAttribute("class", "optionSitio");
-		option.setAttribute("style", "display:block;");
-
-		var firstOption = document.createElement("option");
-		firstOption.appendChild(document.createTextNode(" ---- "));
-		option.appendChild(firstOption);
-		for (var i = 0; i < data.site.length; i++) {
-			var optionText = data.site[i].name;
-			var optionTextNode = document.createTextNode(optionText);
-			var optionNode = document.createElement("option");
-			optionNode.appendChild(optionTextNode);
-			option.appendChild(optionNode);
-		};
-		var oldOptions = document.querySelectorAll(".optionSitio");
-		for (var i = oldOptions.length - 1; i >= 0; i--) {
-			var clone = option.cloneNode(true);
-			if(oldOptions[i].hasAttribute("id")){
-				clone.setAttribute("id", "optionSitio");
-			}
-			oldOptions[i].parentNode.replaceChild(clone, oldOptions[i]);
-		};
-	})();
-
-	// ###################
-	// Compaine Select Option
-	(function(){
-		var option = document.createElement("select");
-		option.setAttribute("class", "optionCompany");
-		option.setAttribute("style", "display:block;");
-
-		var firstOption = document.createElement("option");
-		firstOption.appendChild(document.createTextNode(" ---- "));
-		option.appendChild(firstOption);
-		for (var i = 0; i < data.companies.length; i++) {
-			var optionText = data.companies[i].name;
-			var optionTextNode = document.createTextNode(optionText);
-			var optionNode = document.createElement("option");
-			optionNode.appendChild(optionTextNode);
-			option.appendChild(optionNode);
-		};
-		var oldOptions = document.querySelectorAll(".optionCompany");
-		for (var i = oldOptions.length - 1; i >= 0; i--) {
-			var clone = option.cloneNode(true);
-			if(oldOptions[i].hasAttribute("id")){
-				clone.setAttribute("id", "optionCompany");
-			}
-			oldOptions[i].parentNode.replaceChild(clone, oldOptions[i]);
-		};
-	})();
-
-
-	var formatHandler = function(event) {
-		dataFormat(document.querySelector("#busqueda input").value);
-	};
-	document.querySelector("#optionRegion").onchange =
-	document.querySelector("#optionSitio").onchange = 
-	formatHandler;
 });
