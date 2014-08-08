@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Log Georeferencias</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/log.css">
+</head>
+<body>
+	<div id="content">
+		{{data}}
+		<table>
+			<thead>
+				<tr>
+					<th class="idcol">ID Admin</th>
+					<th>Administrador</th>
+					<th>Operaci&oacute;n</th>
+					<th>Modelo</th>
+					<th class="idcol">ID</th>
+					<th>Fecha-Hora</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for j in data %}
+				<tr>
+					<td class="idcol info">{{ j.adminid }}</td>
+					<td class="info">{{ j.admin }}</td>
+					<td class="info">{{ j.op }}</td>
+					<td class="info">{{ j.model }}</td>
+					<td class="idcol info">{{ j.id }}</td>
+					<td class="info">{{ j.fecha }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

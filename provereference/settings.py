@@ -25,7 +25,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 LOGIN_URL='/login/'
 
@@ -75,9 +75,9 @@ else:
 		'default': {
 	        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
 	        'NAME': 'proverefdb',                      # Or path to database file if using sqlite3.
-	        'USER': 'root',                      # Not used with sqlite3.
-	        'PASSWORD': 'rulo',                  # Not used with sqlite3.
-	        # 'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+	        'USER': 'geo',                      # Not used with sqlite3.
+	        'PASSWORD': 'telcel123',                  # Not used with sqlite3.
+	        # 'HOST': '/tmp/mysql.sock',                      # Set to empty string for localhost. Not used with sqlite3.
 	        # 'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
 	    }
 	}
