@@ -21,11 +21,11 @@ SECRET_KEY = '#r9s0(elco+iyk22@udtga#*kn-&cy-y+*f_k^8bomlzke7ifu'
 API_KEY = '#r9s0(elco+iyk22@udtga#*kn-&cy-y+*f_kapi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 LOGIN_URL='/login/'
 
@@ -63,7 +63,7 @@ AUTHENTICATION_BACKENDS = (
 SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-if DEBUG:
+if not DEBUG:
 	DATABASES = {
 		'default': {
 			'ENGINE': 'django.db.backends.sqlite3',
@@ -75,8 +75,8 @@ else:
 		'default': {
 	        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
 	        'NAME': 'proverefdb',                      # Or path to database file if using sqlite3.
-	        'USER': 'root',                      # Not used with sqlite3.
-	        'PASSWORD': 'rulo',                  # Not used with sqlite3.
+	        'USER': 'geo',                      # Not used with sqlite3.
+	        'PASSWORD': 'telcel123',                  # Not used with sqlite3.
 	        # 'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
 	        # 'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
 	    }
