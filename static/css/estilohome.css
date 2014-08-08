@@ -1,7 +1,21 @@
+@font-face {
+	font-family: 'Source Sans Pro';
+	src: url('/static/Source_Sans_Pro/SourceSansPro-Regular.ttf'),
+		url('/static/Source_Sans_Pro/SourceSansPro-Black.ttf'),
+		url('/static/Source_Sans_Pro/SourceSansPro-BlackItalic.ttf'),
+		url('/static/Source_Sans_Pro/SourceSansPro-ExtraLight.ttf'),
+		url('/static/Source_Sans_Pro/SourceSansPro-ExtraLightItalic.ttf'),
+		url('/static/Source_Sans_Pro/SourceSansPro-Italic.ttf'),
+		url('/static/Source_Sans_Pro/SourceSansPro-Light.ttf'),
+		url('/static/Source_Sans_Pro/SourceSansPro-LightItalic.ttf'),
+		url('/static/Source_Sans_Pro/SourceSansPro-Semibold.ttf'),
+		url('/static/Source_Sans_Pro/SourceSansPro-SemiboldItalic.ttf'),;
+}
 .body {
-background:url("../imagenes/fondo_pegado.png") 
-no-repeat center center;
-height: 568px;
+	background:url("../imagenes/fondo_pegado.png") 
+	no-repeat center center;
+	height: 568px;
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
 .form {

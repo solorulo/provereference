@@ -108,3 +108,15 @@ class InfoOther (User):
 			print 'first save'
 			self.set_password(self.password)
 		super(InfoOther, self).save(*args, **kwargs)
+
+class Log (models.Model):
+	infouser = models.ForeignKey(InfoUser)
+	operacion = models.CharField(max_length=45)
+	modelo = models.CharField(max_length=45)
+	modelo_id = models.CharField(max_length=45)
+	fecha = models.DateTimeField(auto_now_add=True)
+	def save(self, *args, **kwargs):
+		print 'saving infoother'
+		if not self.infouser.is_admin():
+			raise ValidationError(_('Invalid value admin'))
+		super(Log, self).save(*args, **kwargs)

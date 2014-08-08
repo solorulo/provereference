@@ -21,7 +21,7 @@ SECRET_KEY = '#r9s0(elco+iyk22@udtga#*kn-&cy-y+*f_k^8bomlzke7ifu'
 API_KEY = '#r9s0(elco+iyk22@udtga#*kn-&cy-y+*f_kapi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
 
@@ -63,7 +63,7 @@ AUTHENTICATION_BACKENDS = (
 SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-if not DEBUG:
+if DEBUG:
 	DATABASES = {
 		'default': {
 			'ENGINE': 'django.db.backends.sqlite3',
@@ -77,7 +77,7 @@ else:
 	        'NAME': 'proverefdb',                      # Or path to database file if using sqlite3.
 	        'USER': 'geo',                      # Not used with sqlite3.
 	        'PASSWORD': 'telcel123',                  # Not used with sqlite3.
-	        # 'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+	        # 'HOST': '/tmp/mysql.sock',                      # Set to empty string for localhost. Not used with sqlite3.
 	        # 'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
 	    }
 	}

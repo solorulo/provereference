@@ -6,25 +6,22 @@ import settings
 admin.autodiscover()
 
 urlpatterns = patterns('',
-
 	url(r'^admin/', include(admin.site.urls)),
 
 	# Reseteo de password TODO verificar si van a funcionar
-	url(r'^forgot_password/$',auth_views.password_reset,name='forgot_password1'),
-	url(r'^forgot_password/done/$',auth_views.password_reset_done,name='forgot_password2'),
-	url(r'^forgot_password/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',auth_views.password_reset_confirm,name='forgot_password3'),
-	url(r'^forgot_password/complete/$',auth_views.password_reset_complete,name='forgot_password4'),
+	# url(r'^forgot_password/$',auth_views.password_reset,name='forgot_password1'),
+	# url(r'^forgot_password/done/$',auth_views.password_reset_done,name='forgot_password2'),
+	# url(r'^forgot_password/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',auth_views.password_reset_confirm,name='forgot_password3'),
+	# url(r'^forgot_password/complete/$',auth_views.password_reset_complete,name='forgot_password4'),
 )
 
 urlpatterns += patterns('georef_app.views.views',
-	# Examples:
 	url(r'^$', 'home', name='home'),
 	url(r'^login/$', 'login', name='login'),
 	url(r'^logout/$', 'logout', name='logout'),
 )
 
 urlpatterns += patterns('georef_app.views.admin_views',
-	# Examples:
 	url(r'^administradores/(?P<format>json)?$', 'admins', name='admins'),
 	url(r'^administradores/new/$', 'admin_new', name='admin_new'),
 	url(r'^administradores/(?P<id_admin>\d{1,5})/edit/$', 'admin_edit', name='admin_edit'),
@@ -32,7 +29,6 @@ urlpatterns += patterns('georef_app.views.admin_views',
 )
 
 urlpatterns += patterns('georef_app.views.supervisor_views',
-	# Examples:
 	url(r'^supervisores/(?P<format>json)?$', 'supervisors', name='supervisors'),
 	url(r'^supervisores/new/$', 'supervisor_new', name='supervisor_new'),
 	url(r'^supervisores/(?P<id_supervisor>\d{1,5})/edit/$', 'supervisor_edit', name='supervisor_edit'),
@@ -40,7 +36,6 @@ urlpatterns += patterns('georef_app.views.supervisor_views',
 )
 
 urlpatterns += patterns('georef_app.views.provider_views',
-	# Examples:
 	url(r'^proveedores/(?P<format>json)?$', 'users', name='users'),
 	url(r'^proveedores/new/$', 'user_new', name='user_new'),
 	url(r'^proveedores/(?P<id_user>\d{1,5})/edit/$', 'user_edit', name='user_edit'),
@@ -52,7 +47,6 @@ urlpatterns += patterns('georef_app.views.provider_views',
 )
 
 urlpatterns += patterns('georef_app.views.company_views',
-	# Examples:
 	url(r'^companias/(?P<format>json)?$', 'companies', name='companies'),
 	url(r'^companias/new/$', 'company_new', name='company_new'),
 	url(r'^companias/(?P<id_provider>\d{1,5})/edit/$', 'company_edit', name='company_edit'),
@@ -62,7 +56,6 @@ urlpatterns += patterns('georef_app.views.company_views',
 )
 
 urlpatterns += patterns('georef_app.views.user_views',
-	# Examples:
 	url(r'^usuarios/(?P<format>json)?$', 'users', name='users'),
 	url(r'^usuarios/new/$', 'user_new', name='user_new'),
 	url(r'^usuarios/(?P<id_user>\d{1,5})/edit/$', 'user_edit', name='user_edit'),
@@ -73,7 +66,6 @@ urlpatterns += patterns('georef_app.views.user_views',
 )
 
 urlpatterns += patterns('georef_app.views.sites_views',
-	# Examples:
 	url(r'^sitios/(?P<format>json)?$', 'sites', name='sites'),
 	url(r'^sitios/new/$', 'site_new', name='site_new'),
 	url(r'^sitios/(?P<id_site>\d{1,5})/edit/$', 'site_edit', name='site_edit'),
@@ -81,7 +73,6 @@ urlpatterns += patterns('georef_app.views.sites_views',
 )
 
 urlpatterns += patterns('georef_app.api',
-	# Examples:
 	url(r'^api/log/$', 'api_log', name='api_log'),
 	url(r'^api/login/$', 'login', name='api_login'),
 	url(r'^api/logout/$', 'logout', name='api_logout'),
@@ -90,5 +81,8 @@ urlpatterns += patterns('georef_app.api',
 	# url(r'^sitios/$', 'sites', name='sites'),
 )
 
+urlpatterns += patterns('georef_app.views.log_views',
+	url(r'^administradores/log/(?P<format>json)?$', 'log', name='log'),
+)
 if settings.DEBUG:
 	urlpatterns += staticfiles_urlpatterns() 
