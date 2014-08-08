@@ -51,6 +51,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var fecha_final = new Date(document.querySelector("#fecha_final").value);
 		if (!((Date.now()-5*60*1000 < (fecha != null)? fecha.getTime() : Date.now()) && document.querySelector("#checkActivos").checked)) continue;
 		if (!(Date.now()-5*60*1000 < (fecha != null)? fecha.getTime() : Date.now()) && document.querySelector("#checkInactivos").checked) continue;
+		if (fecha == null) fecha = new Date();
 		if (fecha.getTime() < fecha_inicial.getTime()) continue;
 		if (fecha.getTime() > fecha_final.getTime()+24*60*60*1000) continue;
 		if (document.querySelector("#optionRegion").selectedIndex != 0 &&
