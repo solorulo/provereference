@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import simplejson
 from georef_app.models import InfoProv, Empresa, Sitio, Region
-from georef_app.utils import dec_magic
+from georef_app.utils import dec_magic, registerLog
 
 # Create your views here.
 
@@ -54,12 +54,15 @@ def site_new(request):
 			radio=float(radio),
 			region=Region.objects.get(pk=int(region)))
 		new_site.save()
+
+		registerLog(request.user, 'Nuevo', 'Sitio', new_site.pk)
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Bien",
 			'provider_id' : new_site.pk
 		})
-	except :
+	except Exception, e:
+		raise e
 		data = simplejson.dumps({
 			'code' : 0,
 			'msg' : "Fallo"
@@ -90,6 +93,7 @@ def site_edit(request, id_site):
 
 		the_site.save()
 
+		registerLog(request.user, 'Edición', 'Sitio', id_site)
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Bien"
@@ -111,6 +115,7 @@ def site_delete(request, id_site):
 	try:
 		the_site = Sitio.objects.get(pk=id_site)
 		the_site.delete()
+		registerLog(request.user, 'Borrar', 'Sitio', id_site)
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Borrado"

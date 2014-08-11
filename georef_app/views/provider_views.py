@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.utils import simplejson
 from georef_app.models import *
-from georef_app.utils import dec_magic, check_admin
+from georef_app.utils import dec_magic, check_admin, registerLog
 import hashlib
 from provereference.settings import API_KEY
 
@@ -72,6 +72,7 @@ def user_new(request):
 			)
 		new_userprov.save()
 
+		registerLog(request.user, 'Nuevo', 'Proveedor', new_userprov.pk)
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Bien",
@@ -110,6 +111,7 @@ def user_edit(request, id_user):
 
 		the_userprov.save()
 
+		registerLog(request.user, 'Edición', 'Proveedor', id_user)
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Bien"
@@ -132,6 +134,7 @@ def user_delete(request, id_user):
 		# TODO Borrar Supervisor
 		the_userprov = InfoProv.objects.get(pk=id_user)
 		the_userprov.delete()
+		registerLog(request.user, 'Borrar', 'Proveedor', id_user)
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Borrado"

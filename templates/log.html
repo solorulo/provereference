@@ -7,7 +7,6 @@
 </head>
 <body>
 	<div id="content">
-		{{data}}
 		<table>
 			<thead>
 				<tr>
@@ -22,10 +21,10 @@
 			<tbody>
 				{% for j in data %}
 				<tr>
-					<td class="idcol info">{{ j.adminid }}</td>
-					<td class="info">{{ j.admin }}</td>
-					<td class="info">{{ j.op }}</td>
-					<td class="info">{{ j.model }}</td>
+					<td class="idcol info">{{ j.infouser.pk }}</td>
+					<td class="info">{{ j.infouser.get_full_name }}</td>
+					<td class="info">{{ j.operacion }}</td>
+					<td class="info">{{ j.modelo }}</td>
 					<td class="idcol info">{{ j.id }}</td>
 					<td class="info">{{ j.fecha }}</td>
 				</tr>

@@ -231,13 +231,15 @@ function admin(i, id) {
 		var first_name = $('#first_name').val();
 		var last_name = $('#last_name').val();
 		var password = $('#password').val();
+		var myp = $('.myp').val();
 		var postdata = {
 			'email': email,
 			'first_name': first_name,
 			'last_name': last_name,
 			'password': password,
 			'is_admin': true,
-			'tel': ''
+			'tel': '',
+			'my_password': myp
 		};
 		(new Bridge(i, id, "administradores", postdata)).create(event);
 	};
@@ -245,6 +247,7 @@ function admin(i, id) {
 		var email = $('#popup1 .form_mail').val();
 		var first_name = $('#popup1 .form_nombre').val();
 		var last_name = $('#popup1 .form_apellido').val();
+		var password = $('#popup1 .form_password').val();
 		var is_admin = document.querySelector("#popadministrador input").checked;
 		var myp = $('.myp').val();
 		var postdata = {
@@ -252,6 +255,7 @@ function admin(i, id) {
 			'first_name': first_name,
 			'last_name': last_name,
 			'is_admin': is_admin,
+			'password': password,
 			'tel': '',
 			'my_password': myp
 		};
@@ -316,12 +320,19 @@ function proveedor(i, id) {
 		var emailNode = document.querySelector("#popup3 .textinfo.email").value;
 		var imeiNode = document.querySelector("#popup3 .textinfo.imei").value;
 		var telefonoNode = document.querySelector("#popup3 .textinfo.telefono").value;
+		var company = document.querySelector("#popup3 .optionCompany").selectedIndex;
+		if (company == 0) {
+			alert("Debe seleccionar una compañia primero.");
+			return;
+		}
+		company = data.companies[company - 1].pk;
 		var postdata = {
 			'email': emailNode,
 			'first_name': nombreNode,
 			'last_name': apellidoNode,
 			'imei': imeiNode,
-			'phone': telefonoNode
+			'phone': telefonoNode,
+			'empresa': company
 		};
 		(new Bridge(i, id, "proveedores", postdata)).create(event);
 	};

@@ -89,7 +89,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 };
 
 $(document).ready(function(event){
-	document.querySelector("#b_create").onclick = (new usuario()).create;
+	document.querySelector("#b_create").onclick = (new proveedor()).create;
 
 	/*
 		REPARAR LOS ESTILOS DENTRO DEL POPUP

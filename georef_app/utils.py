@@ -17,6 +17,15 @@ def response(msg, code=0, data=None):
 		r['data']=data
 	return HttpResponse(simplejson.dumps(r), mimetype='application/json')
 
+def registerLog(user, operacion, modelo, modelo_id):
+	new_log = Log(
+		infouser=user.infouser,
+		operacion=operacion,
+		modelo=modelo,
+		modelo_id=str(modelo_id)
+	)
+	new_log.save()
+
 def check_admin(user):
 	try:
 		return user.infouser.is_admin()

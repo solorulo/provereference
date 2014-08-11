@@ -3,7 +3,7 @@ from django.core import serializers
 from django.shortcuts import render, get_object_or_404
 from django.utils import simplejson
 from georef_app.models import InfoProv, Empresa, Sitio, Region
-from georef_app.utils import dec_magic
+from georef_app.utils import dec_magic, registerLog
 
 @dec_magic(method='GET', admin_required=True)
 def companies(request, format):
@@ -51,6 +51,7 @@ def company_new(request):
 			region_id=int(region)
 			)
 		new_provider.save()
+		registerLog(request.user, 'Nuevo', 'Compañia', new_provider.pk)
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Bien",
@@ -76,7 +77,7 @@ def company_edit(request, id_provider):
 			the_provider.region_id = int(id_region)
 
 		the_provider.save()
-
+		registerLog(request.user, 'Edición', 'Compañia', id_provider)
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Bien"
@@ -98,6 +99,7 @@ def company_delete(request, id_provider):
 	try:
 		the_provider = Empresa.objects.get(pk=id_provider)
 		the_provider.delete()
+		registerLog(request.user, 'Borrar', 'Compañia', id_provider)
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Borrado"

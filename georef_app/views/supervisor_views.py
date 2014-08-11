@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.utils import simplejson
 from georef_app.models import InfoUser
-from georef_app.utils import dec_magic
+from georef_app.utils import dec_magic, registerLog
 
 @dec_magic(method='GET', admin_required=True)
 def supervisors(request, format):
@@ -41,6 +41,8 @@ def supervisor_new(request):
 			password=password,
 			telefono=phone)
 		new_supervisor.save()
+
+		registerLog(request.user, 'Nuevo', 'Supervisor', new_supervisor.pk)
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Bien",
@@ -83,6 +85,7 @@ def supervisor_edit(request, id_supervisor):
 
 		the_supervisor.save()
 
+		registerLog(request.user, 'Edición', 'Supervisor', id_supervisor)
 		data = simplejson.dumps({
 			'code' : code,
 			'msg' : "Bien"
@@ -104,6 +107,8 @@ def supervisor_delete(request, id_supervisor):
 	try:
 		the_supervisor = InfoUser.objects.get(pk=id_supervisor)
 		the_supervisor.delete()
+
+		registerLog(request.user, 'Borrar', 'Supervisor', id_supervisor)
 		data = simplejson.dumps({
 			'code' : 1,
 			'msg' : "Borrado"
