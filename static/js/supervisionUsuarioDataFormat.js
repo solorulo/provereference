@@ -130,4 +130,12 @@ $(document).ready(function(){
 
 	document.querySelector("#select_sitios").onchange = function(){dataFormat('')};
 	document.querySelector("#fecha_inicial").onkeydown = function(){dataFormat('')};
+
+	window.setInterval(function(){
+		$.ajax("./json", {success: function(d, status, jq){
+			console.log(d);
+			data = d;
+			dataFormat('');
+		}})
+	}, 30000);
 });
