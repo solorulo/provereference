@@ -1,4 +1,5 @@
 - Descomprimir la carpeta y acceder a ella mediante la terminal
 - Poner el comando: python manage.py syncdb
 - Poner el comando: python manage.py collectstatic
-- Poner el comando: gunicorn -b 0.0.0.0:<port> provereference.wsgi:application
+- Poner el comando: gunicorn -w3 -b 0.0.0.0:<port> provereference.wsgi:application
+- HTTPS comando: 	gunicorn -w3 -b 0.0.0.0:<port> --certfile=server.crt --keyfile=server.key provereference.wsgi:application
