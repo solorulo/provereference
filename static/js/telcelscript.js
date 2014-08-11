@@ -420,7 +420,7 @@ function sitio(i, id) {
 			alert("Debe seleccionar una región primero.");
 			return;
 		}
-		reg = data.regiones[reg - 1].id;
+		reg = data.regiones[reg - 1].pk;
 
 		var postdata = {
 			'name': name,
@@ -441,7 +441,7 @@ function sitio(i, id) {
 			alert("Debe seleccionar una región primero.");
 			return;
 		}
-		reg = data.regiones[reg - 1].id;
+		reg = data.regiones[reg - 1].pk;
 
 		var postdata = {
 			'name': name,
