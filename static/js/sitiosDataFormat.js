@@ -50,7 +50,8 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 	
 		var nombreTextNode = document.createTextNode(data.sites[i].name);
 		var infoNeumonico = document.createTextNode("Neumonico: "+data.sites[i].neumonico);
-		var infoLatLng = document.createTextNode("Lat: "+data.sites[i].lat+" Long: "+data.sites[i].lng);
+		var infoLat = document.createTextNode("Lat: "+data.sites[i].lat);
+		var infoLng = document.createTextNode("Lng: "+data.sites[i].lng);
 		var infoReg = document.createTextNode("Región: "+getReg(data.sites[i].reg).nombre);
 		var confTextNode = document.createTextNode("Editar datos");
 		
@@ -68,7 +69,9 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		nombre.appendChild(conf);
 		info.appendChild(infoNeumonico);
 		info.appendChild(document.createElement("br"));
-		info.appendChild(infoLatLng);
+		info.appendChild(infoLat);
+		info.appendChild(document.createElement("br"));
+		info.appendChild(infoLng);
 		info.appendChild(document.createElement("br"));
 		info.appendChild(infoReg);
 		contenedor.appendChild(nombre);
