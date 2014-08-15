@@ -198,9 +198,8 @@ function Bridge(i, id, nombre, datos) {
 	};
 	this.delete = function() {
 		event.preventDefault();
-		var postdata = {
-			'csrfmiddlewaretoken': csrftoken
-		}
+		var postdata = jQuery.extend({}, datos);
+		postdata.csrfmiddlewaretoken = csrftoken;
 		$.post("/" + nombre + "/" + id + "/delete/", postdata, function(response) {
 			// eval('var _jsonData = '+response);
 			var code = response.code;
@@ -262,7 +261,11 @@ function admin(i, id) {
 		(new Bridge(i, id, "administradores", postdata)).save(event);
 	}
 	this.delete = function() {
-		(new Bridge(i, id, "administradores")).delete();
+		var myp = $('.myp').val();
+		var postdata = {
+			'my_password': myp
+		};
+		(new Bridge(i, id, "administradores", postdata)).delete();
 	}
 };
 
