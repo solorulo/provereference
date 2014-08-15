@@ -75,11 +75,11 @@ if DEBUG:
 else:
 	DATABASES = {
 		'default': {
-	        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-	        'NAME': 'proverefdb',                      # Or path to database file if using sqlite3.
-	        'USER': 'geo',                      # Not used with sqlite3.
-	        'PASSWORD': 'telcel123',                  # Not used with sqlite3.
-	        # 'HOST': '/tmp/mysql.sock',                      # Set to empty string for localhost. Not used with sqlite3.
+	        'ENGINE': 'django.db.backends.mysql',    # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+	        'NAME': 'proverefdb',                    # Or path to database file if using sqlite3.
+	        'USER': 'georefdb',                      # Not used with sqlite3.
+	        'PASSWORD': 'telcel123',                 # Not used with sqlite3.
+	        # 'HOST': '/tmp/mysql.sock',             # Set to empty string for localhost. Not used with sqlite3.
 	        # 'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
 	    }
 	}
