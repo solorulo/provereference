@@ -53,7 +53,7 @@ def dec_magic(method='POST', required_args=[], admin_required=False, login_requi
 						return response('login required')
 					else :
 						return HttpResponseRedirect("/login?next="+request.path)
-				if not check_admin(request.user):
+				if admin_required and not check_admin(request.user):
 					return HttpResponseRedirect("/login?next="+request.path)
 			# Validate call method and get the arguments
 			if method == 'GET':

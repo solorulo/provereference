@@ -45,10 +45,10 @@ def logout(request):
 
 @login_required
 def home(request):
-	try:
-		if check_admin(request.user):
-			return HttpResponseRedirect('/administradores')
-		elif request.user.infouser:
-			return HttpResponseRedirect('/supervision')
-	except Exception, e:
-		return HttpResponseRedirect('/login')
+	# try:
+	if check_admin(request.user):
+		return HttpResponseRedirect('/administradores')
+	elif request.user.infouser:
+		return HttpResponseRedirect('/supervision')
+	# except Exception, e:
+	# 	return HttpResponseRedirect('/login')
