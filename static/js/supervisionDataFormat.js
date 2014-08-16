@@ -6,20 +6,20 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 				if(array[i].users[e].pk == userpk){
 					return i;
 				}
-			};
-		};
+			}
+		}
 		return 0;
-	}
+	};
 	var searchRegion = function(array, userpk){
 		for (var i = 0; i < array.length; i++) {
 			for (var e = 0; e < array[i].users.length; e++) {
 				if(array[i].users[e].pk == userpk){
 					return i;
 				}
-			};
-		};
+			}
+		}
 		return 0;
-	}
+	};
 	var searchActivity = function(array, userpk){
 		for (var i = 0; i < array.length; i++) {
 			if(array[i].user_pk == userpk){
@@ -99,7 +99,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		tdNombre.setAttribute("class", "t1");
 		aNombre.setAttribute("href", "/proveedor/"+id);
 		tdActivo.setAttribute("class", "t1");
-		if(Date.now()-5*60*1000 < (fecha != null)? fecha.getTime() : Date.now())
+		if((Date.now()-5*60*1000 < (fecha != null))? fecha.getTime() : Date.now())
 			tdActivo.setAttribute("id", "tactivo");
 		tdProvedor.setAttribute("class", "t2");
 		tdRegistro.setAttribute("class", "t3");
