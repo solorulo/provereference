@@ -4,7 +4,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 	document.querySelector("#derecha").replaceChild(emptyNode, element);
 
 	for (var i = 0; i < data.companies.length; i++) {
-		console.log(data.companies[i].name);
+		// console.log(data.companies[i].name);
 		if (query != '' && !(
 			reg.test((data.companies[i].name).toLowerCase().replace(/[\s-]/g, '')) || 
 			reg.test((data.companies[i].reg).toLowerCase().replace(/[\s-]/g, ''))
