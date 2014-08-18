@@ -344,13 +344,20 @@ function proveedor(i, id) {
 		var apellidoNode = document.querySelector("#popup4 .textinfo.apellido").value;
 		var emailNode = document.querySelector("#popup4 .textinfo.email").value;
 		var imeiNode = document.querySelector("#popup4 .textinfo.imei").value;
-		var telefonoNode = document.querySelector("#popup4 .textinfo.telefono").value;		
+		var telefonoNode = document.querySelector("#popup4 .textinfo.telefono").value;	
+		var company = document.querySelector("#popup4 .optionCompany").selectedIndex;
+		if (company == 0) {
+			alert("Debe seleccionar una compañia primero.");
+			return;
+		}
+		company = data.companies[company - 1].pk;	
 		var postdata = {
 			'email': emailNode,
 			'first_name': nombreNode,
 			'last_name': apellidoNode,
 			'imei': imeiNode,
-			'phone': telefonoNode
+			'phone': telefonoNode,
+			'provider': company
 		};
 		(new Bridge(i, id, "proveedores", postdata)).save(event);
 	};

@@ -102,7 +102,7 @@ def user_edit(request, id_user):
 		if imei is not None :
 			the_userprov.imei = imei
 		if provider is not None :
-			the_userprov.empresa = Empresa.objects.get(pk=int(provider))
+			the_userprov.empresa_id = int(provider)
 		if first_name is not None :
 			the_userprov.first_name = first_name
 		if last_name is not None :
