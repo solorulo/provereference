@@ -343,7 +343,7 @@ function proveedor(i, id) {
 		var nombreNode = document.querySelector("#popup4 .textinfo.form_nombre").value;
 		var apellidoNode = document.querySelector("#popup4 .textinfo.apellido").value;
 		var emailNode = document.querySelector("#popup4 .textinfo.email").value;
-		var imeiNode = document.querySelector("#popup3 .textinfo.imei").value;
+		var imeiNode = document.querySelector("#popup4 .textinfo.imei").value;
 		var telefonoNode = document.querySelector("#popup4 .textinfo.telefono").value;		
 		var postdata = {
 			'email': emailNode,
