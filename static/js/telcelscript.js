@@ -277,10 +277,12 @@ function supervisor(i, id) {
 		var first_name = $("#first_name").val();
 		var last_name = $("#last_name").val();
 		var email = $("#email").val();
+		var contrasena = $("#contrasena").val();
 		var postdata = {
 			'email': email,
 			'first_name': first_name,
 			'last_name': last_name,
+			'password': contrasena,
 			'is_admin': false,
 			'tel': ''
 		};
@@ -474,7 +476,7 @@ function sitio(i, id) {
 		(new Bridge(i, id, "sitios", postdata)).save(event);
 	};
 	this.delete = function(event) {
-		(new Bridge(i, id, "proveedores")).delete();
+		(new Bridge(i, id, "sitios")).delete();
 	};
 }
 
@@ -492,6 +494,7 @@ function companie(i, id) {
 		}
 		document.querySelector("#popup1 .optionRegion").selectedIndex = searchRegion();
 		document.querySelector("#popup1 #beliminar").onclick = (new companie(i, id)).delete
+		document.querySelector("#popup1 #b_save").onclick = (new companie(i, id)).save;
 	}
 	this.create = function(event) {
 		var name = document.querySelector("#popup2 .form_nombre").value;
