@@ -72,6 +72,7 @@ def supervisor_edit(request, id_supervisor):
 			the_supervisor.last_name = last_name
 		if email is not None :
 			the_supervisor.email = email
+			the_supervisor.username = email
 		if phone is not None :
 			the_supervisor.telefono = phone
 		code = 1

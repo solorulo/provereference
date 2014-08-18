@@ -89,6 +89,7 @@ def admin_edit(request, id_admin):
 			the_admin.last_name = last_name
 		if email is not None :
 			the_admin.email = email
+			the_admin.username = username
 		if phone is not None :
 			the_admin.telefono = phone
 		code = 1

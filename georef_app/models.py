@@ -66,7 +66,7 @@ class InfoProv (User):
 		super(InfoProv, self).save(*args, **kwargs)
 
 class Sitio (models.Model):
-	neumonico = models.CharField(max_length=45)
+	neumonico = models.CharField(max_length=45, unique=True)
 	nombre = models.CharField(max_length=45)
 	lat = models.FloatField()
 	lng = models.FloatField()
