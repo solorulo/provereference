@@ -1,0 +1,118 @@
+
+{% if template_name == "administrador" %}
+<div id="izquierda" class="interior">
+	<li id="administrador"> Administradores <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
+	{% if user.infouser.is_superadmin%}
+	<li id="nuevo" onclick="abrir1()"><div id="linea1"></div></br><dd>Nuevo Administrador <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
+	{% endif %}
+
+	<ul id="lateral">
+		<li><a href="/supervisores">Supervisores</a></li>
+		<li><a href="/companias">Compañias</a></li>
+		<li><a href="/proveedores">Proveedores</a></li>
+		<li><a href="/sitios">Sitios</a></li>
+		<li><a href="/usuarios">Usuarios</a></li>
+	</ul>
+</div>
+
+{% elif template_name == "supervisor" %}
+<div id="izquierda" class="interior">
+	<li id="administrador"> Supervisores <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
+	<li id="nuevo" onclick="abrir1()"><div id="linea1"></div></br><dd>Nuevo supervisor <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
+
+	<ul id="lateral">
+		<li ><a href="/administradores">Administradores</a></li>
+		<li><a href="/companias">Compañias</a></li>
+		<li><a href="/proveedores">Proveedores</a></li>
+		<li><a href="/sitios">Sitios</a></li>
+		<li><a href="/usuarios">Usuarios</a></li>
+	</ul>
+</div>
+
+{% elif template_name == "compania" %}
+<div id="izquierda" class="interior">
+	<li id="administrador"> Compañias <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
+	<li id="nuevo" onclick="abrir1()"><div id="linea1"></div></br><dd>Nueva Compañia <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
+
+	<ul id="lateral">
+		{% if user.infouser.is_admin %}
+		<li ><a href="/administradores">Administradores</a></li>
+		<li ><a href="/supervisores">Supervisores</a></li>
+		{% endif %}
+		<li><a href="/proveedores">Proveedores</a></li>
+		<li><a href="/sitios">Sitios</a></li>
+		<li><a href="/usuarios">Usuarios</a></li>
+	</ul>
+</div>
+
+{% elif template_name == "proveedores" %}
+<div id="izquierda1" class="interior">
+	<li id="administrador"> Proveedores <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
+	<li id="nuevo" onclick="abrir2()"><div id="linea1"></div></br><dd>Nuevo Proveedor <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
+
+	<li id="nuevo"></br></br><dd>Región 
+	<select id="optionRegion" class="optionRegion" style="display:block;">
+	<option selected> Select Box </option>
+	<option>Short Option</option>
+	<option>This Is A Longer Option</option>
+	</select> 
+	<div id="linea2"></div>
+		</li>
+		<li id="nuevo"></br></br><dd>Sitio
+	<select id="optionSitio" class="optionSitio" style="display:block;">
+	<option selected> Todos </option>
+	<option>Short Option</option>
+	<option>This Is A Longer Option</option>
+	</select> 
+
+	</li>
+	<ul id="lateral">
+		{% if user.infouser.is_admin %}
+		<li ><a href="/administradores">Administradores</a></li>
+		<li ><a href="/supervisores">Supervisores</a></li>
+		{% endif %}
+		<li><a href="/companias">Compañias</a></li>
+		<li><a href="/sitios">Sitios</a></li>
+		<li><a href="/usuarios">Usuarios</a></li>
+	</ul>
+</div>
+
+{% elif template_name == "sitios" %}
+<div id="izquierda1" class="interior">
+	<li id="administrador"> Sitios <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
+
+
+	<li id="nuevo" onclick="abrir2()"><div id="linea1"></div></br><dd>Nuevo Sitio <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
+	<li id="nuevo"></br></br><dd>Región 
+		<select class="textinfo optionRegion" id="optionRegion">
+			<option selected> ---- </option>
+		</select>
+		<div id="linea2"></div>
+	</li>
+
+	<ul id="lateral">
+		{% if user.infouser.is_admin %}
+		<li ><a href="/administradores">Administradores</a></li>
+		<li ><a href="/supervisores">Supervisores</a></li>
+		{% endif %}
+		<li><a href="/companias">Compañias</a></li>
+		<li><a href="/proveedores">Proveedores</a></li>
+		<li><a href="/usuarios">Usuarios</a></li>
+	</ul>
+</div>
+
+{% elif template_name == "usuarios" %}
+<div id="izquierda1" class="interior">
+	<li id="administrador"> Usuarios <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
+	<li id="nuevo" onclick="abrir2()"><div id="linea1"></div></br><dd>Nuevo Usuario <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
+	<ul id="lateral">
+		{% if user.infouser.is_admin %}
+		<li ><a href="/administradores">Administradores</a></li>
+		<li ><a href="/supervisores">Supervisores</a></li>
+		{% endif %}
+		<li><a href="/companias">Compañias</a></li>
+		<li><a href="/proveedores">Proveedores</a></li>
+		<li><a href="/sitios">Sitios</a></li>
+	</ul>
+</div>
+{% endif %}

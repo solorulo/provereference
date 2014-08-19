@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Supervision</title>
-	{% include "common_headers.html" %}
+	{% include "includes/common_headers.html" %}
 	<script type="text/javascript" src="{{ STATIC_URL }}js/supervisionDataFormat.js" ></script>
 	<script type="text/javascript">
 		eval('var data = {{ data|escape|safe }}');
@@ -10,7 +10,7 @@
 </head>
 <body  > 
 
-	{% include "header_supervision.html" %}
+	{% include "includes/header_supervision.html" %}
 
 	<div id="gradiant"></div>
 	<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 

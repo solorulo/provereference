@@ -56,6 +56,7 @@ ul{/*menu princiapl estilo*/
 }
 #flecha{
 	float: right;
+	visibility: hidden;
 }
 .iconosuperior img{/*scalar los iconos mas grandes*/
 	/*transform:scale(1.5);*/

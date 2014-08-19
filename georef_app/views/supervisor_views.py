@@ -15,6 +15,7 @@ def supervisors(request, format):
 			'last_name':user.last_name,
 			'email':user.email,
 			'is_admin':user.is_admin(),
+			'is_active':user.is_active,
 			# 'tel':str(count)
 			'tel':user.telefono
 			})
@@ -30,6 +31,7 @@ def supervisor_new(request):
 		last_name = request.POST['last_name']
 		email = request.POST['email']
 		phone = request.POST.get('tel', '')
+		is_admin = request.POST.get('is_admin', '')
 
 		password = request.POST.get('password', last_name)
 
@@ -41,6 +43,7 @@ def supervisor_new(request):
 			email=email,
 			password=password,
 			telefono=phone)
+		new_supervisor.is_active = bool(is_admin)
 		new_supervisor.save()
 
 		registerLog(request.user, 'Nuevo', 'Supervisor', new_supervisor.pk)
@@ -63,7 +66,7 @@ def supervisor_edit(request, id_supervisor):
 		last_name = request.POST.get('last_name', None)
 		email = request.POST.get('email', None)
 		phone = request.POST.get('tel', None)
-		is_admin = request.POST.get('is_admin', None)
+		is_admin = request.POST.get('is_admin', '')
 		the_supervisor = InfoUser.objects.get(pk=id_supervisor)
 		
 		if first_name is not None :
@@ -77,13 +80,7 @@ def supervisor_edit(request, id_supervisor):
 			the_supervisor.telefono = phone
 		code = 1
 		if is_admin is not None :
-			if is_admin != 'false' and is_admin != 'False':
-				type_user = InfoUser.ADMINISTRADOR
-			else:
-				type_user = InfoUser.SUPERVISOR
-			if the_supervisor.tipo != type_user:
-				code = 1.1
-				the_supervisor.tipo = type_user
+			the_supervisor.is_active = bool(is_admin)
 
 		the_supervisor.save()
 

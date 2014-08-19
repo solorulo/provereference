@@ -49,6 +49,6 @@ def home(request):
 		if check_admin(request.user):
 			return HttpResponseRedirect('/administradores')
 		elif request.user.infouser:
-			return HttpResponseRedirect('/supervision')
+			return HttpResponseRedirect('/proveedores')
 	except Exception, e:
 		return HttpResponseRedirect('/login')

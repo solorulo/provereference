@@ -5,7 +5,7 @@ from django.utils import simplejson
 from georef_app.models import InfoProv, Empresa, Sitio, Region
 from georef_app.utils import dec_magic, registerLog
 
-@dec_magic(method='GET', admin_required=True)
+@dec_magic(method='GET', login_required=True)
 def companies(request, format):
 	_json = {}
 	providers = []
@@ -40,7 +40,7 @@ def companies(request, format):
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'compania.html', {"data":data})
 
-@dec_magic(method='POST', required_args=['name', 'region'], admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['name', 'region'], login_required=True, json_res=True)
 def company_new(request):
 	try:
 		name = request.POST['name']
@@ -64,7 +64,7 @@ def company_new(request):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
-@dec_magic(method='POST', admin_required=True, json_res=True)
+@dec_magic(method='POST', login_required=True, json_res=True)
 def company_edit(request, id_provider):
 	try:
 		name = request.POST.get('name', None)
@@ -94,7 +94,7 @@ def company_edit(request, id_provider):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
-@dec_magic(method='POST', admin_required=True, json_res=True)
+@dec_magic(method='POST', login_required=True, json_res=True)
 def company_delete(request, id_provider):
 	try:
 		the_provider = Empresa.objects.get(pk=id_provider)
@@ -111,7 +111,7 @@ def company_delete(request, id_provider):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
-@dec_magic(method='GET', admin_required=True)
+@dec_magic(method='GET', login_required=True)
 def company(request, id_provider, format):
 	_json = {}
 	userprovs = []

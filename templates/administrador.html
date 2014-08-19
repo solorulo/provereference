@@ -2,8 +2,12 @@
 <html>
 <head>
 	<title>Administrador</title>
-	{% include "common_headers.html" %}
+	{% include "includes/common_headers.html" %}
+	{% if user.infouser.is_superadmin %}
+	<script type="text/javascript" src="/static/js/adminsuperDataFormat.js"></script>
+	{% else %}
 	<script type="text/javascript" src="/static/js/adminDataFormat.js"></script>
+	{% endif %}
 
 	<script type="text/javascript">
 		eval('var data = {{ data|escape|safe }}')
@@ -16,32 +20,19 @@
 </head>
 <body  > 
 	{% csrf_token %}
-	{% include "header_admins.html" %}
+	{% include "includes/header_admins.html" %}
 	
 	<div id="gradiant"></div>
 	<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()">
 	<div id="cuerpo">
-		<div id="izquierda" class="interior">
-			<li id="administrador"> Administradores <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
-
-			<li id="nuevo" onclick="abrir1()"><div id="linea1"></div></br><dd>Nuevo Administrador <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
-
-			<ul id="lateral">
-				<li ><a href="/supervisores">Supervisores</a></li>
-				<li><a href="/companias">Compañias</a></li>
-				<li><a href="/proveedores">Proveedores</a></li>
-				<li><a href="/sitios">Sitios</a></li>
-				<li><a href="/usuarios">Usuarios</a></li>
-			</ul>
-		</div>
+		{% with template_name="administrador" %}
+		{% include "includes/menu_lateral.html" %}
+		{% endwith %}
 		<div id="derecha" class="interior">
 		 	
 			<a name="inicio"> </a>
 			<div id="busqueda"> Tu búsqueda : <input type="text" size="15"></div>
-			
 			<div id="iabc">
-			</div>
-
 			</div>
 		</div>
 	</div>
@@ -69,7 +60,7 @@
 
 				<input type="text" class="textinfo form_mail">
 				<input type="text" class="textinfo form_password">
-				<div id="popadministrador">Administrador<label class="switch"><input type="checkbox" checked=""><span></span></label></div>
+				<div id="popadministrador">Activo<label class="switch"><input type="checkbox" checked><span></span></label></div>
 
 				<button id="beliminar">Eliminar</button> <button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrar('#popup1')">Cancelar</button>
 			</div>
@@ -98,7 +89,7 @@
 				<input id="last_name" name="last_name" type="text" class="textinfo">
 				<input id="email" name="email" type="text" class="textinfo">
 				<input id="password" name="password" type="text" class="textinfo">
-				<div id="popadministrador">Administrador<label class="switch"><input id="is_admin" name="is_admin" type="checkbox" checked/><span></span></label></div>
+				<div id="popadministrador">Activo<label class="switch"><input id="is_admin" name="is_admin" type="checkbox" checked/><span></span></label></div>
 
 				<button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrar1(); return false;">Cancelar</button>
 			</div>

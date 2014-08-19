@@ -10,7 +10,7 @@ from georef_app.utils import dec_magic, registerLog
 
 # Create your views here.
 
-@dec_magic(method='GET', admin_required=True)
+@dec_magic(method='GET', login_required=True)
 def sites(request, format):
 	_json = {}
 	mSites = Sitio.objects.all().order_by('nombre').select_related()
@@ -36,7 +36,7 @@ def sites(request, format):
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'sitios.html', {"data":data})
 
-@dec_magic(method='POST', required_args=['name', 'neumonico', 'lat', 'lng', 'region'], admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['name', 'neumonico', 'lat', 'lng', 'region'], login_required=True, json_res=True)
 def site_new(request):
 	try:
 		name = request.POST['name']
@@ -69,7 +69,7 @@ def site_new(request):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
-@dec_magic(method='POST', admin_required=True, json_res=True)
+@dec_magic(method='POST', login_required=True, json_res=True)
 def site_edit(request, id_site):
 	try:
 		name = request.POST.get('name', None)
@@ -110,7 +110,7 @@ def site_edit(request, id_site):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
-@dec_magic(method='POST', admin_required=True, json_res=True)
+@dec_magic(method='POST', login_required=True, json_res=True)
 def site_delete(request, id_site):
 	try:
 		the_site = Sitio.objects.get(pk=id_site)

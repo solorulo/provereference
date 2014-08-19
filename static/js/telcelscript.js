@@ -13,7 +13,7 @@ function abrirAdmin(i, id) {
 	document.querySelector("#popup1 .form_nombre").value = data[i].first_name;
 	document.querySelector("#popup1 .form_apellido").value = data[i].last_name;
 	document.querySelector("#popup1 .form_mail").value = data[i].email;
-	document.querySelector("#popadministrador input").checked = true;
+	document.querySelector("#popadministrador input").checked = data[i].is_active;
 	var obj = new admin(i, id)
 	// document.querySelector("#popup1 #beliminar").onclick = obj.delete;
 	document.querySelector("#popup1 #beliminar").onclick = function(event) {
@@ -30,7 +30,7 @@ function abrirSupervisor(i, id) {
 	document.querySelector("#popup1 .form_nombre").value = data[i].first_name;
 	document.querySelector("#popup1 .form_apellido").value = data[i].last_name;
 	document.querySelector("#popup1 .form_mail").value = data[i].email;
-	document.querySelector("#popadministrador input").checked = false;
+	document.querySelector("#popadministrador input").checked = data[i].is_active;
 	var obj = new supervisor(i, id)
 	document.querySelector("#popup1 #beliminar").onclick = obj.delete;
 	document.querySelector("#popup1 #b_save").onclick = obj.save;
@@ -230,13 +230,14 @@ function admin(i, id) {
 		var first_name = $('#first_name').val();
 		var last_name = $('#last_name').val();
 		var password = $('#password').val();
+		var is_admin = document.querySelector("#popup2 input[type=checkbox]").checked;
 		var myp = $('.myp').val();
 		var postdata = {
 			'email': email,
 			'first_name': first_name,
 			'last_name': last_name,
 			'password': password,
-			'is_admin': true,
+			'is_admin': is_admin,
 			'tel': '',
 			'my_password': myp
 		};
@@ -247,7 +248,7 @@ function admin(i, id) {
 		var first_name = $('#popup1 .form_nombre').val();
 		var last_name = $('#popup1 .form_apellido').val();
 		var password = $('#popup1 .form_password').val();
-		var is_admin = document.querySelector("#popadministrador input").checked;
+		var is_admin = document.querySelector("#popup1 input[type=checkbox]").checked;
 		var myp = $('.myp').val();
 		var postdata = {
 			'email': email,
@@ -278,12 +279,13 @@ function supervisor(i, id) {
 		var last_name = $("#last_name").val();
 		var email = $("#email").val();
 		var contrasena = $("#contrasena").val();
+		var is_admin = document.querySelector("#popup2 input[type=checkbox]").checked;
 		var postdata = {
 			'email': email,
 			'first_name': first_name,
 			'last_name': last_name,
 			'password': contrasena,
-			'is_admin': false,
+			'is_admin': is_admin,
 			'tel': ''
 		};
 		(new Bridge(i, id, "supervisores", postdata)).create(event);
@@ -292,7 +294,7 @@ function supervisor(i, id) {
 		var email = $('#popup1 .form_mail').val();
 		var first_name = $('#popup1 .form_nombre').val();
 		var last_name = $('#popup1 .form_apellido').val();
-		var is_admin = document.querySelector("#popadministrador input").checked;
+		var is_admin = document.querySelector("#popup1 input[type=checkbox]").checked;
 		var postdata = {
 			'email': email,
 			'first_name': first_name,

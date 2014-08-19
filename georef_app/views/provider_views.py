@@ -11,7 +11,7 @@ import hashlib
 from provereference.settings import API_KEY
 
 # Create your views here.
-@dec_magic(method='GET', admin_required=True)
+@dec_magic(method='GET', login_required=True)
 def users(request, format):
 	_json = {}
 	usersprov = InfoProv.objects.all().order_by('first_name').select_related('empresa')
@@ -51,7 +51,7 @@ def users(request, format):
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'proveedor.html', {"data":data})
 
-@dec_magic(method='POST', required_args=['email', 'imei', 'empresa'], admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['email', 'imei', 'empresa'], login_required=True, json_res=True)
 def user_new(request):
 	try:
 		# TODO dar de alta el usuario
@@ -86,7 +86,7 @@ def user_new(request):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
-@dec_magic(method='POST', admin_required=True, json_res=True)
+@dec_magic(method='POST', login_required=True, json_res=True)
 def user_edit(request, id_user):
 	try:
 		# TODO Editar al usuario
@@ -129,7 +129,7 @@ def user_edit(request, id_user):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
-@dec_magic(method='POST', admin_required=True, json_res=True)
+@dec_magic(method='POST', login_required=True, json_res=True)
 def user_delete(request, id_user):
 	try:
 		# TODO Borrar Supervisor

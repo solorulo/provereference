@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Proveedores</title>
-	{% include "common_headers.html" %}
+	{% include "includes/common_headers.html" %}
 	<script type="text/javascript" src="/static/js/proveedorDataFormat.js"></script>
 	<script type="text/javascript">
 		eval('var data = {{ data|escape|safe }}');
@@ -10,54 +10,20 @@
 </head>
 <body  > 
 	{% csrf_token %}
-	{% include "header_admins.html" %}
+	{% include "includes/header_admins.html" %}
 	
 	<div id="gradiant"></div>
 	<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 
 	<div id="cuerpo">
-		<div id="izquierda1" class="interior">
-			<li id="administrador"> Proveedores <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
-
-
-			<li id="nuevo" onclick="abrir2()"><div id="linea1"></div></br><dd>Nuevo Proveedor <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
-			<li id="nuevo"></br></br><dd>Región 
-		<select id="optionRegion" class="optionRegion" style="display:block;">
-		<option selected> Select Box </option>
-		<option>Short Option</option>
-		<option>This Is A Longer Option</option>
-		</select> 
-		<div id="linea2"></div>
-			</li>
-			<li id="nuevo"></br></br><dd>Sitio
-		<select id="optionSitio" class="optionSitio" style="display:block;">
-		<option selected> Todos </option>
-		<option>Short Option</option>
-		<option>This Is A Longer Option</option>
-		</select> 
-		
-			</li>
-
-
-
-			<ul id="lateral">
-				<li ><a href="/administradores">Administradores</a></li>
-				<li><a href="/supervisores">Supervisores</a></li>
-				<li><a href="/companias">Compañias</a></li>
-				<li><a href="/sitios">Sitios</a></li>
-				<li><a href="/usuarios">Usuarios</a></li>
-			</ul>
-		</div>
+		{% with template_name="proveedores" %}
+		{% include "includes/menu_lateral.html" %}
+		{% endwith %}
 		<div id="derecha" class="interior">
 			
 			<a name="inicio"> </a>
 			<div id="busqueda"> Tu busqueda : <input type="text" size="15"></div>
 			
 			<div id="iabc">
-				<div class="abc">A</div>
-				<div class="contenedor">
-					<div class="nombre"> Administrador López Piña   <div class="conf" onclick="abrir3()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
-					<div class="info">manuel@telcelcelular.com.mx </br>55943412</div>
-				</div>
 			</div>
 		</div>
 	</div>

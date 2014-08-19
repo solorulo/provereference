@@ -11,7 +11,7 @@ import hashlib
 from provereference.settings import API_KEY
 
 # Create your views here.
-@dec_magic(method='GET', admin_required=True)
+@dec_magic(method='GET', login_required=True)
 def users(request, format):
 	_json = {}
 	usersprov = InfoOther.objects.all().order_by('first_name')
@@ -22,7 +22,7 @@ def users(request, format):
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'usuarios.html', {"data":data})
 
-@dec_magic(method='POST', required_args=['email', 'password'], admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['email', 'password'], login_required=True, json_res=True)
 def user_new(request):
 	try:
 		email = request.POST['email']
@@ -55,7 +55,7 @@ def user_new(request):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
-@dec_magic(method='POST', admin_required=True, json_res=True)
+@dec_magic(method='POST', login_required=True, json_res=True)
 def user_edit(request, id_user):
 	try:
 		email = request.POST.get('email', None)
@@ -92,7 +92,7 @@ def user_edit(request, id_user):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
-@dec_magic(method='POST', admin_required=True, json_res=True)
+@dec_magic(method='POST', login_required=True, json_res=True)
 def user_delete(request, id_user):
 	try:
 		the_userprov = InfoOther.objects.get(pk=id_user)

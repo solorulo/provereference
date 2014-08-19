@@ -14,6 +14,7 @@ class Region (models.Model):
 class Empresa (models.Model):
 	region = models.ForeignKey(Region)
 	nombre = models.CharField(max_length=45)
+	is_active = models.NullBooleanField()
 
 	def __unicode__(self):
 		return self.nombre
@@ -22,7 +23,7 @@ class InfoUser (User):
 	telefono = models.CharField(max_length=45, blank=True, null=True)
 	ADMINISTRADOR = 0
 	SUPERVISOR = 1
-	SUPER_ADMIN = 0
+	SUPER_ADMIN = 2
 	# USUARIO = 2
 	TIPO_CHOICES = (
 		(ADMINISTRADOR, "Administrador"),
@@ -38,7 +39,10 @@ class InfoUser (User):
 		return self.get_full_name() + ' - ' + self.get_tipo_display()
 
 	def is_admin(self):
-		return self.tipo == InfoUser.ADMINISTRADOR
+		return self.tipo == InfoUser.ADMINISTRADOR or  self.tipo == InfoUser.SUPER_ADMIN 
+
+	def is_superadmin(self):
+		return self.tipo == InfoUser.SUPER_ADMIN 
 
 	def is_supervisor(self):
 		return self.tipo == InfoUser.SUPERVISOR

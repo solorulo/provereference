@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Supervisores</title>
-	{% include "common_headers.html" %}
+	{% include "includes/common_headers.html" %}
 	<script type="text/javascript" src="/static/js/supervisorDataFormat.js"></script>
 	<script type="text/javascript">
 		var data = eval('{{ data|escape|safe }}')
@@ -13,24 +13,16 @@
 </head>
 <body>
 	{% csrf_token %}
-	{% include "header_admins.html" %}
+	{% include "includes/header_admins.html" %}
 	
 	<div id="gradiant"></div>
 	<a href= "#inicio"><img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png"></a>
 
 	<div id="cuerpo">
 		<div id="izquierda" class="interior">
-			<li id="administrador"> Supervisores <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
-
-			<li id="nuevo" onclick="abrir1()"><div id="linea1"></div></br><dd>Nuevo supervisor <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
-
-			<ul id="lateral">
-				<li ><a href="/administradores">Administradores</a></li>
-				<li><a href="/companias">Compañias</a></li>
-				<li><a href="/proveedores">Proveedores</a></li>
-				<li><a href="/sitios">Sitios</a></li>
-				<li><a href="/usuarios">Usuarios</a></li>
-			</ul>
+			{% with template_name="supervisor" %}
+			{% include "includes/menu_lateral.html" %}
+			{% endwith %}
 		</div>
 		<div id="derecha" class="interior">
 		<a name="inicio"> </a> 
@@ -62,7 +54,7 @@
 				<input type="text" class="textinfo form_apellido">
 
 				<input type="text" class="textinfo form_mail">
-				<div id="popadministrador">Administrador <label class="switch"><input type="checkbox" checked=""><span></span></label></div>
+				<div id="popadministrador">Activo <label class="switch"><input type="checkbox" checked><span></span></label></div>
 
 				<button id="beliminar">Eliminar</button> <button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrar('#popup1')">Cancelar</button>
 			</div>
@@ -91,7 +83,7 @@
 				<input id="last_name" name="last_name" type="text" class="textinfo">
 				<input id="email" name="email" type="text" class="textinfo">
 				<input id="contrasena" name="contrasena" type="text" class="textinfo">
-				<div id="popadministrador">Administrador <label class="switch"><input id="is_admin" name="is_admin" type="checkbox"/><span></span></label></div>
+				<div id="popadministrador">Activo <label class="switch"><input id="is_admin" name="is_admin" type="checkbox" checked/><span></span></label></div>
 
 				 <button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrar1()">Cancelar</button>
 			</div>

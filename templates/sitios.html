@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Sitios</title>
-	{% include "common_headers.html" %}
+	{% include "includes/common_headers.html" %}
 	<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/sitiosDataFormat.js" ></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/mapa.js" ></script>
@@ -12,31 +12,14 @@
 </head>
 <body  > 
 	{% csrf_token %}
-	{% include "header_admins.html" %}
+	{% include "includes/header_admins.html" %}
 
 	<div id="gradiant"></div>
 	<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 
 	<div id="cuerpo">
-		<div id="izquierda1" class="interior">
-			<li id="administrador"> Sitios <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
-
-
-			<li id="nuevo" onclick="abrir2()"><div id="linea1"></div></br><dd>Nuevo Sitio <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
-			<li id="nuevo"></br></br><dd>Región 
-		<select class="textinfo optionRegion" id="optionRegion">
-			<option selected> ---- </option>
-		</select>
-		<div id="linea2"></div>
-			</li>
-
-			<ul id="lateral">
-			<li ><a href="/administradores">Administradores</a></li>
-				<li ><a href="/supervisores">Supervisores</a></li>
-				<li><a href="/companias">Compañias</a></li>
-				<li><a href="/proveedores">Proveedores</a></li>
-				<li><a href="/usuarios">Usuarios</a></li>
-			</ul>
-		</div>
+		{% with template_name="sitios" %}
+		{% include "includes/menu_lateral.html" %}
+		{% endwith %}
 		<div id="derecha" class="interior">
 			
 			<a name="inicio"> </a>

@@ -15,6 +15,7 @@ def admins(request, format):
 			'last_name':user.last_name,
 			'email':user.email,
 			'is_admin':user.is_admin(),
+			'is_active':user.is_active,
 			# 'tel':str(count)
 			'tel':user.telefono
 			})
@@ -31,6 +32,7 @@ def admin_new(request):
 		email = request.POST['email']
 		phone = request.POST.get('tel', '')
 		password = request.POST.get('password', '')
+		is_admin = request.POST.get('is_admin', '')
 
 		my_password = request.POST.get('my_password', None)
 		if not request.user.check_password(my_password):
@@ -48,6 +50,7 @@ def admin_new(request):
 			email=email,
 			password=password,
 			telefono=phone)
+		new_admin.is_active = bool(is_admin)
 		new_admin.save()
 
 		registerLog(request.user, 'Nuevo', 'Administrador', new_admin.pk)
@@ -71,7 +74,7 @@ def admin_edit(request, id_admin):
 		last_name = request.POST.get('last_name', None)
 		email = request.POST.get('email', None)
 		phone = request.POST.get('tel', None)
-		is_admin = request.POST.get('is_admin', None)
+		is_admin = request.POST.get('is_admin', '')
 		password = request.POST.get('password', None)
 		the_admin = InfoUser.objects.get(pk=id_admin)
 
@@ -89,19 +92,13 @@ def admin_edit(request, id_admin):
 			the_admin.last_name = last_name
 		if email is not None :
 			the_admin.email = email
-			the_admin.username = username
+			the_admin.username = email
 		if phone is not None :
 			the_admin.telefono = phone
 		code = 1
 		if is_admin is not None :
-			if is_admin != 'false' and is_admin != 'False':
-				type_user = InfoUser.ADMINISTRADOR
-			else:
-				type_user = InfoUser.SUPERVISOR
-			if the_admin.tipo != type_user:
-				code = 1.1
-				the_admin.tipo = type_user
-
+			the_admin.is_active = bool(is_admin)
+		
 		the_admin.save()
 
 		registerLog(request.user, 'Edición', 'Administrador', id_admin)
