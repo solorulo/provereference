@@ -24,12 +24,12 @@ def login(request):
 		return render(request, 'login.html', {'wrong_data':True})
 	username = request.POST.get("username", None)
 	password = request.POST.get("password", None)
-	
+
 	next = request.POST.get('next', None)
 
 	user = authenticate(username=username, password=password)
 	try:
-		if user is not None and user.infouser:
+		if user is not None and user.infouser and user.is_active:
 			auth_login(request, user)
 			if next is not None:
 				return HttpResponseRedirect(next)
@@ -45,10 +45,10 @@ def logout(request):
 
 @login_required
 def home(request):
-	# try:
-	if check_admin(request.user):
-		return HttpResponseRedirect('/administradores')
-	elif request.user.infouser:
-		return HttpResponseRedirect('/supervision')
-	# except Exception, e:
-	# 	return HttpResponseRedirect('/login')
+	try:
+		if check_admin(request.user):
+			return HttpResponseRedirect('/administradores')
+		elif request.user.infouser:
+			return HttpResponseRedirect('/supervision')
+	except Exception, e:
+		return HttpResponseRedirect('/login')

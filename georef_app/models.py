@@ -22,10 +22,12 @@ class InfoUser (User):
 	telefono = models.CharField(max_length=45, blank=True, null=True)
 	ADMINISTRADOR = 0
 	SUPERVISOR = 1
+	SUPER_ADMIN = 0
 	# USUARIO = 2
 	TIPO_CHOICES = (
 		(ADMINISTRADOR, "Administrador"),
 		(SUPERVISOR, "Supervisor"),
+		(SUPER_ADMIN, "Super Administrador"),
 		# (USUARIO, "Usuario"),
 	)
 	tipo = models.IntegerField(choices=TIPO_CHOICES, default=SUPERVISOR)
