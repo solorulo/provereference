@@ -61,7 +61,18 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		clone.appendChild(tr);
 	};
 };
-
+function refreshAll(onfinish) {
+	$.getJSON("json", function(json) {
+		data = json;
+		dataFormat('');
+		onfinish();
+	});
+}
+function timertorefresh() {
+	setTimeout(function () {
+        refreshAll(timertorefresh);
+    }, 31000);
+}
 $(document).ready(function(){
 	$("#actividadTemplate").hide();
 	var remplazarTexto = function(query, texto){
@@ -140,4 +151,5 @@ $(document).ready(function(){
 	}, 30000);
 
 	dataFormat('');
+	timertorefresh();
 });
