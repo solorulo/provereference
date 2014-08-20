@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 import math
 
@@ -122,7 +123,7 @@ class Log (models.Model):
 	modelo_id = models.CharField(max_length=45)
 	fecha = models.DateTimeField(auto_now_add=True)
 	def save(self, *args, **kwargs):
-		print 'saving infoother'
-		if not self.infouser.is_admin():
-			raise ValidationError(_('Invalid value admin'))
+		print 'saving log'
+		if not self.infouser:
+			raise ValidationError(_('Invalid value'))
 		super(Log, self).save(*args, **kwargs)
