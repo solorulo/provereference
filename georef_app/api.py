@@ -62,7 +62,10 @@ def event(request, *args, **kwargs):
 	sites = list(mSites)
 	if not sites:
 		response('no sites')
+	print events
 	for event in events:
+		if event is None:
+			continue
 		# https://docs.python.org/2/library/time.html#time.strptime
 		# datetime YYYY-mm-dd HH:MM
 		print event['datetime']
