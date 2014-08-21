@@ -92,6 +92,7 @@ def event(request, *args, **kwargs):
 				'lng':nearest_site.lng,
 				'radio':nearest_site.radio,
 			},
+			'region_name':nearest_site.region.nombre,
 			'region_telefono':nearest_site.region.telefono,
 		})
 
