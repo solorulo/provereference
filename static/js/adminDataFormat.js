@@ -27,8 +27,6 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 
 		var contenedor = document.createElement("div");
 		var nombre = document.createElement("div");
-		// var conf = document.createElement("div");
-		// var img = document.createElement("img");
 		var info = document.createElement("div");
 		
 		var nombreTextNode = document.createTextNode(data[i].name);
@@ -36,20 +34,25 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var infoTelefono = data[i].tel;
 		var infoEmailNode = document.createTextNode(infoEmail);
 		var infoTelefonoNode = document.createTextNode(infoTelefono);
-		// var confTextNode = document.createTextNode("Editar datos");
 		
 		contenedor.setAttribute("class", "contenedor");
 		contenedor.setAttribute("id", data[i].id);
 		nombre.setAttribute("class", "nombre");
-		// conf.setAttribute("class", "conf");
-		// conf.onclick = (new admin(i, data[i].id)).open;
-		// img.setAttribute("src", "/static/imagenes/Supervisar/configurar.png");
 		info.setAttribute("class", "info");
 
-		// conf.appendChild(confTextNode);
-		// conf.appendChild(img);
 		nombre.appendChild(nombreTextNode);
-		// nombre.appendChild(conf);
+
+		if (self_id == data[i].id) {
+			var conf = document.createElement("div");
+			var img = document.createElement("img");
+			var confTextNode = document.createTextNode("Editar datos");
+			conf.setAttribute("class", "conf");
+			conf.onclick = (new admin(i, data[i].id)).open;
+			img.setAttribute("src", "/static/imagenes/Supervisar/configurar.png");
+			conf.appendChild(confTextNode);
+			conf.appendChild(img);
+			nombre.appendChild(conf);
+		}
 		info.appendChild(infoEmailNode);
 		info.appendChild(document.createElement("br"));
 		info.appendChild(infoTelefonoNode);

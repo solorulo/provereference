@@ -2,12 +2,12 @@
 from django.shortcuts import render
 from django.utils import simplejson
 from georef_app.models import InfoUser
-from georef_app.utils import dec_magic, registerLog
+from georef_app.utils import *
 
 @dec_magic(method='GET', admin_required=True)
 def admins(request, format):
 	users = []
-	mUsers = InfoUser.objects.filter(tipo=InfoUser.ADMINISTRADOR).order_by("first_name")
+	mUsers = InfoUser.objects.filter(tipo__in=[InfoUser.ADMINISTRADOR, InfoUser.SUPER_ADMIN]).order_by("first_name")
 	for user in mUsers:
 		users.append({
 			'id':user.id,
@@ -27,6 +27,12 @@ def admins(request, format):
 @dec_magic(method='POST', required_args=['password', 'email', 'my_password'], admin_required=True, json_res=True)
 def admin_new(request):
 	try:
+		if not check_superadmin(request.user):
+			data = simplejson.dumps({
+				'code' : 0,
+				'msg' : "Sin permiso"
+			})
+			return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 		first_name = request.POST.get('first_name', '')
 		last_name = request.POST['last_name']
 		email = request.POST['email']
@@ -70,6 +76,12 @@ def admin_new(request):
 @dec_magic(method='POST', required_args=['my_password'], admin_required=True, json_res=True)
 def admin_edit(request, id_admin):
 	try:
+		if not check_superadmin(request.user) and request.user.infouser.pk != int(id_admin):
+			data = simplejson.dumps({
+				'code' : 0,
+				'msg' : "Sin permiso"
+			})
+			return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 		first_name = request.POST.get('first_name', None)
 		last_name = request.POST.get('last_name', None)
 		email = request.POST.get('email', None)
@@ -95,12 +107,13 @@ def admin_edit(request, id_admin):
 			the_admin.username = email
 		if phone is not None :
 			the_admin.telefono = phone
+		if password is not None:
+			the_admin.set_password(password)
 		code = 1
 		if is_admin is not None :
 			the_admin.is_active = (is_admin.lower() == "true")
 		
 		the_admin.save()
-
 		registerLog(request.user, 'Edición', 'Administrador', id_admin)
 
 		data = simplejson.dumps({
@@ -119,9 +132,15 @@ def admin_edit(request, id_admin):
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
-@dec_magic(method='POST', required_args=['my_password'], admin_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['my_password'], superadmin_required=True, json_res=True)
 def admin_delete(request, id_admin):
 	try:
+		if request.user.infouser.pk == int(id_admin):
+			data = simplejson.dumps({
+				'code' : 0,
+				'msg' : "Operación no permitida"
+			})
+			return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 		my_password = request.POST.get('my_password', None)
 		if not request.user.check_password(my_password):
 			data = simplejson.dumps({

@@ -10,12 +10,7 @@
 	{% endif %}
 
 	<script type="text/javascript">
-		eval('var data = {{ data|escape|safe }}')
-		$(document).ready(function() {
-			$('#b_create').click(function(event) {
-				confirm_action(event, new admin().create);
-			});
-		});
+		eval('var data = {{ data|escape|safe }}; var self_id = {{ user.id }};')
 	</script>
 </head>
 <body  > 
@@ -52,7 +47,6 @@
 					<div id="linea1"></div>
 				</ul>
 
-
 			</div>
 			<div id="popinfo">
 				<input type="text" class="textinfo form_nombre">
@@ -61,11 +55,14 @@
 				<input type="text" class="textinfo form_mail">
 				<input type="text" class="textinfo form_password">
 				<div id="popadministrador">Activo<label class="switch"><input type="checkbox" checked><span></span></label></div>
-
-				<button id="beliminar">Eliminar</button> <button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrar('#popup1')">Cancelar</button>
+				{% if user.infouser.is_superadmin %}
+				<button id="beliminar">Eliminar</button> 
+				{% endif %}
+				<button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrar('#popup1')">Cancelar</button>
 			</div>
 		</div>
 	</div>
+	{% if user.infouser.is_superadmin %}
 	<div id="popup2" class="pop">
 		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Administrador > Nuevo <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
 		<div id="gradiant"></div>
@@ -95,6 +92,7 @@
 			</div>
 		</div>
 	</div>
+	{% endif %}
 
 	<!-- ui-dialog -->
 	<div id="dialogError" title="Error">

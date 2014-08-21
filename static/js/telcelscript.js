@@ -294,12 +294,14 @@ function supervisor(i, id) {
 		var email = $('#popup1 .form_mail').val();
 		var first_name = $('#popup1 .form_nombre').val();
 		var last_name = $('#popup1 .form_apellido').val();
+		var contrasena = $("#popup1 .form_password").val();
 		var is_admin = document.querySelector("#popup1 input[type=checkbox]").checked;
 		var postdata = {
 			'email': email,
 			'first_name': first_name,
 			'last_name': last_name,
 			'is_admin': is_admin,
+			'password': contrasena,
 			'tel': ''
 		};
 		(new Bridge(i, id, "supervisores", postdata)).save(event);

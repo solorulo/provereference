@@ -18,10 +18,14 @@
 {% elif template_name == "supervisor" %}
 <div id="izquierda" class="interior">
 	<li id="administrador"> Supervisores <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
+	{% if user.infouser.is_admin %}
 	<li id="nuevo" onclick="abrir1()"><div id="linea1"></div></br><dd>Nuevo supervisor <img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
+	{% endif %}
 
 	<ul id="lateral">
+		{% if user.infouser.is_admin %}
 		<li ><a href="/administradores">Administradores</a></li>
+		{% endif %}
 		<li><a href="/companias">Compañias</a></li>
 		<li><a href="/proveedores">Proveedores</a></li>
 		<li><a href="/sitios">Sitios</a></li>
@@ -37,8 +41,8 @@
 	<ul id="lateral">
 		{% if user.infouser.is_admin %}
 		<li ><a href="/administradores">Administradores</a></li>
-		<li ><a href="/supervisores">Supervisores</a></li>
 		{% endif %}
+		<li ><a href="/supervisores">Supervisores</a></li>
 		<li><a href="/proveedores">Proveedores</a></li>
 		<li><a href="/sitios">Sitios</a></li>
 		<li><a href="/usuarios">Usuarios</a></li>
@@ -69,8 +73,8 @@
 	<ul id="lateral">
 		{% if user.infouser.is_admin %}
 		<li ><a href="/administradores">Administradores</a></li>
-		<li ><a href="/supervisores">Supervisores</a></li>
 		{% endif %}
+		<li ><a href="/supervisores">Supervisores</a></li>
 		<li><a href="/companias">Compañias</a></li>
 		<li><a href="/sitios">Sitios</a></li>
 		<li><a href="/usuarios">Usuarios</a></li>
@@ -93,8 +97,8 @@
 	<ul id="lateral">
 		{% if user.infouser.is_admin %}
 		<li ><a href="/administradores">Administradores</a></li>
-		<li ><a href="/supervisores">Supervisores</a></li>
 		{% endif %}
+		<li ><a href="/supervisores">Supervisores</a></li>
 		<li><a href="/companias">Compañias</a></li>
 		<li><a href="/proveedores">Proveedores</a></li>
 		<li><a href="/usuarios">Usuarios</a></li>
@@ -108,8 +112,8 @@
 	<ul id="lateral">
 		{% if user.infouser.is_admin %}
 		<li ><a href="/administradores">Administradores</a></li>
-		<li ><a href="/supervisores">Supervisores</a></li>
 		{% endif %}
+		<li ><a href="/supervisores">Supervisores</a></li>
 		<li><a href="/companias">Compañias</a></li>
 		<li><a href="/proveedores">Proveedores</a></li>
 		<li><a href="/sitios">Sitios</a></li>

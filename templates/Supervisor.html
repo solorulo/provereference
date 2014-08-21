@@ -5,7 +5,7 @@
 	{% include "includes/common_headers.html" %}
 	<script type="text/javascript" src="/static/js/supervisorDataFormat.js"></script>
 	<script type="text/javascript">
-		var data = eval('{{ data|escape|safe }}')
+		var data = eval('{{ data|escape|safe }}');
 		$(document).ready(function() {
 			$('#b_create').click(new supervisor().create);
 		});
@@ -44,6 +44,8 @@
 					<li>Apellido</li>
 					<div id="linea1"></div>
 					<li>Mail</li>
+					<div id="linea1"></div>
+					<li>Contraseña</li>
 					<div id="linea1"></div>
 				</ul>
 

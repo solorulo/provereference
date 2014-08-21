@@ -33,7 +33,14 @@ def check_admin(user):
 		pass
 	return False
 
-def dec_magic(method='POST', required_args=[], admin_required=False, login_required=False, json_res=False):
+def check_superadmin(user):
+	try:
+		return user.infouser.is_superadmin()
+	except InfoUser.DoesNotExist:
+		pass
+	return False
+
+def dec_magic(method='POST', required_args=[], superadmin_required=False, admin_required=False, login_required=False, json_res=False):
 	def check_args(func):
 		# First, validate arguments *to API_magic* and raise an exception if they are bad. 
 		# This happens when the code is first loaded by the server.
@@ -47,12 +54,15 @@ def dec_magic(method='POST', required_args=[], admin_required=False, login_requi
 		@wraps(func)
 		def new_f(request, *args, **kwargs):
 			# Validate authentication
-			if login_required or admin_required:
+			if login_required or admin_required or superadmin_required:
 				if not request.user.is_authenticated():
 					if json_res :
 						return response('login required')
 					else :
 						return HttpResponseRedirect("/login?next="+request.path)
+				if superadmin_required and not check_superadmin(request.user):
+					# return HttpResponseRedirect("/login?next="+request.path)
+					return HttpResponseRedirect("/")
 				if admin_required and not check_admin(request.user):
 					# return HttpResponseRedirect("/login?next="+request.path)
 					return HttpResponseRedirect("/")
@@ -102,8 +112,6 @@ def dec_magic(method='POST', required_args=[], admin_required=False, login_requi
 def fetch_token(token_id):
 	from django.contrib.sessions.models import Session
 	return Session.objects.get(pk=token_id)
-
-
 
 def dec_magic_api(method='POST', required_args=[], login_required=True):
 	def check_args(func):

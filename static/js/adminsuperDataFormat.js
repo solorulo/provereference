@@ -58,3 +58,9 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		document.querySelector("#iabc").appendChild(contenedor);
 	};
 };
+
+$(document).ready(function() {
+	$('#b_create').click(function(event) {
+		confirm_action(event, new admin().create);
+	});
+});
