@@ -69,9 +69,10 @@ def user_new(request):
 			email=email,
 			imei=imei,
 			telefono=phone,
-			is_active=(is_active.lower() == 'true'),
 			empresa_id=int(provider)
 			)
+		if is_active is not None:
+			new_userprov.is_active=(is_active.lower() == 'true'),
 		new_userprov.save()
 
 		registerLog(request.user, 'Nuevo', 'Proveedor', new_userprov.pk)
@@ -220,12 +221,12 @@ def supervision(request, format):
 			_jsonactivity.append( {
 				'user_pk':user.pk,
 				'date':str(last_act.fecha),
-				'site':last_act.sitio.nombre
+				'site':last_act.sitio.nombre,
 			})
 		except :
 			pass
 
-	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei'))
+	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'is_active'))
 	_json['activity'] = _jsonactivity
 	_json['provider'] = _jsonproviders
 	_json['site'] = _jsonsitios

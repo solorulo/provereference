@@ -99,7 +99,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		tdNombre.setAttribute("class", "t1");
 		aNombre.setAttribute("href", "/proveedor/"+id);
 		tdActivo.setAttribute("class", "t1");
-		if((Date.now()-5*60*1000 < (fecha != null))? fecha.getTime() : Date.now())
+		if(data.users[i].is_active)
 			tdActivo.setAttribute("id", "tactivo");
 		tdProvedor.setAttribute("class", "t2");
 		tdRegistro.setAttribute("class", "t3");

@@ -31,6 +31,8 @@ def login(request):
 	imei = request.POST['imei']
 	try:
 		user_prov = InfoProv.objects.get(imei=imei)
+		if not user_prov.is_active:
+			return response('not active')
 		# request.session['user'] = user_prov
 		request.session['user_id'] = user_prov.pk
 		request.session['imei'] = imei
@@ -83,7 +85,15 @@ def event(request, *args, **kwargs):
 		)
 		new_activity.save()
 
-	return response('ok', 1)
+	return response('ok', 1, {
+			'near_site':{
+				'nombre':nearest_site.nombre,
+				'lat':nearest_site.lat,
+				'lng':nearest_site.lng,
+				'radio':nearest_site.radio,
+			},
+			'region_telefono':nearest_site.region.telefono,
+		})
 
 @dec_magic_api(method='GET')
 def logout(request, *args, **kwargs):
