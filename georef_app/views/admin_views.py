@@ -50,7 +50,7 @@ def admin_new(request):
 			email=email,
 			password=password,
 			telefono=phone)
-		new_admin.is_active = False if is_admin.lower() == "false" else True
+		new_admin.is_active = (is_admin.lower() == "true")
 		new_admin.save()
 
 		registerLog(request.user, 'Nuevo', 'Administrador', new_admin.pk)
@@ -97,7 +97,7 @@ def admin_edit(request, id_admin):
 			the_admin.telefono = phone
 		code = 1
 		if is_admin is not None :
-			the_admin.is_active = False if is_admin.lower() == "false" else True
+			the_admin.is_active = (is_admin.lower() == "true")
 		
 		the_admin.save()
 

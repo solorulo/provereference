@@ -42,7 +42,7 @@ def users(request, format):
 			'users':list(usersprov.filter(empresa=provider).values('pk'))
 		})
 
-	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id', 'empresa__region'))
+	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id', 'empresa__region', 'is_active'))
 	_json['companies'] = _jsonproviders
 	_json['site'] = _jsonsitios
 	_json['region'] = _jsonregiones
@@ -54,13 +54,13 @@ def users(request, format):
 @dec_magic(method='POST', required_args=['email', 'imei', 'empresa'], login_required=True, json_res=True)
 def user_new(request):
 	try:
-		# TODO dar de alta el usuario
 		email = request.POST['email']
 		imei = request.POST['imei']
 		provider = request.POST['empresa']
 		first_name = request.POST.get('first_name', '')
 		last_name = request.POST.get('last_name', '')
 		phone = request.POST.get('phone', '')
+		is_active = request.POST.get('is_active', None)
 
 		new_userprov = InfoProv(
 			username=imei,
@@ -69,7 +69,8 @@ def user_new(request):
 			email=email,
 			imei=imei,
 			telefono=phone,
-			empresa=Empresa.objects.get(pk=int(provider))
+			is_active=(is_active.lower() == 'true'),
+			empresa_id=int(provider)
 			)
 		new_userprov.save()
 
@@ -96,11 +97,13 @@ def user_edit(request, id_user):
 		first_name = request.POST.get('first_name', None)
 		last_name = request.POST.get('last_name', None)
 		phone = request.POST.get('phone', None)
+		is_active = request.POST.get('is_active', None)
 		the_userprov = InfoProv.objects.get(pk=id_user)
 		if email is not None :
 			the_userprov.email = email
 		if imei is not None :
 			the_userprov.imei = imei
+			the_userprov.username = imei
 		if provider is not None :
 			the_userprov.empresa_id = int(provider)
 		if first_name is not None :
@@ -109,6 +112,8 @@ def user_edit(request, id_user):
 			the_userprov.last_name = last_name
 		if phone is not None :
 			the_userprov.telefono = phone
+		if is_active is not None:
+			the_userprov.is_active = (is_active.lower() == 'true')
 
 		the_userprov.save()
 

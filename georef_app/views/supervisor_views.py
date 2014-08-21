@@ -43,7 +43,7 @@ def supervisor_new(request):
 			email=email,
 			password=password,
 			telefono=phone)
-		new_supervisor.is_active = False if is_admin.lower() == "false" else True
+		new_supervisor.is_active = (is_admin.lower() == "true")
 		new_supervisor.save()
 
 		registerLog(request.user, 'Nuevo', 'Supervisor', new_supervisor.pk)
@@ -80,7 +80,7 @@ def supervisor_edit(request, id_supervisor):
 			the_supervisor.telefono = phone
 		code = 1
 		if is_admin is not None :
-			the_supervisor.is_active = False if is_admin.lower() == "false" else True
+			the_supervisor.is_active = (is_admin.lower() == "true")
 
 		print (is_admin)
 		print (the_supervisor.is_active)
