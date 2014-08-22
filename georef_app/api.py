@@ -54,39 +54,40 @@ def login(request):
 def event(request, *args, **kwargs):
 	session = args[0].get_decoded()
 	events_string = request.POST['events']
-	try:
-		events = simplejson.loads(events_string)
-	except Exception, e:
-		raise e
+	
 	mSites = Sitio.objects.all()
 	sites = list(mSites)
 	if not sites:
-		response('no sites')
-	print events
-	for event in events:
-		if event is None:
-			continue
-		# https://docs.python.org/2/library/time.html#time.strptime
-		# datetime YYYY-mm-dd HH:MM
-		print event['datetime']
-		tiempo = dateparse.parse_datetime(event['datetime'])
-		tipo_evento = event['tipo']
-		lat = float(event['lat'])
-		lng = float(event['lng'])
-		margen_error = event.get('margin_error')
-		sites.sort(key=lambda x: x.distance_rel(lat, lng))
-		# print sites
-		nearest_site = sites[0]
-		new_activity = Actividad(
-			fecha=tiempo,
-			tipo_evento=tipo_evento,
-			lat=lat,
-			lng=lng,
-			margen_error=margen_error,
-			sitio=nearest_site,
-			infoprov_id=session['user_id']
-		)
-		new_activity.save()
+		return response('no sites')
+	try:
+		events = simplejson.loads(events_string)
+		for event in events:
+			if event is None:
+				continue
+			# https://docs.python.org/2/library/time.html#time.strptime
+			# datetime YYYY-mm-dd HH:MM
+			print event['datetime']
+			tiempo = dateparse.parse_datetime(event['datetime'])
+			tipo_evento = event['tipo']
+			lat = float(event['lat'])
+			lng = float(event['lng'])
+			margen_error = event.get('margin_error')
+			sites.sort(key=lambda x: x.distance_rel(lat, lng))
+			# print sites
+			nearest_site = sites[0]
+			new_activity = Actividad(
+				fecha=tiempo,
+				tipo_evento=tipo_evento,
+				lat=lat,
+				lng=lng,
+				margen_error=margen_error,
+				sitio=nearest_site,
+				infoprov_id=session['user_id']
+			)
+			new_activity.save()
+	except Exception, e:
+		# raise e
+		return response('Data format error', 0)
 
 	return response('ok', 1, {
 			'near_site':{

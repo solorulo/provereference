@@ -165,6 +165,7 @@ function Bridge(i, id, nombre, datos) {
 				});
 				cerrarTodo();
 			} else {
+				// $("#dialogError > p").text(response.msg);
 				$("#dialogError").dialog("open");
 			}
 			return true;
@@ -188,6 +189,7 @@ function Bridge(i, id, nombre, datos) {
 				});
 				cerrarTodo();
 			} else {
+				// $("#dialogError > p").text(response.msg);
 				$("#dialogError").dialog("open");
 			}
 			return true;
@@ -211,6 +213,7 @@ function Bridge(i, id, nombre, datos) {
 				});
 				cerrarTodo();
 			} else {
+				// $("#dialogError > p").text(response.msg);
 				$("#dialogError").dialog("open");
 			}
 			return true;
@@ -557,34 +560,7 @@ function dataFormat(query) {
 	query = query.replace(/[oòó]/ig, "[oòó]");
 	query = query.replace(/[uùú]/ig, "[uùú]");
 	var reg = new RegExp(query);
-
-	if ((/^\/administradores/i).test(document.location.pathname)) {
-		var usr;
-		usr = admin;
-		// Importar adminDataFormat.js
-		innerDataFormat(element, lastLetter, query, reg, usr);
-	} else if ((/^\/supervisores/i).test(document.location.pathname)) {
-		var usr;
-		usr = supervisor;
-		// Importar adminDataFormat.js
-		innerDataFormat(element, lastLetter, query, reg, usr);
-	} else if ((/^\/proveedores/i).test(document.location.pathname)) {
-		// Importar proveedoresDataFormat.js
-		innerDataFormat(element, lastLetter, query, reg, usr);
-	} else if ((/^\/proveedor/i).test(document.location.pathname)) {
-		innerDataFormat(element, lastLetter, query, reg, usr);
-	} else if ((/^\/usuarios/i).test(document.location.pathname)) {
-		innerDataFormat(element, lastLetter, query, reg, usr);
-	} else if ((/^\/usuario/i).test(document.location.pathname)) {
-		innerDataFormat(element, lastLetter, query, reg, usr);
-	} else if ((/^\/supervision/i).test(document.location.pathname)) {
-		innerDataFormat(element, lastLetter, query, reg, usr);
-	} else if ((/^\/sitios/i).test(document.location.pathname)) {
-		innerDataFormat(element, lastLetter, query, reg, usr);
-	} else if ((/^\/companias/i).test(document.location.pathname)) {
-		innerDataFormat(element, lastLetter, query, reg, usr);
-		return;
-	}
+	innerDataFormat(element, lastLetter, query, reg);
 }
 
 function fechaToString(fecha) {
