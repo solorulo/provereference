@@ -199,7 +199,6 @@ function Bridge(i, id, nombre, datos) {
 		return false;
 	};
 	this.delete = function() {
-		event.preventDefault();
 		var postdata = jQuery.extend({}, datos);
 		postdata.csrfmiddlewaretoken = csrftoken;
 		$.post("/" + nombre + "/" + id + "/delete/", postdata, function(response) {
