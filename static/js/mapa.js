@@ -35,8 +35,8 @@ function plotPoint(srcLat,srcLon,title,popUpContent,markerIcon)
 };
 function initialize(lat, lng) 
 {
-	lat = (lat === undefined) ? coords.lat : lat;
-	lng = (lng === undefined) ? coords.lng : lng;
+	lat = (lat === undefined or lat === null) ? coords.lat : lat;
+	lng = (lng === undefined or lat === null) ? coords.lng : lng;
 	var latlng = new google.maps.LatLng(lat, lng);
 	var myOptions = {
 		zoom: 12,

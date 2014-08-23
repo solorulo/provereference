@@ -47,13 +47,46 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var conf = document.createElement("div");
 		var img = document.createElement("img");
 		var info = document.createElement("div");
+		var mapa = document.createElement("button");
 	
+		var mapaFn = (function (lat, lng) {
+					return function () {
+						initialize(lat, lng);
+						$( "#map_container" ).dialog( "open" );
+						var myLatlng = map.getCenter();
+						var marker = new google.maps.Marker({
+							position: myLatlng,
+							map: map
+						});
+						var infowindow = new google.maps.InfoWindow({
+							content: ":)"
+						});
+						var openInfo = function(){
+							marker.setTitle(marker.getPosition().lat()+", "+marker.getPosition().lng());
+							infowindow.setContent('<span class="gBubble"><b>'+marker.getTitle()+'</b></span>');
+							infowindow.open(map,marker);
+							// console.log(marker.getTitle());
+							$(".lat").val(marker.getPosition().lat())
+							$(".lng").val(marker.getPosition().lng())
+						};
+						google.maps.event.addListener(marker, 'dragend', openInfo)
+						google.maps.event.addListener(map, 'dblclick', function(e){
+							e.stop();
+							marker.setPosition(e.latLng);
+							openInfo();
+							return false;
+						})
+						markersArray.push(marker);
+					}
+				})(data.sites[i].lat, data.sites[i].lng);
+
 		var nombreTextNode = document.createTextNode(data.sites[i].name);
 		var infoNeumonico = document.createTextNode("Neumonico: "+data.sites[i].neumonico);
 		var infoLat = document.createTextNode("Lat: "+data.sites[i].lat);
 		var infoLng = document.createTextNode("Lng: "+data.sites[i].lng);
 		var infoReg = document.createTextNode("Región: "+getReg(data.sites[i].reg).nombre);
 		var confTextNode = document.createTextNode("Editar datos");
+		var mapaTextNode = document.createTextNode("Mapa");
 		
 		contenedor.setAttribute("class", "contenedor");
 		contenedor.setAttribute("id", data.sites[i].pk);
@@ -62,6 +95,9 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		conf.onclick = (new sitio(i, data.sites[i].pk)).open;
 		img.setAttribute("src", "/static/imagenes/Supervisar/configurar.png");
 		info.setAttribute("class", "info");
+		mapa.setAttribute("class", "btnMapView");
+		// info.setAttribute("class", "btnMapView");
+		mapa.onclick = mapaFn;
 
 		conf.appendChild(confTextNode);
 		conf.appendChild(img);
@@ -76,6 +112,8 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		info.appendChild(infoReg);
 		contenedor.appendChild(nombre);
 		contenedor.appendChild(info);
+		mapa.appendChild(mapaTextNode);
+		contenedor.appendChild(mapa);
 		document.querySelector("#iabc").appendChild(contenedor);
 	};
 };
@@ -109,18 +147,7 @@ $(document).ready(function(event){
 	};
 	document.querySelector("#optionRegion").onchange = function(event){dataFormat(inputDOM.value);};
 
-	/*
-		MAPA
-	*/
-	$("#popup4 .btnMap").click(function() {
-		var lat_ = document.querySelector("#popup4 .lat").value;
-		var lng_ = document.querySelector("#popup4 .lng").value;
-		initialize(lat_, lng_);
-	});
-	$("#popup3 .btnMap").click(function() {
-		initialize();
-	});
-	$(".btnMap").click( function(){
+	var openMap = function (){
 		$( "#map_container" ).dialog( "open" );
 		var myLatlng = map.getCenter();
 		var marker = new google.maps.Marker({
@@ -147,5 +174,20 @@ $(document).ready(function(event){
 			return false;
 		})
 		markersArray.push(marker);
+	}
+	/*
+		MAPA
+	*/
+	$("#popup4 .btnMap").click(function() {
+		var lat_ = document.querySelector("#popup4 .lat").value;
+		var lng_ = document.querySelector("#popup4 .lng").value;
+		initialize(lat_, lng_);
+		openMap();
+	});
+	$("#popup3 .btnMap").click(function() {
+		var lat_ = document.querySelector("#popup3 .lat").value;
+		var lng_ = document.querySelector("#popup3 .lng").value;
+		initialize(lat_, lng_);
+		openMap();
 	});
 });
