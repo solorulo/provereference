@@ -52,8 +52,9 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var mapaFn = (function (lat, lng) {
 					return function () {
 						initialize(lat, lng);
-						$( "#map_container" ).dialog( "open" );
 						var myLatlng = map.getCenter();
+						$( "#map_container" ).dialog( "open" );
+						map.setCenter(myLatlng);
 						var marker = new google.maps.Marker({
 							position: myLatlng,
 							map: map
@@ -61,21 +62,9 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 						var infowindow = new google.maps.InfoWindow({
 							content: ":)"
 						});
-						var openInfo = function(){
-							marker.setTitle(marker.getPosition().lat()+", "+marker.getPosition().lng());
-							infowindow.setContent('<span class="gBubble"><b>'+marker.getTitle()+'</b></span>');
-							infowindow.open(map,marker);
-							// console.log(marker.getTitle());
-							$(".lat").val(marker.getPosition().lat())
-							$(".lng").val(marker.getPosition().lng())
-						};
-						google.maps.event.addListener(marker, 'dragend', openInfo)
-						google.maps.event.addListener(map, 'dblclick', function(e){
-							e.stop();
-							marker.setPosition(e.latLng);
-							openInfo();
-							return false;
-						})
+						marker.setTitle(myLatlng.lat()+", "+myLatlng.lng());
+						infowindow.setContent('<span class="gBubble"><b>'+marker.getTitle()+'</b></span>');
+						infowindow.open(map,marker);
 						markersArray.push(marker);
 					}
 				})(data.sites[i].lat, data.sites[i].lng);
@@ -148,8 +137,9 @@ $(document).ready(function(event){
 	document.querySelector("#optionRegion").onchange = function(event){dataFormat(inputDOM.value);};
 
 	var openMap = function (){
-		$( "#map_container" ).dialog( "open" );
 		var myLatlng = map.getCenter();
+		$( "#map_container" ).dialog( "open" );
+		map.setCenter(myLatlng);
 		var marker = new google.maps.Marker({
 			position: myLatlng, 
 			map: map,
@@ -159,21 +149,21 @@ $(document).ready(function(event){
 			content: ":)"
 		});
 		var openInfo = function(){
-			marker.setTitle(marker.getPosition().lat()+", "+marker.getPosition().lng());
+			marker.setTitle(myLatlng.lat()+", "+myLatlng.lng());
 			infowindow.setContent('<span class="gBubble"><b>'+marker.getTitle()+'</b></span>');
-			infowindow.open(map,marker);
-			// console.log(marker.getTitle());
-			$(".lat").val(marker.getPosition().lat())
-			$(".lng").val(marker.getPosition().lng())
+			infowindow.open(map, marker);
+			$(".lat").val(myLatlng.lat())
+			$(".lng").val(myLatlng.lng())
 		};
-		google.maps.event.addListener(marker, 'dragend', openInfo)
+		google.maps.event.addListener(marker, 'dragend', openInfo);
 		google.maps.event.addListener(map, 'dblclick', function(e){
 			e.stop();
 			marker.setPosition(e.latLng);
 			openInfo();
 			return false;
-		})
+		});
 		markersArray.push(marker);
+		openInfo();
 	}
 	/*
 		MAPA
