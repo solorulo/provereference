@@ -113,7 +113,6 @@ $(document).ready(function(event){
 	/*
 		SELECT OPTION REGIONES
 	*/
-
 	var optionRegion = document.createElement("select");
 	optionRegion.setAttribute("class", "optionRegion");
 	var firstOption = document.createElement("option");

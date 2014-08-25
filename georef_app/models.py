@@ -26,12 +26,10 @@ class InfoUser (User):
 	ADMINISTRADOR = 0
 	SUPERVISOR = 1
 	SUPER_ADMIN = 2
-	# USUARIO = 2
 	TIPO_CHOICES = (
 		(ADMINISTRADOR, "Administrador"),
 		(SUPERVISOR, "Supervisor"),
 		(SUPER_ADMIN, "Super Administrador"),
-		# (USUARIO, "Usuario"),
 	)
 	tipo = models.IntegerField(choices=TIPO_CHOICES, default=SUPERVISOR)
 	class Meta:

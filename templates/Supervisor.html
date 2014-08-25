@@ -3,12 +3,14 @@
 <head>
 	<title>Supervisores</title>
 	{% include "includes/common_headers.html" %}
+	{% if user.infouser.is_admin %}
+	<script type="text/javascript" src="/static/js/supervisoradminDataFormat.js"></script>
+	{% else %}
 	<script type="text/javascript" src="/static/js/supervisorDataFormat.js"></script>
+	{% endif %}
 	<script type="text/javascript">
 		var data = eval('{{ data|escape|safe }}');
-		$(document).ready(function() {
-			$('#b_create').click(new supervisor().create);
-		});
+		var self_id = {{ user.id }};
 	</script>
 </head>
 <body>

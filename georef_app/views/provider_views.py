@@ -55,12 +55,12 @@ def users(request, format):
 @dec_magic(method='POST', required_args=['email', 'imei', 'empresa'], login_required=True, json_res=True)
 def user_new(request):
 	try:
-		email = request.POST['email']
-		imei = request.POST['imei']
-		provider = request.POST['empresa']
-		first_name = request.POST.get('first_name', '')
-		last_name = request.POST.get('last_name', '')
-		phone = request.POST.get('phone', '')
+		email = request.POST['email'].strip()
+		imei = request.POST['imei'].strip()
+		provider = request.POST['empresa'].strip()
+		first_name = request.POST.get('first_name', '').strip()
+		last_name = request.POST.get('last_name', '').strip()
+		phone = request.POST.get('phone', '').strip()
 		is_active = request.POST.get('is_active', None)
 
 		new_userprov = InfoProv(
@@ -107,18 +107,18 @@ def user_edit(request, id_user):
 		is_active = request.POST.get('is_active', None)
 		the_userprov = InfoProv.objects.get(pk=id_user)
 		if email is not None :
-			the_userprov.email = email
+			the_userprov.email = email.strip()
 		if imei is not None :
-			the_userprov.imei = imei
-			the_userprov.username = imei
+			the_userprov.imei = imei.strip()
+			the_userprov.username = imei.strip()
 		if provider is not None :
 			the_userprov.empresa_id = int(provider)
 		if first_name is not None :
-			the_userprov.first_name = first_name
+			the_userprov.first_name = first_name.strip()
 		if last_name is not None :
-			the_userprov.last_name = last_name
+			the_userprov.last_name = last_name.strip()
 		if phone is not None :
-			the_userprov.telefono = phone
+			the_userprov.telefono = phone.strip()
 		if is_active is not None:
 			the_userprov.is_active = (is_active.lower() == 'true')
 
@@ -149,7 +149,6 @@ def user_edit(request, id_user):
 @dec_magic(method='POST', login_required=True, json_res=True)
 def user_delete(request, id_user):
 	try:
-		# TODO Borrar Supervisor
 		the_userprov = InfoProv.objects.get(pk=id_user)
 		the_userprov.delete()
 		registerLog(request.user, 'Borrar', 'Proveedor', id_user)

@@ -34,12 +34,12 @@ def admin_new(request):
 				'msg' : "Sin permiso"
 			})
 			return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
-		first_name = request.POST.get('first_name', '')
-		last_name = request.POST['last_name']
-		email = request.POST['email']
-		phone = request.POST.get('tel', '')
+		first_name = request.POST.get('first_name', '').strip()
+		last_name = request.POST.get('last_name', '').strip()
+		email = request.POST.get('email', '').strip()
+		phone = request.POST.get('tel', '').strip()
 		password = request.POST.get('password', '')
-		is_admin = request.POST.get('is_admin', '')
+		is_admin = request.POST.get('is_admin', '').strip()
 
 		my_password = request.POST.get('my_password', None)
 		if not request.user.check_password(my_password):
@@ -105,14 +105,14 @@ def admin_edit(request, id_admin):
 			return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
 		if first_name is not None :
-			the_admin.first_name = first_name
+			the_admin.first_name = first_name.strip()
 		if last_name is not None :
-			the_admin.last_name = last_name
+			the_admin.last_name = last_name.strip()
 		if email is not None :
-			the_admin.email = email
-			the_admin.username = email
+			the_admin.email = email.strip()
+			the_admin.username = email.strip()
 		if phone is not None :
-			the_admin.telefono = phone
+			the_admin.telefono = phone.strip()
 		if password is not None:
 			the_admin.set_password(password)
 		code = 1

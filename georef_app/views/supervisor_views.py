@@ -8,31 +8,17 @@ from georef_app.utils import *
 @dec_magic(method='GET', login_required=True)
 def supervisors(request, format):
 	users = []
-	if check_admin(request.user):
-		mUsers = InfoUser.objects.filter(tipo=InfoUser.SUPERVISOR).order_by("first_name")
-		for user in mUsers:
-			users.append({
-				'id':user.id,
-				'first_name':user.first_name,
-				'last_name':user.last_name,
-				'email':user.email,
-				'is_admin':user.is_admin(),
-				'is_active':user.is_active,
-				# 'tel':str(count)
-				'tel':user.telefono
-				})
-	else:
-		user = request.user.infouser
+	mUsers = InfoUser.objects.filter(tipo=InfoUser.SUPERVISOR).order_by("first_name")
+	for user in mUsers:
 		users.append({
-				'id':user.id,
-				'first_name':user.first_name,
-				'last_name':user.last_name,
-				'email':user.email,
-				'is_admin':user.is_admin(),
-				'is_active':user.is_active,
-				# 'tel':str(count)
-				'tel':user.telefono
-				})
+			'id':user.id,
+			'first_name':user.first_name,
+			'last_name':user.last_name,
+			'email':user.email,
+			'is_admin':user.is_admin(),
+			'is_active':user.is_active,
+			'tel':user.telefono
+			})
 	data = simplejson.dumps(users)
 	if format:
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')

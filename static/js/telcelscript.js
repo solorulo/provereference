@@ -59,7 +59,7 @@ function cerrar(selector) {
 	if ((/^\/administradores/i).test(document.location.pathname)) {
 		document.querySelector(selector + " input[type=\"checkbox\"]").checked = true;
 	} else if ((/^\/supervisores/i).test(document.location.pathname)) {
-		document.querySelector(selector + " input[type=\"checkbox\"]").checked = false;
+		document.querySelector(selector + " input[type=\"checkbox\"]").checked = true;
 	}
 }
 

@@ -44,8 +44,15 @@ def companies(request, format):
 @dec_magic(method='POST', required_args=['name', 'region'], login_required=True, json_res=True)
 def company_new(request):
 	try:
-		name = request.POST['name']
+		name = request.POST['name'].strip()
 		region = request.POST['region']
+
+		if Empresa.objects.all().filter(nombre__iexact=name).count() > 0:
+			data = simplejson.dumps({
+					'code' : 0,
+					'msg' : "El nombre de la región ya existe"
+				})
+			return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
 		new_provider = Empresa(
 			nombre=name,
@@ -58,10 +65,11 @@ def company_new(request):
 			'msg' : "Bien",
 			'provider_id' : new_provider.pk
 		})
-	except :
+	except Exception as e:
+		raise e
 		data = simplejson.dumps({
 			'code' : 0,
-			'msg' : "Fallo"
+			'msg' : "Error desconocido"
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
@@ -72,8 +80,16 @@ def company_edit(request, id_provider):
 		id_region = request.POST.get('region', None)
 
 		the_provider = Empresa.objects.get(pk=id_provider)
+
+		if Empresa.objects.all().exclude(pk=id_provider).filter(nombre__iexact=name).count() > 0:
+			data = simplejson.dumps({
+					'code' : 0,
+					'msg' : "El nombre de la región ya existe"
+				})
+			return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
+
 		if name is not None :
-			the_provider.nombre = name
+			the_provider.nombre = name.strip()
 		if id_region is not None :
 			the_provider.region_id = int(id_region)
 

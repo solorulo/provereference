@@ -16,7 +16,6 @@ def sites(request, format):
 	_json = {}
 	mSites = Sitio.objects.all().order_by('nombre').select_related()
 	mRegions = Region.objects.all()
-	# print simplejson.dumps(list(mSites.values()))
 	_jsonRegiones = []
 	for region in mRegions:
 		_jsonRegiones.append( {
@@ -24,12 +23,6 @@ def sites(request, format):
 			'nombre':region.nombre,
 			'sites':list(mSites.filter(region=region).values('pk')),
 		})
-		# 'id':site.id,
-		# 'name':site.nombre,
-		# 'neumonico':site.neumonico,
-		# 'lat':site.lat,
-		# 'lng':site.lng,
-		# 'reg':site.region.pk
 	_json["sites"] = list(mSites.extra(select={'reg': 'region_id', 'name':'nombre'}).values('pk', 'name', 'neumonico', 'lat', 'lng', 'reg'))
 	_json["regiones"] = _jsonRegiones
 	data = simplejson.dumps(_json)
@@ -40,11 +33,11 @@ def sites(request, format):
 @dec_magic(method='POST', required_args=['name', 'neumonico', 'lat', 'lng', 'region'], login_required=True, json_res=True)
 def site_new(request):
 	try:
-		name = request.POST['name']
-		neumonico = request.POST['neumonico']
-		lat = request.POST['lat']
-		lng = request.POST['lng']
-		region = request.POST['region']
+		name = request.POST['name'].strip()
+		neumonico = request.POST['neumonico'].strip()
+		lat = request.POST['lat'].strip()
+		lng = request.POST['lng'].strip()
+		region = request.POST['region'].strip()
 		radio = request.POST.get('radio', '10')
 
 		new_site = Sitio(
@@ -86,15 +79,15 @@ def site_edit(request, id_site):
 
 		the_site = Sitio.objects.get(pk=id_site)
 		if name is not None :
-			the_site.nombre = name
+			the_site.nombre = name.strip()
 		if neumonico is not None :
-			the_site.neumonico = neumonico
+			the_site.neumonico = neumonico.strip()
 		if id_region is not None :
 			the_site.region_id = Region.objects.get(pk=int(id_region))
 		if lat is not None :
-			the_site.lat = lat
+			the_site.lat = lat.strip()
 		if lng is not None :
-			the_site.lng = lng
+			the_site.lng = lng.strip()
 
 		the_site.save()
 
