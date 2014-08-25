@@ -33,12 +33,15 @@ function plotPoint(srcLat,srcLon,title,popUpContent,markerIcon)
 		infowindow.open(map,marker);
 	});                                          
 };
+function isEmpty(str) {
+    return (str.length === 0 || !str.trim());
+}
 function initialize(lat, lng) 
 {
 	lat = (lat === undefined || lat === null) ? coords.lat : lat;
 	lng = (lng === undefined || lat === null) ? coords.lng : lng;
-	lat = (typeof(lat)== "String") ? lat : Number(lat);
-	lng = (typeof(lng)== "String") ? lng : Number(lng);
+	lat = (typeof(lat)== "string" && isEmpty(lat)) ? coords.lat : Number(lat);
+	lng = (typeof(lng)== "string" && isEmpty(lng)) ? coords.lng : Number(lng);
 	var latlng = new google.maps.LatLng(lat, lng);
 	var myOptions = {
 		zoom: 12,

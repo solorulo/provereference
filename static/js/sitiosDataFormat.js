@@ -149,6 +149,7 @@ $(document).ready(function(event){
 			content: ":)"
 		});
 		var openInfo = function(){
+			var myLatlng = marker.getPosition();
 			marker.setTitle(myLatlng.lat()+", "+myLatlng.lng());
 			infowindow.setContent('<span class="gBubble"><b>'+marker.getTitle()+'</b></span>');
 			infowindow.open(map, marker);
