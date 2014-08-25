@@ -35,8 +35,10 @@ function plotPoint(srcLat,srcLon,title,popUpContent,markerIcon)
 };
 function initialize(lat, lng) 
 {
-	lat = (lat === undefined) ? coords.lat : lat;
-	lng = (lng === undefined) ? coords.lng : lng;
+	lat = (lat === undefined || lat === null) ? coords.lat : lat;
+	lng = (lng === undefined || lat === null) ? coords.lng : lng;
+	lat = (typeof(lat)== "String") ? lat : Number(lat);
+	lng = (typeof(lng)== "String") ? lng : Number(lng);
 	var latlng = new google.maps.LatLng(lat, lng);
 	var myOptions = {
 		zoom: 12,
@@ -44,5 +46,5 @@ function initialize(lat, lng)
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		disableDoubleClickZoom: true
 	};
-	map = new google.maps.Map(document.getElementById("map_canvas"),  myOptions);                         
+	map = new google.maps.Map(document.getElementById("map_canvas"),  myOptions);
 }        
