@@ -9,7 +9,6 @@ function confirm_action(event, action) {
 	$('#dialogPass').dialog('open');
 }
 function abrirAdmin(i, id) {
-	abrir("#popup1");
 	document.querySelector("#popup1 .form_nombre").value = data[i].first_name;
 	document.querySelector("#popup1 .form_apellido").value = data[i].last_name;
 	document.querySelector("#popup1 .form_mail").value = data[i].email;
@@ -23,10 +22,10 @@ function abrirAdmin(i, id) {
 	document.querySelector("#popup1 #b_save").onclick = function(event) {
 		confirm_action(event, obj.save);
 	};
+	abrir("#popup1");
 };
 
 function abrirSupervisor(i, id) {
-	abrir("#popup1");
 	document.querySelector("#popup1 .form_nombre").value = data[i].first_name;
 	document.querySelector("#popup1 .form_apellido").value = data[i].last_name;
 	document.querySelector("#popup1 .form_mail").value = data[i].email;
@@ -34,6 +33,7 @@ function abrirSupervisor(i, id) {
 	var obj = new supervisor(i, id)
 	document.querySelector("#popup1 #beliminar").onclick = obj.delete;
 	document.querySelector("#popup1 #b_save").onclick = obj.save;
+	abrir("#popup1");
 }
 
 function cerrar(selector) {
@@ -70,7 +70,6 @@ function abrir(selector) {
 	document.querySelector(selector).style.webkitTransform = "scale(1)";
 	document.querySelector(selector).style.transition = ".2s transform ease-in 0s";
 	document.querySelector(selector).style.transform = "scale(1)";
-
 };
 
 function cerrar0() {
@@ -123,13 +122,11 @@ function activo() {
 	document.querySelector("#popadministrador img").style.webkitTransform = "rotate(180deg)";
 	document.querySelector("#popadministrador img").style.msTransform = "rotate(180deg)";
 	document.querySelector("#popadministrador img").style.transform = "rotate(180deg)";
-
 };
 
 function subir() {
 	window.location.href = "#inicio";
 	window.location.href = "#inicio1";
-
 };
 
 function getCookie(name) {
@@ -145,7 +142,6 @@ function getCookie(name) {
 			}
 		}
 	}
-
 	return cookieValue;
 };
 
@@ -155,9 +151,7 @@ function Bridge(i, id, nombre, datos) {
 		var postdata = jQuery.extend({}, datos);
 		postdata.csrfmiddlewaretoken = csrftoken;
 		$.post("/" + nombre + "/new/", postdata, function(response) {
-			// eval('var _jsonData = '+response);
 			var code = response.code;
-			// alert(code);
 			if (code == 1) {
 				$.getJSON("json", function(json) {
 					data = json;
@@ -165,7 +159,7 @@ function Bridge(i, id, nombre, datos) {
 				});
 				cerrarTodo();
 			} else {
-				// $("#dialogError > p").text(response.msg);
+				$("#dialogError > p").text(response.msg);
 				$("#dialogError").dialog("open");
 			}
 			return true;
@@ -179,9 +173,7 @@ function Bridge(i, id, nombre, datos) {
 		var postdata = jQuery.extend({}, datos);
 		postdata.csrfmiddlewaretoken = csrftoken;
 		$.post("/" + nombre + "/" + id + "/edit/", postdata, function(response) {
-			// eval('var _jsonData = '+response);
 			var code = response.code;
-			// alert(response["code"]);
 			if (code == '1' || code == '1.1') {
 				$.getJSON("json", function(json) {
 					data = json;
@@ -189,7 +181,7 @@ function Bridge(i, id, nombre, datos) {
 				});
 				cerrarTodo();
 			} else {
-				// $("#dialogError > p").text(response.msg);
+				$("#dialogError > p").text(response.msg);
 				$("#dialogError").dialog("open");
 			}
 			return true;
@@ -202,9 +194,7 @@ function Bridge(i, id, nombre, datos) {
 		var postdata = jQuery.extend({}, datos);
 		postdata.csrfmiddlewaretoken = csrftoken;
 		$.post("/" + nombre + "/" + id + "/delete/", postdata, function(response) {
-			// eval('var _jsonData = '+response);
 			var code = response.code;
-			// alert(code);
 			if (code == '1') {
 				$.getJSON("json", function(json) {
 					data = json;
@@ -212,7 +202,7 @@ function Bridge(i, id, nombre, datos) {
 				});
 				cerrarTodo();
 			} else {
-				// $("#dialogError > p").text(response.msg);
+				$("#dialogError > p").text(response.msg);
 				$("#dialogError").dialog("open");
 			}
 			return true;

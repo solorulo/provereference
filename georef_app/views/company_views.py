@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.db import IntegrityError
 from django.core import serializers
 from django.shortcuts import render, get_object_or_404
 from django.utils import simplejson
@@ -85,12 +86,12 @@ def company_edit(request, id_provider):
 	except Empresa.DoesNotExist:
 		data = simplejson.dumps({
 			'code' : 0,
-			'msg' : "No existe el proveedor"
+			'msg' : "No existe la compañia"
 		})
-	except:
+	except Exception, e:
 		data = simplejson.dumps({
 			'code' : 0,
-			'msg' : "Ocurrio un error desconocido"
+			'msg' : "Error desconocido"
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
@@ -107,7 +108,7 @@ def company_delete(request, id_provider):
 	except Empresa.DoesNotExist:
 		data = simplejson.dumps({
 			'code' : 0,
-			'msg' : "No existe el proveedor"
+			'msg' : "No existe la compañia"
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 

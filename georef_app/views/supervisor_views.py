@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.db import IntegrityError
 from django.shortcuts import render
 from django.utils import simplejson
 from georef_app.models import InfoUser
@@ -65,10 +66,15 @@ def supervisor_new(request):
 			'msg' : "Bien",
 			'user_id':new_supervisor.pk
 		})
-	except :
+	except IntegrityError, e:
 		data = simplejson.dumps({
 			'code' : 0,
-			'msg' : "Fallo"
+			'msg' : 'El campo de email no es válido'
+		})
+	except Exception, e:
+		data = simplejson.dumps({
+			'code' : 0,
+			'msg' : "Error desconocido"
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 
@@ -116,10 +122,15 @@ def supervisor_edit(request, id_supervisor):
 			'code' : 0,
 			'msg' : "No existe el usuario"
 		})
-	except:
+	except IntegrityError, e:
 		data = simplejson.dumps({
 			'code' : 0,
-			'msg' : "Ocurrio un error desconocido"
+			'msg' : 'El campo de email no es válido'
+		})
+	except Exception, e:
+		data = simplejson.dumps({
+			'code' : 0,
+			'msg' : "Error desconocido"
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 

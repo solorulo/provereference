@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied, SuspiciousOperation
@@ -85,10 +86,10 @@ def user_edit(request, id_user):
 			'code' : 0,
 			'msg' : "No existe el usuario"
 		})
-	except:
+	except Exception, e:
 		data = simplejson.dumps({
 			'code' : 0,
-			'msg' : "Ocurrio un error desconocido"
+			'msg' : "Error desconocido"
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json' )
 

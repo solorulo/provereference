@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied, SuspiciousOperation
@@ -61,11 +62,15 @@ def site_new(request):
 			'msg' : "Bien",
 			'provider_id' : new_site.pk
 		})
-	except Exception, e:
-		raise e
+	except IntegrityError, e:
 		data = simplejson.dumps({
 			'code' : 0,
-			'msg' : "Fallo"
+			'msg' : 'Los campos de nombre y/o neumónico no pueden repetirse'
+		})
+	except Exception, e:
+		data = simplejson.dumps({
+			'code' : 0,
+			'msg' : "Error desconocido"
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
@@ -103,10 +108,15 @@ def site_edit(request, id_site):
 			'code' : 0,
 			'msg' : "No existe el sitio"
 		})
-	except:
+	except IntegrityError, e:
 		data = simplejson.dumps({
 			'code' : 0,
-			'msg' : "Ocurrio un error desconocido"
+			'msg' : 'Los campos de nombre y/o neumonico no pueden repetirse'
+		})
+	except Exception, e:
+		data = simplejson.dumps({
+			'code' : 0,
+			'msg' : "Error desconocido"
 		})
 	return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
