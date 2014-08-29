@@ -14,7 +14,7 @@ class Region (models.Model):
 		return u'Región '+self.nombre
 
 class Empresa (models.Model):
-	region = models.ForeignKey(Region)
+	regiones = models.ManyToManyField(Region)
 	nombre = models.CharField(max_length=45)
 	is_active = models.NullBooleanField()
 

@@ -3,7 +3,9 @@
 <head>
 	<title>Compañia</title>
 	{% include "includes/common_headers.html" %}
+  	<link rel="stylesheet" href="/static/chosen/chosen.css">
 	<script type="text/javascript" src="/static/js/companyDataFormat.js"></script>
+	<script src="/static/chosen/chosen.jquery.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		eval('var data = {{ data|escape|safe }}')
 	</script>
@@ -40,7 +42,7 @@
 			</div>
 			<div id="popinfo">
 				<input id="name" name="name" type="text" class="textinfo form_nombre">
-				<select id="optionRegion" class="optionRegion textinfo" style="display:block;"></select>
+				<select id="optionRegion" class="optionRegion textinfo" data-placeholder="Selecciona las regiones" style="display:block;" multiple="true"></select>
 				<button id="beliminar">Eliminar</button><button id="b_save" class="bazul">Guardar</button><button id="bblanco" onclick="cerrarTodo()">Cancelar</button>
 			</div>
 		</div>
@@ -59,7 +61,7 @@
 			</div>
 			<div id="popinfo">
 				<input id="name" name="name" type="text" class="textinfo form_nombre">
-				<select id="optionRegion" class="optionRegion textinfo" style="display:block;"></select>
+				<select data-placeholder="Selecciona las regiones" id="optionRegion" class="optionRegion textinfo" style="display:block;" multiple="true"></select>
 				<button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrarTodo()">Cancelar</button>
 			</div>
 		</div>

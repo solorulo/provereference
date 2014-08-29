@@ -22,13 +22,14 @@ def users(request, format):
 	_jsonregiones = []
 	_jsonsitios = []
 	_jsonproviders = []
+	_jsonusers = []
 	for region in regiones:
 		_jsonregiones.append( {
 			'pk' : region.pk,
 			'name':region.nombre,
-			'providers':list(providers.filter(region=region).values('pk')),
+			'providers':list(providers.filter(regiones__id=region.id).values('pk')),
 			'sites':list(sitios.filter(region=region).values('pk')),
-			'users':list(usersprov.filter(empresa__region=region).values('pk'))
+			'users':list(usersprov.filter(empresa__regiones__id=region.id).values('pk'))
 		})
 	for sitio in sitios:
 		_jsonsitios.append ({
@@ -40,10 +41,29 @@ def users(request, format):
 		_jsonproviders.append( {
 			'pk':provider.pk,
 			'name':provider.nombre,
-			'users':list(usersprov.filter(empresa=provider).values('pk'))
+			'users':list(usersprov.filter(empresa_id=provider.id).values('pk'))
 		})
-
-	_json['users'] = list(usersprov.values('pk', 'first_name', 'last_name', 'email', 'telefono', 'imei', 'empresa_id', 'empresa__region', 'is_active'))
+	for user in usersprov:
+		_jsonusers.append({
+			'pk':user.pk,
+			'first_name':user.first_name,
+			'last_name':user.last_name,
+			'email':user.email,
+			'telefono':user.telefono,
+			'imei':user.imei,
+			'empresa_id':user.empresa.id,
+			'is_active':user.is_active,
+			'empresa_regiones':list(user.empresa.regiones.all().values('pk')),
+			})
+	# _json['users'] = list(usersprov
+	# 	# .extra(select={'empresa__region':'empresa__regiones'})
+	# 	.values('pk', 
+	# 		'first_name', 'last_name', 
+	# 		'email', 'telefono', 
+	# 		'imei', 'empresa_id', 
+	# 		#'empresa__regiones', 
+	# 		'is_active').distinct())
+	_json['users'] = _jsonusers
 	_json['companies'] = _jsonproviders
 	_json['site'] = _jsonsitios
 	_json['region'] = _jsonregiones
@@ -209,9 +229,9 @@ def supervision(request, format):
 		_jsonregiones.append( {
 			'pk':region.pk,
 			'name':region.nombre,
-			'providers':list(providers.filter(region=region).values('pk')),
+			'providers':list(providers.filter(regiones__id=region.id).values('pk')),
 			'sites':list(sitios.filter(region=region).values('pk')),
-			'users':list(usersprov.filter(empresa__region=region).values('pk'))
+			'users':list(usersprov.filter(empresa__regiones__id=region.id).values('pk'))
 		})
 	for sitio in sitios:
 		_jsonsitios.append( {

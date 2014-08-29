@@ -17,20 +17,25 @@ def companies(request, format):
 	mAllUsers = InfoProv.objects.all()
 	# print simplejson.dumps(list(mSites.values()))
 	for site in mSites:
-		mSiteProvs = mProviders.filter(region=site.region).values('pk')
+		mSiteProvs = mProviders.filter(regiones__id=site.region_id).values('pk')
 		sites_provs.append({
 			'id':site.id,
 			'name':site.nombre,
 			'provs':list(mSiteProvs)
 			})
 	for prov in mProviders:
-		nusers = mAllUsers.filter(empresa=prov).count()
+		nusers = mAllUsers.filter(empresa_id=prov.pk).count()
 		# sites = Sitio.objects.filter(region=prov.region).values('pk', 'nombre')
+		str_region = ""
+		for reg in prov.regiones.all():
+			str_region += str(reg)+","
 		providers.append({
 			'id':prov.id,
 			'name':prov.nombre,
 			'nusers':nusers,
-			'reg': u'Región '+prov.region.nombre, 
+			# 'reg': u'Región '+prov.region.nombre, 
+			'reg': str_region if not str_region else str_region[:len(str_region)-1], 
+			'reg_ids' : list(prov.regiones.all().values('id'))
 			# 'sites':list(sites)
 			})
 	_json["companies"] = providers
@@ -41,24 +46,25 @@ def companies(request, format):
 		return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 	return render(request, 'compania.html', {"data":data})
 
-@dec_magic(method='POST', required_args=['name', 'region'], login_required=True, json_res=True)
+@dec_magic(method='POST', required_args=['name', 'regiones[]'], login_required=True, json_res=True)
 def company_new(request):
 	try:
 		name = request.POST['name'].strip()
-		region = request.POST['region']
+		regiones = request.POST.getlist('regiones[]')
 
 		if Empresa.objects.all().filter(nombre__iexact=name).count() > 0:
 			data = simplejson.dumps({
 					'code' : 0,
-					'msg' : "El nombre de la región ya existe"
+					'msg' : "El nombre de la compañia ya existe"
 				})
 			return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
 		new_provider = Empresa(
 			nombre=name,
-			region_id=int(region)
 			)
 		new_provider.save()
+		for region in regiones:
+			new_provider.regiones.add(int(region))
 		registerLog(request.user, 'Nuevo', 'Compañia', new_provider.pk)
 		data = simplejson.dumps({
 			'code' : 1,
@@ -77,21 +83,24 @@ def company_new(request):
 def company_edit(request, id_provider):
 	try:
 		name = request.POST.get('name', None)
-		id_region = request.POST.get('region', None)
+		regiones = request.POST.getlist('regiones[]', None)
 
 		the_provider = Empresa.objects.get(pk=id_provider)
 
 		if Empresa.objects.all().exclude(pk=id_provider).filter(nombre__iexact=name).count() > 0:
 			data = simplejson.dumps({
 					'code' : 0,
-					'msg' : "El nombre de la región ya existe"
+					'msg' : "El nombre de la compañia ya existe"
 				})
 			return render(request, 'simple_data.html', { 'data':data }, content_type='application/json')
 
 		if name is not None :
 			the_provider.nombre = name.strip()
-		if id_region is not None :
-			the_provider.region_id = int(id_region)
+		if regiones is not None :
+			the_provider.regiones.clear()
+			for region in regiones:
+				the_provider.regiones.add(int(region))
+			# the_provider.region_id = int(id_region)
 
 		the_provider.save()
 		registerLog(request.user, 'Edición', 'Compañia', id_provider)
@@ -149,8 +158,10 @@ def company(request, id_provider, format):
 
 	_json["provider"] = { 
 		'name_provider':mProvider.nombre, 
-		'id_region':mProvider.region_id,
-		'name_region':mProvider.region.nombre,
+		# 'id_region':mProvider.region_id,
+		'id_region':'',
+		# 'name_region':mProvider.region.nombre,
+		'name_region':'',
 		'n_users':mAllUsers.count(),
 		'id':int(id_provider)
 		}

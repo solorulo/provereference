@@ -58,16 +58,22 @@ $(document).ready(function(event){
 
 	var optionRegion = document.createElement("select");
 	optionRegion.setAttribute("class", "optionRegion");
+	optionRegion.setAttribute("multiple", "true");
 	optionRegion.setAttribute("style", "display:block;");
+	optionRegion.setAttribute("data-placeholder", "Selecciona las regiones");
 
-	var firstOption = document.createElement("option");
-	firstOption.appendChild(document.createTextNode(" ---- "));
-	optionRegion.appendChild(firstOption);
+	// var firstOption = document.createElement("option");
+	// firstOption.appendChild(document.createTextNode(" ---- "));
+	// optionRegion.appendChild(firstOption);
+	// var mptNode = document.createElement("option");
+	// mptNode.value = "";
+	// optionRegion.appendChild(mptNode);
 	for (var i = 0; i < data.regiones.length; i++) {
 		var optionText = data.regiones[i].nombre;
 		var optionTextNode = document.createTextNode(optionText);
 		var option = document.createElement("option");
 		option.appendChild(optionTextNode);
+		option.value = data.regiones[i].id;
 		optionRegion.appendChild(option);
 	};
 	var oldOptionsRegion = document.querySelectorAll(".optionRegion");
@@ -82,4 +88,6 @@ $(document).ready(function(event){
 	$("select").addClass("textinfo");
 
 	document.querySelector("#popup2 #b_create").onclick = (new companie()).create;
+
+	$('.optionRegion').chosen();
 });

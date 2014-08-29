@@ -61,6 +61,21 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 
 $(document).ready(function() {
 	$('#b_create').click(function(event) {
+		var password = $('#password').val();
+		var reppassword = $('#reppassword').val();
+
+		if (password.length < 6) {
+			alert("Contraseña demasiado corta");
+			$('#password').focus()
+    		$('#password').select()
+    		return false;
+		}
+		if (password != reppassword) {
+			alert("Las contraseñas no coinciden");
+			$('#reppassword').focus()
+    		$('#reppassword').select()
+    		return false;
+		}
 		confirm_action(event, new admin().create);
 	});
 });

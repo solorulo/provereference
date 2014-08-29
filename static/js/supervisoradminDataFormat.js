@@ -59,5 +59,21 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 	};
 };
 $(document).ready(function() {
-	$('#b_create').click(new supervisor().create);
+	$('#b_create').click(function(event) {
+		var contrasena = $("#contrasena").val();
+		var reppassword = $('#repcontrasena').val();
+		if (contrasena.length < 6) {
+			alert("Contraseña demasiado corta");
+			$('#contrasena').focus()
+    		$('#contrasena').select()
+    		return false;
+		}
+		if (contrasena != reppassword) {
+			alert("Las contraseñas no coinciden");
+			$('#repcontrasena').focus()
+    		$('#repcontrasena').select()
+    		return false;
+		}
+		new supervisor().create(event);
+	});
 });

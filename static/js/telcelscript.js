@@ -20,6 +20,20 @@ function abrirAdmin(i, id) {
 	};
 	// document.querySelector("#popup1 #b_save").onclick = obj.save;
 	document.querySelector("#popup1 #b_save").onclick = function(event) {
+		var password = $('#popup1 .form_password').val();
+		var reppassword = $('#popup1 .form_rep_password').val();
+		if (password.length < 6) {
+			alert("Contraseña demasiado corta");
+			$('#popup1 .form_password').focus()
+    		$('#popup1 .form_password').select()
+    		return false;
+		}
+		if (password != reppassword) {
+			alert("Las contraseñas no coinciden");
+			$('#popup1 .form_rep_password').focus()
+    		$('#popup1 .form_rep_password').select()
+    		return false;
+		}
 		confirm_action(event, obj.save);
 	};
 	abrir("#popup1");
@@ -32,7 +46,23 @@ function abrirSupervisor(i, id) {
 	document.querySelector("#popadministrador input").checked = data[i].is_active;
 	var obj = new supervisor(i, id)
 	document.querySelector("#popup1 #beliminar").onclick = obj.delete;
-	document.querySelector("#popup1 #b_save").onclick = obj.save;
+	document.querySelector("#popup1 #b_save").onclick = function (event) {
+		var contrasena = $("#popup1 .form_password").val();
+		var reppassword = $('#popup1 .form_rep_password').val();
+		if (contrasena.length < 6) {
+			alert("Contraseña demasiado corta");
+			$('#popup1 .form_password').focus()
+    		$('#popup1 .form_password').select()
+    		return false;
+		}
+		if (contrasena != reppassword) {
+			alert("Las contraseñas no coinciden");
+			$('#popup1 .form_rep_password').focus()
+    		$('#popup1 .form_rep_password').select()
+    		return false;
+		}
+		obj.save(event);
+	};
 	abrir("#popup1");
 }
 
@@ -222,6 +252,13 @@ function admin(i, id) {
 		var first_name = $('#first_name').val();
 		var last_name = $('#last_name').val();
 		var password = $('#password').val();
+		// var reppassword = $('#reppassword').val();
+		// if (password != reppassword) {
+		// 	alert("Las contraseñas no coinciden");
+		// 	$('#reppassword').focus()
+  //   		$('#reppassword').select()
+  //   		return false;
+		// }
 		var is_admin = document.querySelector("#popup2 input[type=checkbox]").checked;
 		var myp = $('.myp').val();
 		var postdata = {
@@ -240,6 +277,13 @@ function admin(i, id) {
 		var first_name = $('#popup1 .form_nombre').val();
 		var last_name = $('#popup1 .form_apellido').val();
 		var password = $('#popup1 .form_password').val();
+		// var reppassword = $('#popup1 .form_rep_password').val();
+		// if (password != reppassword) {
+		// 	alert("Las contraseñas no coinciden");
+		// 	$('#popup1 .form_rep_password').focus()
+  //   		$('#popup1 .form_rep_password').select()
+  //   		return false;
+		// }
 		var is_admin = document.querySelector("#popup1 input[type=checkbox]").checked;
 		var myp = $('.myp').val();
 		var postdata = {
@@ -271,6 +315,13 @@ function supervisor(i, id) {
 		var last_name = $("#last_name").val();
 		var email = $("#email").val();
 		var contrasena = $("#contrasena").val();
+		// var reppassword = $('#repcontrasena').val();
+		// if (password != reppassword) {
+		// 	alert("Las contraseñas no coinciden");
+		// 	$('#repcontrasena').focus()
+  //   		$('#repcontrasena').select()
+  //   		return false;
+		// }
 		var is_admin = document.querySelector("#popup2 input[type=checkbox]").checked;
 		var postdata = {
 			'email': email,
@@ -287,6 +338,13 @@ function supervisor(i, id) {
 		var first_name = $('#popup1 .form_nombre').val();
 		var last_name = $('#popup1 .form_apellido').val();
 		var contrasena = $("#popup1 .form_password").val();
+		// var reppassword = $('#popup1 .form_rep_password').val();
+		// if (contrasena != reppassword) {
+		// 	alert("Las contraseñas no coinciden");
+		// 	$('#popup1 .form_rep_password').focus()
+  //   		$('#popup1 .form_rep_password').select()
+  //   		return false;
+		// }
 		var is_admin = document.querySelector("#popup1 input[type=checkbox]").checked;
 		var postdata = {
 			'email': email,
@@ -481,42 +539,56 @@ function companie(i, id) {
 		abrir0();
 		document.querySelector("#popup1 .form_nombre").value = data.companies[i].name;
 
+		// function searchRegion() {
+		// 	for (var e = 0; e < data.regiones.length; e++) {
+		// 		if ("Región " + data.regiones[e].nombre == data.companies[i].reg) {
+		// 			return e + 1;
+		// 		}
+		// 	}
+		// }
+		// document.querySelector("#popup1 .optionRegion").selectedIndex = searchRegion();
+
 		function searchRegion() {
-			for (var e = 0; e < data.regiones.length; e++) {
-				if ("Región " + data.regiones[e].nombre == data.companies[i].reg) {
-					return e + 1;
-				}
+			var regs = [];
+			for (var e = 0; e < data.companies[i].reg_ids.length; e++) {
+				regs.push(data.companies[i].reg_ids[e].id)
 			}
+			return regs;
 		}
-		document.querySelector("#popup1 .optionRegion").selectedIndex = searchRegion();
+		$(document.querySelector("#popup1 .optionRegion")).val(searchRegion());
+
+		$("#popup1 .optionRegion").trigger("chosen:updated");
+
 		document.querySelector("#popup1 #beliminar").onclick = (new companie(i, id)).delete
 		document.querySelector("#popup1 #b_save").onclick = (new companie(i, id)).save;
 	}
 	this.create = function(event) {
 		var name = document.querySelector("#popup2 .form_nombre").value;
-		var reg = document.querySelector("#popup2 .optionRegion").selectedIndex;
-		if (reg == 0) {
+		// var reg = document.querySelector("#popup2 .optionRegion").selectedIndex;
+		var reg = $(document.querySelector("#popup2 .optionRegion")).val();
+		if (!reg || reg.length== 0) {
 			alert("Debe seleccionar una región primero.");
 			return;
 		}
-		reg = data.regiones[reg - 1].id;
+		// reg = data.regiones[reg - 1].id;
 		var postdata = {
 			'name': name,
-			'region': reg
+			'regiones': reg
 		};
 		(new Bridge(i, id, "companias", postdata)).create(event);
 	}
 	this.save = function(event) {
 		var name = document.querySelector("#popup1 .form_nombre").value;
-		var reg = document.querySelector("#popup1 .optionRegion").selectedIndex;
-		if (reg == 0) {
+		// var reg = document.querySelector("#popup1 .optionRegion").selectedIndex;
+		var reg = $(document.querySelector("#popup1 .optionRegion")).val();
+		if (!reg || reg.length== 0) {
 			alert("Debe seleccionar una región primero.");
 			return;
 		}
-		reg = data.regiones[reg - 1].id;
+		// reg = data.regiones[reg - 1].id;
 		var postdata = {
 			'name': name,
-			'region': reg
+			'regiones': reg
 		};
 		(new Bridge(i, id, "companias", postdata)).save(event);
 	}
