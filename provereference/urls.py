@@ -73,7 +73,7 @@ urlpatterns += patterns('georef_app.views.sites_views',
 )
 
 urlpatterns += patterns('georef_app.views.region_views',
-	url(r'^regiones/(?P<format>json)?$', 'companies', name='companies'),
+	url(r'^regiones/(?P<format>json)?$', 'regions', name='regions'),
 	url(r'^regiones/new/$', 'region_new', name='region_new'),
 	url(r'^regiones/(?P<id_region>\d{1,5})/edit/$', 'region_edit', name='region_edit'),
 	url(r'^regiones/(?P<id_region>\d{1,5})/delete/$', 'region_delete', name='region_delete'),
