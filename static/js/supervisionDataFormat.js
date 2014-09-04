@@ -1,15 +1,5 @@
 function innerDataFormat (element, lastLetter, query, reg, usr) {
 	var newElement;
-	var searchProveedor = function(array, userpk){
-		for (var i = 0; i < array.length; i++) {
-			for (var e = 0; e < array[i].users.length; e++) {
-				if(array[i].users[e].pk == userpk){
-					return i;
-				}
-			}
-		}
-		return 0;
-	};
 	var searchRegion = function(array, userpk){
 		for (var i = 0; i < array.length; i++) {
 			for (var e = 0; e < array[i].users.length; e++) {
@@ -27,6 +17,20 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 			}
 		};
 		return 0;
+	};
+
+	var searchRegionBy = function(array, userpk, selectedIndex){
+		selectedIndex --;
+		for (var i = 0; i < array.length; i++) {
+			if (i == selectedIndex) {
+				for (var e = 0; e < array[i].users.length; e++) {
+					if(array[i].users[e].pk == userpk){
+						return false;
+					}
+				};
+			}
+		};
+		return true;
 	}
 
 	newElement = document.createElement("div");
@@ -37,7 +41,7 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var nombre, proveedor, fecha, sitio, telefono, id, contenedor;
 		id = data.users[i].pk;
 		nombre = data.users[i].first_name + " " + data.users[i].last_name;
-		proveedor = data.provider[searchProveedor(data.provider, id)].name;
+		proveedor = data.provider[searchRegion(data.provider, id)].name;
 		if (data.activity.length > 0) {
 			sitio = data.activity[searchActivity(data.activity, id)].site;
 			fecha = new Date(data.activity[searchActivity(data.activity, id)].date.replace(/ /, "T"));
@@ -55,11 +59,11 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		if (fecha.getTime() < fecha_inicial.getTime()) continue;
 		if (fecha.getTime() > fecha_final.getTime()+24*60*60*1000) continue;
 		if (document.querySelector("#optionRegion").selectedIndex != 0 &&
-			document.querySelector("#optionRegion").selectedIndex != searchRegion(data.region, id)+1) continue;
+			searchRegionBy(data.region, id, document.querySelector("#optionRegion").selectedIndex)) continue;
 		if (document.querySelector("#optionSite").selectedIndex != 0 &&
-			document.querySelector("#optionSite").selectedIndex != searchRegion(data.site, id)+1) continue;
+			searchRegionBy(data.site, id, document.querySelector("#optionSite").selectedIndex)) continue;
 		if (document.querySelector("#optionProveedor").selectedIndex != 0 &&
-			document.querySelector("#optionProveedor").selectedIndex != searchProveedor(data.provider, id)+1) continue;
+			searchRegionBy(data.provider, id, document.querySelector("#optionProveedor").selectedIndex)) continue;
 		// Query
 		if (query != '' && !(
 			reg.test((data.users[i].first_name).toLowerCase().replace(/[\s-]/g, '')) || 
