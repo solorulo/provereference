@@ -542,7 +542,7 @@ function sitio(i, id) {
 	};
 }
 
-function sitio(i, id) {
+function region(i, id) {
 	var searchRegionIndexByID = function(id) {
 		for (var i = 0; i < data.regiones.length; i++) {
 			if (data.regiones[i].pk == id)
@@ -551,10 +551,10 @@ function sitio(i, id) {
 	};
 	this.open = function() {
 
-		document.querySelector("#popup4 .form_nombre").value = data.sites[i].name;
-		document.querySelector("#popup4 .phone").value = data.sites[i].phone;
-		document.querySelector("#popup4 #b_save").onclick = (new sitio(i, id)).save;
-		document.querySelector("#popup4 #beliminar").onclick = (new sitio(i, id)).delete
+		document.querySelector("#popup4 .form_nombre").value = data.regiones[i].nombre;
+		document.querySelector("#popup4 .phone").value = data.regiones[i].telefono;
+		document.querySelector("#popup4 #b_save").onclick = (new region(i, id)).save;
+		document.querySelector("#popup4 #beliminar").onclick = (new region(i, id)).delete
 		abrir3();
 
 	};

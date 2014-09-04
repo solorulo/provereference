@@ -10,16 +10,16 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		};
 	}
 
-	for (var i = 0; i < data.sites.length; i++) {
+	for (var i = 0; i < data.regiones.length; i++) {
 		if (query != '' && !(
-			reg.test((data.sites[i].name).toLowerCase().replace(/[\s-]/g, '')) || 
-			reg.test((data.sites[i].phone).toLowerCase().replace(/[\s-]/g, '')) || 
+			reg.test((data.regiones[i].nombre).toLowerCase().replace(/[\s-]/g, '')) || 
+			reg.test((data.regiones[i].telefono).toLowerCase().replace(/[\s-]/g, ''))
 			)) {
 			continue;
 		}
 
-		if (lastLetter != data.sites[i].name[0].toUpperCase()){
-			lastLetter = data.sites[i].name[0].toUpperCase();
+		if (lastLetter != data.regiones[i].nombre[0].toUpperCase()){
+			lastLetter = data.regiones[i].nombre[0].toUpperCase();
 			// <div class="abc">A</div>
 			var letra = document.createElement("div");
 			letra.setAttribute("class", "abc");
@@ -33,68 +33,30 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		var conf = document.createElement("div");
 		var img = document.createElement("img");
 		var info = document.createElement("div");
-		var mapa = document.createElement("button");
-	
-		var mapaFn = (function (lat, lng) {
-					return function () {
-						initialize(lat, lng);
-						var myLatlng = map.getCenter();
-						$( "#map_container" ).dialog( "open" );
-						map.setCenter(myLatlng);
-						var marker = new google.maps.Marker({
-							position: myLatlng,
-							map: map
-						});
-						var infowindow = new google.maps.InfoWindow({
-							content: ":)"
-						});
-						marker.setTitle(myLatlng.lat()+", "+myLatlng.lng());
-						infowindow.setContent('<span class="gBubble"><b>'+marker.getTitle()+'</b></span>');
-						infowindow.open(map,marker);
-						markersArray.push(marker);
-					}
-				})(data.sites[i].lat, data.sites[i].lng);
 
-		var nombreTextNode = document.createTextNode(data.sites[i].name);
-		var infoNeumonico = document.createTextNode("Neumonico: "+data.sites[i].neumonico);
-		var infoLat = document.createTextNode("Lat: "+data.sites[i].lat);
-		var infoLng = document.createTextNode("Lng: "+data.sites[i].lng);
-		var infoReg = document.createTextNode("Región: "+getReg(data.sites[i].reg).nombre);
+		var nombreTextNode = document.createTextNode(data.regiones[i].nombre);
+		var phoneTextNode = document.createTextNode("Telefono: "+data.regiones[i].telefono);
 		var confTextNode = document.createTextNode("Editar datos");
-		var mapaTextNode = document.createTextNode("Mapa");
 		
 		contenedor.setAttribute("class", "contenedor");
-		contenedor.setAttribute("id", data.sites[i].pk);
+		contenedor.setAttribute("id", data.regiones[i].id);
 		nombre.setAttribute("class", "nombre");
 		conf.setAttribute("class", "conf");
-		conf.onclick = (new sitio(i, data.sites[i].pk)).open;
+		conf.onclick = (new region(i, data.regiones[i].id)).open;
 		img.setAttribute("src", "/static/imagenes/Supervisar/configurar.png");
 		info.setAttribute("class", "info");
-		mapa.setAttribute("class", "btnMapView");
-		// info.setAttribute("class", "btnMapView");
-		mapa.onclick = mapaFn;
 
 		conf.appendChild(confTextNode);
 		conf.appendChild(img);
 		nombre.appendChild(nombreTextNode);
 		nombre.appendChild(conf);
-		info.appendChild(infoNeumonico);
-		info.appendChild(document.createElement("br"));
-		info.appendChild(infoLat);
-		info.appendChild(document.createElement("br"));
-		info.appendChild(infoLng);
-		info.appendChild(document.createElement("br"));
-		info.appendChild(infoReg);
+		info.appendChild(phoneTextNode);
 		contenedor.appendChild(nombre);
 		contenedor.appendChild(info);
-		mapa.appendChild(mapaTextNode);
-		contenedor.appendChild(mapa);
 		document.querySelector("#iabc").appendChild(contenedor);
 	};
 };
 
 $(document).ready(function(event){
 	document.querySelector("#b_create").onclick = (new region()).create;
-
-
 });
