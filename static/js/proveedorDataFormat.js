@@ -1,13 +1,16 @@
 
-var searchRegion = function(array, userpk){
+var searchRegion = function(array, userpk, selectedIndex){
+	selectedIndex --;
 	for (var i = 0; i < array.length; i++) {
-		for (var e = 0; e < array[i].users.length; e++) {
-			if(array[i].users[e].pk == userpk){
-				return i;
-			}
-		};
+		if (i == selectedIndex) {
+			for (var e = 0; e < array[i].users.length; e++) {
+				if(array[i].users[e].pk == userpk){
+					return false;
+				}
+			};
+		}
 	};
-	return -1;
+	return true;
 }
 
 function innerDataFormat (element, lastLetter, query, reg, usr) {
@@ -30,9 +33,9 @@ function innerDataFormat (element, lastLetter, query, reg, usr) {
 		}
 
 		if (document.querySelector("#optionRegion").selectedIndex != 0 &&
-			document.querySelector("#optionRegion").selectedIndex != searchRegion(data.region, id)+1) continue;
+			searchRegion(data.region, id, document.querySelector("#optionRegion").selectedIndex)) continue;
 		if (document.querySelector("#optionSitio").selectedIndex != 0 &&
-			document.querySelector("#optionSitio").selectedIndex != searchRegion(data.site, id)+1) continue;
+			searchRegion(data.site, id, document.querySelector("#optionSitio").selectedIndex)) continue;
 
 		if (query != '' && !(
 			reg.test((data.users[i].first_name).toLowerCase().replace(/[\s-]/g, '')) || 

@@ -362,13 +362,21 @@ function supervisor(i, id) {
 };
 
 function proveedor(i, id) {
+	var searchCompanie = function(id) {
+		for (var i = 0; i < data.companies.length; i++) {
+			for (var e = 0; e < data.companies[i].users.length; e++) {
+				if (id == data.companies[i].users[e].pk)
+					return i;
+			}
+		};
+	};
 	this.open = function() {
 		document.querySelector("#popup4 .textinfo.form_nombre").value = data.users[i].first_name;
 		document.querySelector("#popup4 .textinfo.apellido").value = data.users[i].last_name;
 		document.querySelector("#popup4 .textinfo.email").value = data.users[i].email;
 		document.querySelector("#popup4 .textinfo.imei").value = data.users[i].imei;
 		document.querySelector("#popup4 .textinfo.telefono").value = data.users[i].telefono;
-		document.querySelector("#popup4 .optionCompany").selectedIndex = searchRegion(data.companies, id) + 1;
+		document.querySelector("#popup4 .optionCompany").selectedIndex = searchCompanie(id) + 1;
 		document.querySelector("#popup4 .bazul").onclick = (new proveedor(i, id)).save;
 		document.querySelector("#popup4 #beliminar").onclick = (new proveedor(i, id)).delete;
 		abrir("#popup4");
@@ -531,6 +539,46 @@ function sitio(i, id) {
 	};
 	this.delete = function(event) {
 		(new Bridge(i, id, "sitios")).delete();
+	};
+}
+
+function sitio(i, id) {
+	var searchRegionIndexByID = function(id) {
+		for (var i = 0; i < data.regiones.length; i++) {
+			if (data.regiones[i].pk == id)
+				return i;
+		};
+	};
+	this.open = function() {
+
+		document.querySelector("#popup4 .form_nombre").value = data.sites[i].name;
+		document.querySelector("#popup4 .phone").value = data.sites[i].phone;
+		document.querySelector("#popup4 #b_save").onclick = (new sitio(i, id)).save;
+		document.querySelector("#popup4 #beliminar").onclick = (new sitio(i, id)).delete
+		abrir3();
+
+	};
+	this.create = function(event) {
+		var name = document.querySelector("#popup3 .form_nombre").value;
+		var phone = document.querySelector("#popup3 .phone").value;
+		var postdata = {
+			'name': name,
+			'phone': phone
+		};
+		(new Bridge(i, id, "regiones", postdata)).create(event);
+	};
+	this.save = function(event) {
+		var name = document.querySelector("#popup4 .form_nombre").value;
+		var phone = document.querySelector("#popup4 .phone").value;
+
+		var postdata = {
+			'name': name,
+			'phone': phone
+		};
+		(new Bridge(i, id, "regiones", postdata)).save(event);
+	};
+	this.delete = function(event) {
+		(new Bridge(i, id, "regiones")).delete();
 	};
 }
 

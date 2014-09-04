@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sitios</title>
+	{% include "includes/common_headers.html" %}
+	<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/regionesDataFormat.js" ></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/mapa.js" ></script>
+	<script type="text/javascript">
+		eval('var data = {{ data|escape|safe }}');
+	</script>
+</head>
+<body  > 
+	{% csrf_token %}
+	{% include "includes/header_admins.html" %}
+
+	<div id="gradiant"></div>
+	<img id="flecha"  src="/static/imagenes/Supervisar/flecha_arriba.png" onclick="subir()"> 
+	<div id="cuerpo">
+		{% with template_name="regiones" %}
+		{% include "includes/menu_lateral.html" %}
+		{% endwith %}
+		<div id="derecha" class="interior">
+			
+			<a name="inicio"> </a>
+			<div id="busqueda"> Tu busqueda : <input type="text" size="15"></div>
+			
+			<div id="iabc">
+				<div id="abc">A</div>
+				<div id="contenedor">
+					<div id="nombre"> Administrador López Piña   <div id="conf" onclick="abrir3()"> Editar datos <img src="/static/imagenes/Supervisar/configurar.png"></div></div>
+					<div id="info">manuel@telcelcelular.com.mx </br>55943412</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="popup4" class="pop">
+		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Region > Editar <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
+		<div id="gradiant"></div>
+		<div id="popcontenido">
+			<div id="poplateral" >
+				<ul id="popul">
+					<li>Nombre</li>
+					<div id="linea1"></div>
+					<li>Teléfono</li>
+					<div id="linea1"></div>
+				</ul>
+			</div>
+			<div id="popinfo" style="top:20%">
+				<input type="text" class="textinfo form_nombre">
+				<input type="text" class="textinfo phone">
+				<button id="beliminar">Eliminar</button> <button id="b_save" class="bazul" >Guardar</button><button id="bblanco" onclick="cerrarTodo();">Cancelar</button>
+			</div>
+		</div>
+	</div>
+	<div id="popup3" class="pop">
+		<div id="popsuperior"> <img     src="/static/imagenes/Supervisar/usuario.png"> Region > Nuevo <img id="azul" src="/static/imagenes/Supervisar/configurar.png"> </div>
+		<div id="gradiant"></div>
+		<div id="popcontenido">
+			<div id="poplateral" >
+				<ul id="popul">
+					<li>Nombre</li>
+					<div id="linea1"></div>
+					<li>Teléfono</li>
+					<div id="linea1"></div>
+				</ul>
+			</div>
+			<div id="popinfo" style="top:20%">
+				<input type="text" class="textinfo form_nombre">
+				<input type="text" class="textinfo phone">
+				<button id="b_create" class="bazul">Crear</button><button id="bblanco" onclick="cerrarTodo();">Cancelar</button>
+			</div>
+		</div>
+	</div>
+	<div id="map_container">    
+		<div id="map_canvas" style="width:100%;height:100%;"></div>
+	</div>
+	{% include "includes/error_dialog.html" %}
+</body>
+</html>

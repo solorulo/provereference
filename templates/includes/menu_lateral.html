@@ -12,6 +12,7 @@
 		<li><a href="/proveedores">Proveedores</a></li>
 		<li><a href="/sitios">Sitios</a></li>
 		<li><a href="/usuarios">Usuarios</a></li>
+		<li><a href="/regiones">Regiones</a></li>
 	</ul>
 </div>
 
@@ -30,6 +31,7 @@
 		<li><a href="/proveedores">Proveedores</a></li>
 		<li><a href="/sitios">Sitios</a></li>
 		<li><a href="/usuarios">Usuarios</a></li>
+		<li><a href="/regiones">Regiones</a></li>
 	</ul>
 </div>
 
@@ -46,6 +48,7 @@
 		<li><a href="/proveedores">Proveedores</a></li>
 		<li><a href="/sitios">Sitios</a></li>
 		<li><a href="/usuarios">Usuarios</a></li>
+		<li><a href="/regiones">Regiones</a></li>
 	</ul>
 </div>
 
@@ -78,6 +81,7 @@
 		<li><a href="/companias">Compañias</a></li>
 		<li><a href="/sitios">Sitios</a></li>
 		<li><a href="/usuarios">Usuarios</a></li>
+		<li><a href="/regiones">Regiones</a></li>
 	</ul>
 </div>
 
@@ -102,6 +106,26 @@
 		<li><a href="/companias">Compañias</a></li>
 		<li><a href="/proveedores">Proveedores</a></li>
 		<li><a href="/usuarios">Usuarios</a></li>
+		<li><a href="/regiones">Regiones</a></li>
+	</ul>
+</div>
+
+{% elif template_name == "regiones" %}
+<div id="izquierda1" class="interior">
+	<li id="administrador"> Regiones <img src="/static/imagenes/Supervisar/flecha_combobox.png"></li>
+
+
+	<li id="nuevo" onclick="abrir2()"><div id="linea1"></div></br><dd>Nueva Región<img src="/static/imagenes/Supervisar/nuevo.png"> <div id="linea2"></div></li>
+
+	<ul id="lateral">
+		{% if user.infouser.is_admin %}
+		<li ><a href="/administradores">Administradores</a></li>
+		{% endif %}
+		<li ><a href="/supervisores">Supervisores</a></li>
+		<li><a href="/companias">Compañias</a></li>
+		<li><a href="/proveedores">Proveedores</a></li>
+		<li><a href="/usuarios">Usuarios</a></li>
+		<li><a href="/sitios">Sitios</a></li>
 	</ul>
 </div>
 
@@ -117,6 +141,7 @@
 		<li><a href="/companias">Compañias</a></li>
 		<li><a href="/proveedores">Proveedores</a></li>
 		<li><a href="/sitios">Sitios</a></li>
+		<li><a href="/regiones">Regiones</a></li>
 	</ul>
 </div>
 {% endif %}
